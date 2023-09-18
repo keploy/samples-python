@@ -1,0 +1,46 @@
+version: api.keploy.io/v1beta2
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/user/
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Host: 127.0.0.1:8000
+            Postman-Token: fa534992-4e98-4081-a107-16bd5ec515f3
+            User-Agent: PostmanRuntime/7.32.3
+        body: ""
+        body_type: ""
+    resp:
+        status_code: 200
+        header:
+            Allow: POST, GET, OPTIONS
+            Content-Length: "346"
+            Content-Type: application/json
+            Cross-Origin-Opener-Policy: same-origin
+            Date: Sun, 17 Sep 2023 07:32:17 GMT
+            Referrer-Policy: same-origin
+            Server: WSGIServer/0.2 CPython/3.10.12
+            Vary: Accept, Cookie
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+        body: '[{"id":"57326de5-8c98-45ca-8e6d-69e0ccf0195e","name":"Shashwat Gupta","email":"shashwatg79802@gmail.com","password":"shashwat","website":"https://medium.com/@shashwatg79802"},{"id":"7b1a1d4a-c410-451f-8ca7-7a11803d55a0","name":"Poorva Diwan","email":"poorvadiwan2@gmail.com","password":"poorvadiwan2","website":"https://medium.com/@poorvadiwan"}]'
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+    objects: []
+    assertions:
+        noise:
+            - body.name
+            - header.Allow
+            - body.password
+            - header.Vary
+            - header.Date
+    created: 1694935960

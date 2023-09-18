@@ -1,0 +1,129 @@
+version: api.keploy.io/v1beta1
+name: report-6
+status: PASSED
+success: 1
+failure: 0
+total: 1
+tests:
+    - kind: Http
+      name: report-6
+      status: PASSED
+      started: 1694956928
+      completed: 1694956928
+      test_case_path: /media/shashwat/2E9AD3589AD31AE3/Keploy/sample-app/django_postgres/keploy
+      mock_path: ""
+      test_case_id: test-1
+      req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/user/7b1a1d4a-c410-451f-8ca7-7a11803d55a0
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "141"
+            Content-Type: application/json
+            Host: 127.0.0.1:8000
+            Postman-Token: 09b2d458-b145-4aa4-8a16-f1e521cc3566
+            User-Agent: PostmanRuntime/7.32.3
+        body: |-
+            {
+                "name": "Shashwat Gupta",
+                "email": "shashwat.gupta@keploy.io",
+                "password": "shashwat",
+                "website": "https://www.keploy.io"
+            }
+        body_type: ""
+      resp:
+        status_code: 301
+        header:
+            Content-Type: text/html; charset=utf-8
+            Cross-Origin-Opener-Policy: same-origin
+            Date: Sun, 17 Sep 2023 09:23:00 GMT
+            Location: /user/7b1a1d4a-c410-451f-8ca7-7a11803d55a0/
+            Referrer-Policy: same-origin
+            Server: WSGIServer/0.2 CPython/3.10.12
+            X-Content-Type-Options: nosniff
+        body: ""
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+      noise:
+        - header.Date
+      result:
+        status_code:
+            normal: true
+            expected: 301
+            actual: 301
+        headers_result:
+            - normal: true
+              expected:
+                key: Location
+                value:
+                    - /user/7b1a1d4a-c410-451f-8ca7-7a11803d55a0/
+              actual:
+                key: Location
+                value:
+                    - /user/7b1a1d4a-c410-451f-8ca7-7a11803d55a0/
+            - normal: true
+              expected:
+                key: Referrer-Policy
+                value:
+                    - same-origin
+              actual:
+                key: Referrer-Policy
+                value:
+                    - same-origin
+            - normal: true
+              expected:
+                key: Server
+                value:
+                    - WSGIServer/0.2 CPython/3.10.12
+              actual:
+                key: Server
+                value:
+                    - WSGIServer/0.2 CPython/3.10.12
+            - normal: true
+              expected:
+                key: X-Content-Type-Options
+                value:
+                    - nosniff
+              actual:
+                key: X-Content-Type-Options
+                value:
+                    - nosniff
+            - normal: true
+              expected:
+                key: Content-Type
+                value:
+                    - text/html; charset=utf-8
+              actual:
+                key: Content-Type
+                value:
+                    - text/html; charset=utf-8
+            - normal: true
+              expected:
+                key: Cross-Origin-Opener-Policy
+                value:
+                    - same-origin
+              actual:
+                key: Cross-Origin-Opener-Policy
+                value:
+                    - same-origin
+            - normal: true
+              expected:
+                key: Date
+                value:
+                    - Sun, 17 Sep 2023 09:23:00 GMT
+              actual:
+                key: Date
+                value:
+                    - Sun, 17 Sep 2023 13:22:08 GMT
+        body_result:
+            - normal: true
+              type: PLAIN
+              expected: ""
+              actual: ""
+        dep_result: []

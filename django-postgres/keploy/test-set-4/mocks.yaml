@@ -1,0 +1,799 @@
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAACATSFi8=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: Tg==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAAPQADAAB1c2VyAHBvc3RncmVzAGRhdGFiYXNlAHVzZXJzZGIAY2xpZW50X2VuY29kaW5nAFVURjgAAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAABcAAAAKU0NSQU0tU0hBLTI1NgAA
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAADZTQ1JBTS1TSEEtMjU2AAAAACBuLCxuPSxyPXE0Q2o4TXB1VFplWm9VVVhjYTZrYWNZVw==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAAFwAAAALcj1xNENqOE1wdVRaZVpvVVVYY2E2a2FjWVdWRlVHdVBRVUVEY0I0M1F4WjdCWlpKWXoscz1NbnhSUHpxZ2k0VFV5cklkeUc1Ti9RPT0saT00MDk2
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAAGxjPWJpd3Mscj1xNENqOE1wdVRaZVpvVVVYY2E2a2FjWVdWRlVHdVBRVUVEY0I0M1F4WjdCWlpKWXoscD1JQ3pmNEg5cUNmZ0hMQ1FWa2VoWnBTU01YTDZHVkFVdStYcHU0MjBUWkRzPQ==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAADYAAAAMdj1kMXdwWHAvKzJiY1E3QUFlMStCWko3cVNGc2xmeEtQa25OamNLUjNxTDlrPVIAAAAIAAAAAFMAAAAXaW5faG90X3N0YW5kYnkAb2ZmAFMAAAAZaW50ZWdlcl9kYXRldGltZXMAb24AUwAAABVUaW1lWm9uZQBFdGMvVVRDAFMAAAAbSW50ZXJ2YWxTdHlsZQBwb3N0Z3JlcwBTAAAAFGlzX3N1cGVydXNlcgBvbgBTAAAAFmFwcGxpY2F0aW9uX25hbWUAAFMAAAAmZGVmYXVsdF90cmFuc2FjdGlvbl9yZWFkX29ubHkAb2ZmAFMAAAAac2NyYW1faXRlcmF0aW9ucwA0MDk2AFMAAAAXRGF0ZVN0eWxlAElTTywgTURZAFMAAAAjc3RhbmRhcmRfY29uZm9ybWluZ19zdHJpbmdzAG9uAFMAAAAjc2Vzc2lvbl9hdXRob3JpemF0aW9uAHBvc3RncmVzAFMAAAAZY2xpZW50X2VuY29kaW5nAFVURjgAUwAAADJzZXJ2ZXJfdmVyc2lvbgAxNi4wIChEZWJpYW4gMTYuMC0xLnBnZGcxMjArMSkAUwAAABlzZXJ2ZXJfZW5jb2RpbmcAVVRGOABLAAAADAAAAOZRTfIiWgAAAAVJ
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAADBTRUxFQ1Qgc2V0X2NvbmZpZygnVGltZVpvbmUnLCAnVVRDJywgZmFsc2UpAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAACMAAXNldF9jb25maWcAAAAAAAAAAAAAGf///////wAARAAAAA0AAQAAAANVVENDAAAADVNFTEVDVCAxAFMAAAARVGltZVpvbmUAVVRDAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAkcKICAgICAgICAgICAgU0VMRUNUCiAgICAgICAgICAgICAgICBjLnJlbG5hbWUsCiAgICAgICAgICAgICAgICBDQVNFCiAgICAgICAgICAgICAgICAgICAgV0hFTiBjLnJlbGlzcGFydGl0aW9uIFRIRU4gJ3AnCiAgICAgICAgICAgICAgICAgICAgV0hFTiBjLnJlbGtpbmQgSU4gKCdtJywgJ3YnKSBUSEVOICd2JwogICAgICAgICAgICAgICAgICAgIEVMU0UgJ3QnCiAgICAgICAgICAgICAgICBFTkQsCiAgICAgICAgICAgICAgICBvYmpfZGVzY3JpcHRpb24oYy5vaWQsICdwZ19jbGFzcycpCiAgICAgICAgICAgIEZST00gcGdfY2F0YWxvZy5wZ19jbGFzcyBjCiAgICAgICAgICAgIExFRlQgSk9JTiBwZ19jYXRhbG9nLnBnX25hbWVzcGFjZSBuIE9OIG4ub2lkID0gYy5yZWxuYW1lc3BhY2UKICAgICAgICAgICAgV0hFUkUgYy5yZWxraW5kIElOICgnZicsICdtJywgJ3AnLCAncicsICd2JykKICAgICAgICAgICAgICAgIEFORCBuLm5zcG5hbWUgTk9UIElOICgncGdfY2F0YWxvZycsICdwZ190b2FzdCcpCiAgICAgICAgICAgICAgICBBTkQgcGdfY2F0YWxvZy5wZ190YWJsZV9pc192aXNpYmxlKGMub2lkKQogICAgICAgIAA=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAAFkAA3JlbG5hbWUAAAAE6wACAAAAEwBA/////wAAY2FzZQAAAAAAAAAAAAAZ////////AABvYmpfZGVzY3JpcHRpb24AAAAAAAAAAAAAGf///////wAARAAAACQAAwAAABFkamFuZ29fbWlncmF0aW9ucwAAAAF0/////0QAAAAmAAMAAAATZGphbmdvX2NvbnRlbnRfdHlwZQAAAAF0/////0QAAAAiAAMAAAAPYXV0aF9wZXJtaXNzaW9uAAAAAXT/////RAAAAB0AAwAAAAphdXRoX2dyb3VwAAAAAXT/////RAAAACkAAwAAABZhdXRoX2dyb3VwX3Blcm1pc3Npb25zAAAAAXT/////RAAAABwAAwAAAAlhdXRoX3VzZXIAAAABdP////9EAAAAIwADAAAAEGF1dGhfdXNlcl9ncm91cHMAAAABdP////9EAAAALQADAAAAGmF1dGhfdXNlcl91c2VyX3Blcm1pc3Npb25zAAAAAXT/////RAAAACMAAwAAABBhcHBsaWNhdGlvbl91c2VyAAAAAXT/////RAAAACMAAwAAABBkamFuZ29fYWRtaW5fbG9nAAAAAXT/////RAAAACEAAwAAAA5kamFuZ29fc2Vzc2lvbgAAAAF0/////0MAAAAOU0VMRUNUIDExAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAACATSFi8=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: Tg==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAAPQADAAB1c2VyAHBvc3RncmVzAGRhdGFiYXNlAHVzZXJzZGIAY2xpZW50X2VuY29kaW5nAFVURjgAAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAABcAAAAKU0NSQU0tU0hBLTI1NgAA
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAADZTQ1JBTS1TSEEtMjU2AAAAACBuLCxuPSxyPXFIand3TlAwbWExMklRVkZXaGtMcllLTw==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAAFwAAAALcj1xSGp3d05QMG1hMTJJUVZGV2hrTHJZS09uYkwvWHBkZTRTODE5NVVBb3AzdTJZTlkscz1NbnhSUHpxZ2k0VFV5cklkeUc1Ti9RPT0saT00MDk2
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAAGxjPWJpd3Mscj1xSGp3d05QMG1hMTJJUVZGV2hrTHJZS09uYkwvWHBkZTRTODE5NVVBb3AzdTJZTlkscD0za0k5Q2IxNVdFMkxQRzM5SlIxM20rSEtGbFRJY2VXbWgzYnNlVEUzMTlZPQ==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAADYAAAAMdj1oR0FFaDN4K2pXbnQrUzRsb0lUbjh6Zy96QUV6Q1ZtcWFkenM1ZlNPSS9FPVIAAAAIAAAAAFMAAAAXaW5faG90X3N0YW5kYnkAb2ZmAFMAAAAZaW50ZWdlcl9kYXRldGltZXMAb24AUwAAABVUaW1lWm9uZQBFdGMvVVRDAFMAAAAbSW50ZXJ2YWxTdHlsZQBwb3N0Z3JlcwBTAAAAFGlzX3N1cGVydXNlcgBvbgBTAAAAFmFwcGxpY2F0aW9uX25hbWUAAFMAAAAmZGVmYXVsdF90cmFuc2FjdGlvbl9yZWFkX29ubHkAb2ZmAFMAAAAac2NyYW1faXRlcmF0aW9ucwA0MDk2AFMAAAAXRGF0ZVN0eWxlAElTTywgTURZAFMAAAAjc3RhbmRhcmRfY29uZm9ybWluZ19zdHJpbmdzAG9uAFMAAAAjc2Vzc2lvbl9hdXRob3JpemF0aW9uAHBvc3RncmVzAFMAAAAZY2xpZW50X2VuY29kaW5nAFVURjgAUwAAADJzZXJ2ZXJfdmVyc2lvbgAxNi4wIChEZWJpYW4gMTYuMC0xLnBnZGcxMjArMSkAUwAAABlzZXJ2ZXJfZW5jb2RpbmcAVVRGOABLAAAADAAAAOi+yq4GWgAAAAVJ
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAADBTRUxFQ1Qgc2V0X2NvbmZpZygnVGltZVpvbmUnLCAnVVRDJywgZmFsc2UpAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAACMAAXNldF9jb25maWcAAAAAAAAAAAAAGf///////wAARAAAAA0AAQAAAANVVENDAAAADVNFTEVDVCAxAFMAAAARVGltZVpvbmUAVVRDAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAQFTRUxFQ1QgImFwcGxpY2F0aW9uX3VzZXIiLiJpZCIsICJhcHBsaWNhdGlvbl91c2VyIi4ibmFtZSIsICJhcHBsaWNhdGlvbl91c2VyIi4iZW1haWwiLCAiYXBwbGljYXRpb25fdXNlciIuInBhc3N3b3JkIiwgImFwcGxpY2F0aW9uX3VzZXIiLiJ3ZWJzaXRlIiBGUk9NICJhcHBsaWNhdGlvbl91c2VyIiBXSEVSRSAiYXBwbGljYXRpb25fdXNlciIuImlkIiA9ICc3YjFhMWQ0YWM0MTA0NTFmOGNhNzdhMTE4MDNkNTVhMCc6OnV1aWQgTElNSVQgMjEA
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAAH8ABWlkAAAAQIYAAQAAC4YAEP////8AAG5hbWUAAABAhgACAAAEE///AAAANgAAZW1haWwAAABAhgADAAAEE///AAABAgAAcGFzc3dvcmQAAABAhgAEAAAEE///AAAANgAAd2Vic2l0ZQAAAECGAAUAAAQT//8AAAA2AABEAAAAiwAFAAAAJDdiMWExZDRhLWM0MTAtNDUxZi04Y2E3LTdhMTE4MDNkNTVhMAAAAAxQb29ydmEgRGl3YW4AAAAWcG9vcnZhZGl3YW4yQGdtYWlsLmNvbQAAAAxwb29ydmFkaXdhbjIAAAAfaHR0cHM6Ly9tZWRpdW0uY29tL0Bwb29ydmFkaXdhbkMAAAANU0VMRUNUIDEAWgAAAAVJ
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAACATSFi8=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: Tg==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAAPQADAAB1c2VyAHBvc3RncmVzAGRhdGFiYXNlAHVzZXJzZGIAY2xpZW50X2VuY29kaW5nAFVURjgAAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAABcAAAAKU0NSQU0tU0hBLTI1NgAA
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAADZTQ1JBTS1TSEEtMjU2AAAAACBuLCxuPSxyPXJGbjk4cWJ6UVpTSlhxZllSWHUyRzBOTw==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAAFwAAAALcj1yRm45OHFielFaU0pYcWZZUlh1MkcwTk9rQ2xXYmZsOGw0Wit2V3pZeWMwYThHRlkscz1NbnhSUHpxZ2k0VFV5cklkeUc1Ti9RPT0saT00MDk2
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAAGxjPWJpd3Mscj1yRm45OHFielFaU0pYcWZZUlh1MkcwTk9rQ2xXYmZsOGw0Wit2V3pZeWMwYThHRlkscD1UTEtYSkFGR0xBMkdxL3dGNXhpUDZjTm9WWjlkYThKZlVrZkU0c0QwcVhvPQ==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAADYAAAAMdj1xUnQzeVNOaDBzME1XaDltT01LVGtrYWIrVjYvajNVWWgxK3kzNDlYcXpvPVIAAAAIAAAAAFMAAAAXaW5faG90X3N0YW5kYnkAb2ZmAFMAAAAZaW50ZWdlcl9kYXRldGltZXMAb24AUwAAABVUaW1lWm9uZQBFdGMvVVRDAFMAAAAbSW50ZXJ2YWxTdHlsZQBwb3N0Z3JlcwBTAAAAFGlzX3N1cGVydXNlcgBvbgBTAAAAFmFwcGxpY2F0aW9uX25hbWUAAFMAAAAmZGVmYXVsdF90cmFuc2FjdGlvbl9yZWFkX29ubHkAb2ZmAFMAAAAac2NyYW1faXRlcmF0aW9ucwA0MDk2AFMAAAAXRGF0ZVN0eWxlAElTTywgTURZAFMAAAAjc3RhbmRhcmRfY29uZm9ybWluZ19zdHJpbmdzAG9uAFMAAAAjc2Vzc2lvbl9hdXRob3JpemF0aW9uAHBvc3RncmVzAFMAAAAZY2xpZW50X2VuY29kaW5nAFVURjgAUwAAADJzZXJ2ZXJfdmVyc2lvbgAxNi4wIChEZWJpYW4gMTYuMC0xLnBnZGcxMjArMSkAUwAAABlzZXJ2ZXJfZW5jb2RpbmcAVVRGOABLAAAADAAAAOtRRVwhWgAAAAVJ
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAADBTRUxFQ1Qgc2V0X2NvbmZpZygnVGltZVpvbmUnLCAnVVRDJywgZmFsc2UpAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAACMAAXNldF9jb25maWcAAAAAAAAAAAAAGf///////wAARAAAAA0AAQAAAANVVENDAAAADVNFTEVDVCAxAFMAAAARVGltZVpvbmUAVVRDAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAM1JTlNFUlQgSU5UTyAiYXBwbGljYXRpb25fdXNlciIgKCJpZCIsICJuYW1lIiwgImVtYWlsIiwgInBhc3N3b3JkIiwgIndlYnNpdGUiKSBWQUxVRVMgKCcxYzllMmNlYzU4MjY0NmEzYTU3MDQ3Y2UzNWQ4Njk1Nic6OnV1aWQsICdKYW5lIFNtaXRoJywgJ2phbmUuc21pdGhAZXhhbXBsZS5jb20nLCAnc21pdGg1NjcnLCAnd3d3LmphbmVzbWl0aC5jb20nKQA=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: QwAAAA9JTlNFUlQgMCAxAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAACATSFi8=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: Tg==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAAPQADAAB1c2VyAHBvc3RncmVzAGRhdGFiYXNlAHVzZXJzZGIAY2xpZW50X2VuY29kaW5nAFVURjgAAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAABcAAAAKU0NSQU0tU0hBLTI1NgAA
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAADZTQ1JBTS1TSEEtMjU2AAAAACBuLCxuPSxyPTZadnQrRnBlMDJCQWtudTZjcFpaSDV2WA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAAFwAAAALcj02WnZ0K0ZwZTAyQkFrbnU2Y3BaWkg1dlgxbDNiTTVuU0gzWFRVS3o2cGR4dHhLcHUscz1NbnhSUHpxZ2k0VFV5cklkeUc1Ti9RPT0saT00MDk2
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAAGxjPWJpd3Mscj02WnZ0K0ZwZTAyQkFrbnU2Y3BaWkg1dlgxbDNiTTVuU0gzWFRVS3o2cGR4dHhLcHUscD01R1dueHBRdzJHNENDZWxRbEZVNnR4RHkvTHI3OWp2eXlLSXFvbWlxdXJzPQ==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAADYAAAAMdj1FcVY2RjU5czd4K0loTldNUkxLVi85V2l0UWNJdlljTWpVekduMFJRc0hnPVIAAAAIAAAAAFMAAAAXaW5faG90X3N0YW5kYnkAb2ZmAFMAAAAZaW50ZWdlcl9kYXRldGltZXMAb24AUwAAABVUaW1lWm9uZQBFdGMvVVRDAFMAAAAbSW50ZXJ2YWxTdHlsZQBwb3N0Z3JlcwBTAAAAFGlzX3N1cGVydXNlcgBvbgBTAAAAFmFwcGxpY2F0aW9uX25hbWUAAFMAAAAmZGVmYXVsdF90cmFuc2FjdGlvbl9yZWFkX29ubHkAb2ZmAFMAAAAac2NyYW1faXRlcmF0aW9ucwA0MDk2AFMAAAAXRGF0ZVN0eWxlAElTTywgTURZAFMAAAAjc3RhbmRhcmRfY29uZm9ybWluZ19zdHJpbmdzAG9uAFMAAAAjc2Vzc2lvbl9hdXRob3JpemF0aW9uAHBvc3RncmVzAFMAAAAZY2xpZW50X2VuY29kaW5nAFVURjgAUwAAADJzZXJ2ZXJfdmVyc2lvbgAxNi4wIChEZWJpYW4gMTYuMC0xLnBnZGcxMjArMSkAUwAAABlzZXJ2ZXJfZW5jb2RpbmcAVVRGOABLAAAADAAAAO1mfnR1WgAAAAVJ
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAADBTRUxFQ1Qgc2V0X2NvbmZpZygnVGltZVpvbmUnLCAnVVRDJywgZmFsc2UpAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAACMAAXNldF9jb25maWcAAAAAAAAAAAAAGf///////wAARAAAAA0AAQAAAANVVENDAAAADVNFTEVDVCAxAFMAAAARVGltZVpvbmUAVVRDAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAK9TRUxFQ1QgImFwcGxpY2F0aW9uX3VzZXIiLiJpZCIsICJhcHBsaWNhdGlvbl91c2VyIi4ibmFtZSIsICJhcHBsaWNhdGlvbl91c2VyIi4iZW1haWwiLCAiYXBwbGljYXRpb25fdXNlciIuInBhc3N3b3JkIiwgImFwcGxpY2F0aW9uX3VzZXIiLiJ3ZWJzaXRlIiBGUk9NICJhcHBsaWNhdGlvbl91c2VyIgA=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAAH8ABWlkAAAAQIYAAQAAC4YAEP////8AAG5hbWUAAABAhgACAAAEE///AAAANgAAZW1haWwAAABAhgADAAAEE///AAABAgAAcGFzc3dvcmQAAABAhgAEAAAEE///AAAANgAAd2Vic2l0ZQAAAECGAAUAAAQT//8AAAA2AABEAAAAjgAFAAAAJDU3MzI2ZGU1LThjOTgtNDVjYS04ZTZkLTY5ZTBjY2YwMTk1ZQAAAA5TaGFzaHdhdCBHdXB0YQAAABhzaGFzaHdhdGc3OTgwMkBnbWFpbC5jb20AAAAIc2hhc2h3YXQAAAAiaHR0cHM6Ly9tZWRpdW0uY29tL0BzaGFzaHdhdGc3OTgwMkQAAACLAAUAAAAkN2IxYTFkNGEtYzQxMC00NTFmLThjYTctN2ExMTgwM2Q1NWEwAAAADFBvb3J2YSBEaXdhbgAAABZwb29ydmFkaXdhbjJAZ21haWwuY29tAAAADHBvb3J2YWRpd2FuMgAAAB9odHRwczovL21lZGl1bS5jb20vQHBvb3J2YWRpd2FuRAAAAHQABQAAACQzOTY5ODU5YS0wMzFhLTRmYzMtYjFmOS0yZjYwZmQ2OWFmY2QAAAAISm9obiBEb2UAAAAUam9obi5kb2VAZXhhbXBsZS5jb20AAAALcGFzc3dvcmQxMjMAAAAPd3d3LmpvaG5kb2UuY29tRAAAAHcABQAAACQxYzllMmNlYy01ODI2LTQ2YTMtYTU3MC00N2NlMzVkODY5NTYAAAAKSmFuZSBTbWl0aAAAABZqYW5lLnNtaXRoQGV4YW1wbGUuY29tAAAACHNtaXRoNTY3AAAAEXd3dy5qYW5lc21pdGguY29tQwAAAA1TRUxFQ1QgNABaAAAABUk=
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAACATSFi8=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: Tg==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAAPQADAAB1c2VyAHBvc3RncmVzAGRhdGFiYXNlAHVzZXJzZGIAY2xpZW50X2VuY29kaW5nAFVURjgAAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAABcAAAAKU0NSQU0tU0hBLTI1NgAA
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAADZTQ1JBTS1TSEEtMjU2AAAAACBuLCxuPSxyPTE4YjVDNTZZYkt5UjlybW5tbm40ZUtXWA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAAFwAAAALcj0xOGI1QzU2WWJLeVI5cm1ubW5uNGVLV1hxMXFkZWVBQVpwNi93WW9ReEMwVC8yUG0scz1NbnhSUHpxZ2k0VFV5cklkeUc1Ti9RPT0saT00MDk2
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAAGxjPWJpd3Mscj0xOGI1QzU2WWJLeVI5cm1ubW5uNGVLV1hxMXFkZWVBQVpwNi93WW9ReEMwVC8yUG0scD1qY0RPbjFRUEpwbkhpdS9DU0tRc0NzcXYwMytjempIWUZsMXA0b1dJTVdBPQ==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAADYAAAAMdj1Dck1PSTJkN2t0eGl0SkgyOWNLejU3OGZwSjZmeUx4OFRNbHdFeThqT2MwPVIAAAAIAAAAAFMAAAAXaW5faG90X3N0YW5kYnkAb2ZmAFMAAAAZaW50ZWdlcl9kYXRldGltZXMAb24AUwAAABVUaW1lWm9uZQBFdGMvVVRDAFMAAAAbSW50ZXJ2YWxTdHlsZQBwb3N0Z3JlcwBTAAAAFGlzX3N1cGVydXNlcgBvbgBTAAAAFmFwcGxpY2F0aW9uX25hbWUAAFMAAAAmZGVmYXVsdF90cmFuc2FjdGlvbl9yZWFkX29ubHkAb2ZmAFMAAAAac2NyYW1faXRlcmF0aW9ucwA0MDk2AFMAAAAXRGF0ZVN0eWxlAElTTywgTURZAFMAAAAjc3RhbmRhcmRfY29uZm9ybWluZ19zdHJpbmdzAG9uAFMAAAAjc2Vzc2lvbl9hdXRob3JpemF0aW9uAHBvc3RncmVzAFMAAAAZY2xpZW50X2VuY29kaW5nAFVURjgAUwAAADJzZXJ2ZXJfdmVyc2lvbgAxNi4wIChEZWJpYW4gMTYuMC0xLnBnZGcxMjArMSkAUwAAABlzZXJ2ZXJfZW5jb2RpbmcAVVRGOABLAAAADAAAAPCaUO+JWgAAAAVJ
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAADBTRUxFQ1Qgc2V0X2NvbmZpZygnVGltZVpvbmUnLCAnVVRDJywgZmFsc2UpAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAACMAAXNldF9jb25maWcAAAAAAAAAAAAAGf///////wAARAAAAA0AAQAAAANVVENDAAAADVNFTEVDVCAxAFMAAAARVGltZVpvbmUAVVRDAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAQFTRUxFQ1QgImFwcGxpY2F0aW9uX3VzZXIiLiJpZCIsICJhcHBsaWNhdGlvbl91c2VyIi4ibmFtZSIsICJhcHBsaWNhdGlvbl91c2VyIi4iZW1haWwiLCAiYXBwbGljYXRpb25fdXNlciIuInBhc3N3b3JkIiwgImFwcGxpY2F0aW9uX3VzZXIiLiJ3ZWJzaXRlIiBGUk9NICJhcHBsaWNhdGlvbl91c2VyIiBXSEVSRSAiYXBwbGljYXRpb25fdXNlciIuImlkIiA9ICcxYzllMmNlYzU4MjY0NmEzYTU3MDQ3Y2UzNWQ4Njk1Nic6OnV1aWQgTElNSVQgMjEA
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAAH8ABWlkAAAAQIYAAQAAC4YAEP////8AAG5hbWUAAABAhgACAAAEE///AAAANgAAZW1haWwAAABAhgADAAAEE///AAABAgAAcGFzc3dvcmQAAABAhgAEAAAEE///AAAANgAAd2Vic2l0ZQAAAECGAAUAAAQT//8AAAA2AABEAAAAdwAFAAAAJDFjOWUyY2VjLTU4MjYtNDZhMy1hNTcwLTQ3Y2UzNWQ4Njk1NgAAAApKYW5lIFNtaXRoAAAAFmphbmUuc21pdGhAZXhhbXBsZS5jb20AAAAIc21pdGg1NjcAAAARd3d3LmphbmVzbWl0aC5jb21DAAAADVNFTEVDVCAxAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAN9VUERBVEUgImFwcGxpY2F0aW9uX3VzZXIiIFNFVCAibmFtZSIgPSAnSmFuZSBTbWl0aCcsICJlbWFpbCIgPSAnc21pdGguamFuZUBleGFtcGxlLmNvbScsICJwYXNzd29yZCIgPSAnc21pdGg1NjcnLCAid2Vic2l0ZSIgPSAnd3d3LnNtaXRoamFuZS5jb20nIFdIRVJFICJhcHBsaWNhdGlvbl91c2VyIi4iaWQiID0gJzFjOWUyY2VjNTgyNjQ2YTNhNTcwNDdjZTM1ZDg2OTU2Jzo6dXVpZAA=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: QwAAAA1VUERBVEUgMQBaAAAABUk=
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAACATSFi8=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: Tg==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAAPQADAAB1c2VyAHBvc3RncmVzAGRhdGFiYXNlAHVzZXJzZGIAY2xpZW50X2VuY29kaW5nAFVURjgAAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAABcAAAAKU0NSQU0tU0hBLTI1NgAA
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAADZTQ1JBTS1TSEEtMjU2AAAAACBuLCxuPSxyPVVNajJncy9GN3RwU3JzZVlPOVZ1VFYzRw==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAAFwAAAALcj1VTWoyZ3MvRjd0cFNyc2VZTzlWdVRWM0dzMEVUdUhRbUdoK0xZTmpqUjBPcDg0TU8scz1NbnhSUHpxZ2k0VFV5cklkeUc1Ti9RPT0saT00MDk2
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAAGxjPWJpd3Mscj1VTWoyZ3MvRjd0cFNyc2VZTzlWdVRWM0dzMEVUdUhRbUdoK0xZTmpqUjBPcDg0TU8scD1OUG94UTA2aHllRjNkZXk5aEpWMDA3YXV5cUpxMXR6OEEvY0c2bFdaR1UwPQ==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAADYAAAAMdj1xai9YbzFIWkFtWTBZakFyZmVrcGRIb0VyK082N0hrM2dGR2lIQnE5MWMwPVIAAAAIAAAAAFMAAAAXaW5faG90X3N0YW5kYnkAb2ZmAFMAAAAZaW50ZWdlcl9kYXRldGltZXMAb24AUwAAABVUaW1lWm9uZQBFdGMvVVRDAFMAAAAbSW50ZXJ2YWxTdHlsZQBwb3N0Z3JlcwBTAAAAFGlzX3N1cGVydXNlcgBvbgBTAAAAFmFwcGxpY2F0aW9uX25hbWUAAFMAAAAmZGVmYXVsdF90cmFuc2FjdGlvbl9yZWFkX29ubHkAb2ZmAFMAAAAac2NyYW1faXRlcmF0aW9ucwA0MDk2AFMAAAAXRGF0ZVN0eWxlAElTTywgTURZAFMAAAAjc3RhbmRhcmRfY29uZm9ybWluZ19zdHJpbmdzAG9uAFMAAAAjc2Vzc2lvbl9hdXRob3JpemF0aW9uAHBvc3RncmVzAFMAAAAZY2xpZW50X2VuY29kaW5nAFVURjgAUwAAADJzZXJ2ZXJfdmVyc2lvbgAxNi4wIChEZWJpYW4gMTYuMC0xLnBnZGcxMjArMSkAUwAAABlzZXJ2ZXJfZW5jb2RpbmcAVVRGOABLAAAADAAAAPGIPoxdWgAAAAVJ
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAADBTRUxFQ1Qgc2V0X2NvbmZpZygnVGltZVpvbmUnLCAnVVRDJywgZmFsc2UpAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAACMAAXNldF9jb25maWcAAAAAAAAAAAAAGf///////wAARAAAAA0AAQAAAANVVENDAAAADVNFTEVDVCAxAFMAAAARVGltZVpvbmUAVVRDAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAK9TRUxFQ1QgImFwcGxpY2F0aW9uX3VzZXIiLiJpZCIsICJhcHBsaWNhdGlvbl91c2VyIi4ibmFtZSIsICJhcHBsaWNhdGlvbl91c2VyIi4iZW1haWwiLCAiYXBwbGljYXRpb25fdXNlciIuInBhc3N3b3JkIiwgImFwcGxpY2F0aW9uX3VzZXIiLiJ3ZWJzaXRlIiBGUk9NICJhcHBsaWNhdGlvbl91c2VyIgA=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAAH8ABWlkAAAAQIYAAQAAC4YAEP////8AAG5hbWUAAABAhgACAAAEE///AAAANgAAZW1haWwAAABAhgADAAAEE///AAABAgAAcGFzc3dvcmQAAABAhgAEAAAEE///AAAANgAAd2Vic2l0ZQAAAECGAAUAAAQT//8AAAA2AABEAAAAjgAFAAAAJDU3MzI2ZGU1LThjOTgtNDVjYS04ZTZkLTY5ZTBjY2YwMTk1ZQAAAA5TaGFzaHdhdCBHdXB0YQAAABhzaGFzaHdhdGc3OTgwMkBnbWFpbC5jb20AAAAIc2hhc2h3YXQAAAAiaHR0cHM6Ly9tZWRpdW0uY29tL0BzaGFzaHdhdGc3OTgwMkQAAACLAAUAAAAkN2IxYTFkNGEtYzQxMC00NTFmLThjYTctN2ExMTgwM2Q1NWEwAAAADFBvb3J2YSBEaXdhbgAAABZwb29ydmFkaXdhbjJAZ21haWwuY29tAAAADHBvb3J2YWRpd2FuMgAAAB9odHRwczovL21lZGl1bS5jb20vQHBvb3J2YWRpd2FuRAAAAHQABQAAACQzOTY5ODU5YS0wMzFhLTRmYzMtYjFmOS0yZjYwZmQ2OWFmY2QAAAAISm9obiBEb2UAAAAUam9obi5kb2VAZXhhbXBsZS5jb20AAAALcGFzc3dvcmQxMjMAAAAPd3d3LmpvaG5kb2UuY29tRAAAAHcABQAAACQxYzllMmNlYy01ODI2LTQ2YTMtYTU3MC00N2NlMzVkODY5NTYAAAAKSmFuZSBTbWl0aAAAABZzbWl0aC5qYW5lQGV4YW1wbGUuY29tAAAACHNtaXRoNTY3AAAAEXd3dy5zbWl0aGphbmUuY29tQwAAAA1TRUxFQ1QgNABaAAAABUk=
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAACATSFi8=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: Tg==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAAPQADAAB1c2VyAHBvc3RncmVzAGRhdGFiYXNlAHVzZXJzZGIAY2xpZW50X2VuY29kaW5nAFVURjgAAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAABcAAAAKU0NSQU0tU0hBLTI1NgAA
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAADZTQ1JBTS1TSEEtMjU2AAAAACBuLCxuPSxyPVpneVYyWWh1a2t1amM1dzQvaTR4K3JSNw==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAAFwAAAALcj1aZ3lWMllodWtrdWpjNXc0L2k0eCtyUjdJMjYzMXRJVDFhOGY1M09NNWYxVkcxS1Uscz1NbnhSUHpxZ2k0VFV5cklkeUc1Ti9RPT0saT00MDk2
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAAGxjPWJpd3Mscj1aZ3lWMllodWtrdWpjNXc0L2k0eCtyUjdJMjYzMXRJVDFhOGY1M09NNWYxVkcxS1UscD1UMGlGdXJId2FBM25tWldYNzUwOGxYbFNzWnZmVldBc1ErcHQ5TkJiTFpjPQ==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAADYAAAAMdj0wbXBJbEgyaE5lODZOdlAwbFVhR2VSQ3ZyVmhUd2M2dlM4YXhwNlRTZ1I0PVIAAAAIAAAAAFMAAAAXaW5faG90X3N0YW5kYnkAb2ZmAFMAAAAZaW50ZWdlcl9kYXRldGltZXMAb24AUwAAABVUaW1lWm9uZQBFdGMvVVRDAFMAAAAbSW50ZXJ2YWxTdHlsZQBwb3N0Z3JlcwBTAAAAFGlzX3N1cGVydXNlcgBvbgBTAAAAFmFwcGxpY2F0aW9uX25hbWUAAFMAAAAmZGVmYXVsdF90cmFuc2FjdGlvbl9yZWFkX29ubHkAb2ZmAFMAAAAac2NyYW1faXRlcmF0aW9ucwA0MDk2AFMAAAAXRGF0ZVN0eWxlAElTTywgTURZAFMAAAAjc3RhbmRhcmRfY29uZm9ybWluZ19zdHJpbmdzAG9uAFMAAAAjc2Vzc2lvbl9hdXRob3JpemF0aW9uAHBvc3RncmVzAFMAAAAZY2xpZW50X2VuY29kaW5nAFVURjgAUwAAADJzZXJ2ZXJfdmVyc2lvbgAxNi4wIChEZWJpYW4gMTYuMC0xLnBnZGcxMjArMSkAUwAAABlzZXJ2ZXJfZW5jb2RpbmcAVVRGOABLAAAADAAAAPNq/QLGWgAAAAVJ
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAADBTRUxFQ1Qgc2V0X2NvbmZpZygnVGltZVpvbmUnLCAnVVRDJywgZmFsc2UpAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAACMAAXNldF9jb25maWcAAAAAAAAAAAAAGf///////wAARAAAAA0AAQAAAANVVENDAAAADVNFTEVDVCAxAFMAAAARVGltZVpvbmUAVVRDAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAQFTRUxFQ1QgImFwcGxpY2F0aW9uX3VzZXIiLiJpZCIsICJhcHBsaWNhdGlvbl91c2VyIi4ibmFtZSIsICJhcHBsaWNhdGlvbl91c2VyIi4iZW1haWwiLCAiYXBwbGljYXRpb25fdXNlciIuInBhc3N3b3JkIiwgImFwcGxpY2F0aW9uX3VzZXIiLiJ3ZWJzaXRlIiBGUk9NICJhcHBsaWNhdGlvbl91c2VyIiBXSEVSRSAiYXBwbGljYXRpb25fdXNlciIuImlkIiA9ICcxYzllMmNlYzU4MjY0NmEzYTU3MDQ3Y2UzNWQ4Njk1Nic6OnV1aWQgTElNSVQgMjEA
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAAH8ABWlkAAAAQIYAAQAAC4YAEP////8AAG5hbWUAAABAhgACAAAEE///AAAANgAAZW1haWwAAABAhgADAAAEE///AAABAgAAcGFzc3dvcmQAAABAhgAEAAAEE///AAAANgAAd2Vic2l0ZQAAAECGAAUAAAQT//8AAAA2AABEAAAAdwAFAAAAJDFjOWUyY2VjLTU4MjYtNDZhMy1hNTcwLTQ3Y2UzNWQ4Njk1NgAAAApKYW5lIFNtaXRoAAAAFnNtaXRoLmphbmVAZXhhbXBsZS5jb20AAAAIc21pdGg1NjcAAAARd3d3LnNtaXRoamFuZS5jb21DAAAADVNFTEVDVCAxAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAG9ERUxFVEUgRlJPTSAiYXBwbGljYXRpb25fdXNlciIgV0hFUkUgImFwcGxpY2F0aW9uX3VzZXIiLiJpZCIgSU4gKCcxYzllMmNlYzU4MjY0NmEzYTU3MDQ3Y2UzNWQ4Njk1Nic6OnV1aWQpAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: QwAAAA1ERUxFVEUgMQBaAAAABUk=
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAACATSFi8=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: Tg==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: AAAAPQADAAB1c2VyAHBvc3RncmVzAGRhdGFiYXNlAHVzZXJzZGIAY2xpZW50X2VuY29kaW5nAFVURjgAAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAABcAAAAKU0NSQU0tU0hBLTI1NgAA
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAADZTQ1JBTS1TSEEtMjU2AAAAACBuLCxuPSxyPTBha3ZXWlEwb0pZWEp2dE9TcndUbXc2cg==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAAFwAAAALcj0wYWt2V1pRMG9KWVhKdnRPU3J3VG13NnJMVHNPZnhtd1RSckVlMnJQeDBYbDJmYWoscz1NbnhSUHpxZ2k0VFV5cklkeUc1Ti9RPT0saT00MDk2
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: cAAAAGxjPWJpd3Mscj0wYWt2V1pRMG9KWVhKdnRPU3J3VG13NnJMVHNPZnhtd1RSckVlMnJQeDBYbDJmYWoscD1uNHgrS0dBRTM1bFRYQXFQWE8xN01Ub2tZV3VXUmMrOVd3RXcrL084QVNvPQ==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: UgAAADYAAAAMdj05SER6VHhGMk5wWFFUcWVaR0JUcXArdjRibHNMN0JBSnNNWStDT3p3ck1rPVIAAAAIAAAAAFMAAAAXaW5faG90X3N0YW5kYnkAb2ZmAFMAAAAZaW50ZWdlcl9kYXRldGltZXMAb24AUwAAABVUaW1lWm9uZQBFdGMvVVRDAFMAAAAbSW50ZXJ2YWxTdHlsZQBwb3N0Z3JlcwBTAAAAFGlzX3N1cGVydXNlcgBvbgBTAAAAFmFwcGxpY2F0aW9uX25hbWUAAFMAAAAmZGVmYXVsdF90cmFuc2FjdGlvbl9yZWFkX29ubHkAb2ZmAFMAAAAac2NyYW1faXRlcmF0aW9ucwA0MDk2AFMAAAAXRGF0ZVN0eWxlAElTTywgTURZAFMAAAAjc3RhbmRhcmRfY29uZm9ybWluZ19zdHJpbmdzAG9uAFMAAAAjc2Vzc2lvbl9hdXRob3JpemF0aW9uAHBvc3RncmVzAFMAAAAZY2xpZW50X2VuY29kaW5nAFVURjgAUwAAADJzZXJ2ZXJfdmVyc2lvbgAxNi4wIChEZWJpYW4gMTYuMC0xLnBnZGcxMjArMSkAUwAAABlzZXJ2ZXJfZW5jb2RpbmcAVVRGOABLAAAADAAAAPVwq75xWgAAAAVJ
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAADBTRUxFQ1Qgc2V0X2NvbmZpZygnVGltZVpvbmUnLCAnVVRDJywgZmFsc2UpAA==
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAACMAAXNldF9jb25maWcAAAAAAAAAAAAAGf///////wAARAAAAA0AAQAAAANVVENDAAAADVNFTEVDVCAxAFMAAAARVGltZVpvbmUAVVRDAFoAAAAFSQ==
+---
+version: api.keploy.io/v1beta2
+kind: Postgres
+name: mocks
+spec:
+    metadata: {}
+    postgresrequests:
+        - origin: client
+          message:
+            - type: binary
+              data: UQAAAK9TRUxFQ1QgImFwcGxpY2F0aW9uX3VzZXIiLiJpZCIsICJhcHBsaWNhdGlvbl91c2VyIi4ibmFtZSIsICJhcHBsaWNhdGlvbl91c2VyIi4iZW1haWwiLCAiYXBwbGljYXRpb25fdXNlciIuInBhc3N3b3JkIiwgImFwcGxpY2F0aW9uX3VzZXIiLiJ3ZWJzaXRlIiBGUk9NICJhcHBsaWNhdGlvbl91c2VyIgA=
+    postgresresponses:
+        - origin: server
+          message:
+            - type: binary
+              data: VAAAAH8ABWlkAAAAQIYAAQAAC4YAEP////8AAG5hbWUAAABAhgACAAAEE///AAAANgAAZW1haWwAAABAhgADAAAEE///AAABAgAAcGFzc3dvcmQAAABAhgAEAAAEE///AAAANgAAd2Vic2l0ZQAAAECGAAUAAAQT//8AAAA2AABEAAAAjgAFAAAAJDU3MzI2ZGU1LThjOTgtNDVjYS04ZTZkLTY5ZTBjY2YwMTk1ZQAAAA5TaGFzaHdhdCBHdXB0YQAAABhzaGFzaHdhdGc3OTgwMkBnbWFpbC5jb20AAAAIc2hhc2h3YXQAAAAiaHR0cHM6Ly9tZWRpdW0uY29tL0BzaGFzaHdhdGc3OTgwMkQAAACLAAUAAAAkN2IxYTFkNGEtYzQxMC00NTFmLThjYTctN2ExMTgwM2Q1NWEwAAAADFBvb3J2YSBEaXdhbgAAABZwb29ydmFkaXdhbjJAZ21haWwuY29tAAAADHBvb3J2YWRpd2FuMgAAAB9odHRwczovL21lZGl1bS5jb20vQHBvb3J2YWRpd2FuRAAAAHQABQAAACQzOTY5ODU5YS0wMzFhLTRmYzMtYjFmOS0yZjYwZmQ2OWFmY2QAAAAISm9obiBEb2UAAAAUam9obi5kb2VAZXhhbXBsZS5jb20AAAALcGFzc3dvcmQxMjMAAAAPd3d3LmpvaG5kb2UuY29tQwAAAA1TRUxFQ1QgMwBaAAAABUk=
