@@ -1,0 +1,49 @@
+version: api.keploy.io/v1beta2
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:5000/user
+        header:
+            Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+            Accept-Encoding: gzip, deflate, br
+            Accept-Language: en-US,en;q=0.9
+            Connection: keep-alive
+            Cookie: csrftoken=XL7YzqyAa2jOTBYgHMqwledtHPshXHIh
+            Dnt: "1"
+            Host: localhost:5000
+            Sec-Ch-Ua: '"Microsoft Edge";v="117", "Not;A=Brand";v="8", "Chromium";v="117"'
+            Sec-Ch-Ua-Mobile: ?0
+            Sec-Ch-Ua-Platform: '"Linux"'
+            Sec-Fetch-Dest: document
+            Sec-Fetch-Mode: navigate
+            Sec-Fetch-Site: none
+            Sec-Fetch-User: ?1
+            Upgrade-Insecure-Requests: "1"
+            User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.0.0
+        body: ""
+        body_type: ""
+    resp:
+        status_code: 301
+        header:
+            Content-Type: text/html; charset=utf-8
+            Cross-Origin-Opener-Policy: same-origin
+            Date: Sun, 17 Sep 2023 09:27:24 GMT
+            Location: /user/
+            Referrer-Policy: same-origin
+            Server: WSGIServer/0.2 CPython/3.10.12
+            X-Content-Type-Options: nosniff
+        body: ""
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+    objects: []
+    assertions:
+        noise:
+            - header.Date
+    created: 1694942844

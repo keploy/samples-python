@@ -1,0 +1,44 @@
+version: api.keploy.io/v1beta2
+kind: Http
+name: test-3
+spec:
+    metadata: {}
+    req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/user/d55bc96b-5392-498b-830e-096d5d25dec3/
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Host: 127.0.0.1:8000
+            Postman-Token: 37acf7b5-3fae-480b-8157-0e851500ebff
+            Referer: http://127.0.0.1:8000/user/d55bc96b-5392-498b-830e-096d5d25dec3
+            User-Agent: PostmanRuntime/7.32.3
+        body: ""
+        body_type: ""
+    resp:
+        status_code: 200
+        header:
+            Allow: PUT, DELETE, OPTIONS, GET
+            Content-Length: "152"
+            Content-Type: application/json
+            Cross-Origin-Opener-Policy: same-origin
+            Date: Sun, 17 Sep 2023 07:35:03 GMT
+            Referrer-Policy: same-origin
+            Server: WSGIServer/0.2 CPython/3.10.12
+            Vary: Accept, Cookie
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+        body: '{"id":"d55bc96b-5392-498b-830e-096d5d25dec3","name":"User","email":"user@email.com","password":"useristhepassword","website":"https://medium.com/@user"}'
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+    objects: []
+    assertions:
+        noise:
+            - header.Date
+            - header.Vary
+    created: 1694936157

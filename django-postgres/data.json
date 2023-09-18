@@ -1,0 +1,26 @@
+[
+    {
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "password": "password123",
+        "website": "www.johndoe.com"
+    },
+    {
+        "name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "password": "smith567",
+        "website": "www.janesmith.com"
+    },
+    {
+        "name": "Alice Johnson",
+        "email": "alice.johnson@example.com",
+        "password": "alicePass",
+        "website": "www.alicejohnson.com"
+    },
+    {
+        "name": "Bob Brown",
+        "email": "bob.brown@example.com",
+        "password": "brownPass789",
+        "website": "www.bobbrown.com"
+    }
+]

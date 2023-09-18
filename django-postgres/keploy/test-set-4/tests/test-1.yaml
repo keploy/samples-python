@@ -1,0 +1,47 @@
+version: api.keploy.io/v1beta2
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/user/7b1a1d4a-c410-451f-8ca7-7a11803d55a0
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "141"
+            Content-Type: application/json
+            Host: 127.0.0.1:8000
+            Postman-Token: 1c961bdf-6a9a-48e1-bdaa-0bb5dbc2cb2d
+            User-Agent: PostmanRuntime/7.32.3
+        body: |-
+            {
+                "name": "Shashwat Gupta",
+                "email": "shashwat.gupta@keploy.io",
+                "password": "shashwat",
+                "website": "https://www.keploy.io"
+            }
+        body_type: ""
+    resp:
+        status_code: 301
+        header:
+            Content-Type: text/html; charset=utf-8
+            Cross-Origin-Opener-Policy: same-origin
+            Date: Sun, 17 Sep 2023 08:39:58 GMT
+            Location: /user/7b1a1d4a-c410-451f-8ca7-7a11803d55a0/
+            Referrer-Policy: same-origin
+            Server: WSGIServer/0.2 CPython/3.10.12
+            X-Content-Type-Options: nosniff
+        body: ""
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+    objects: []
+    assertions:
+        noise:
+            - header.Date
+    created: 1694939998
