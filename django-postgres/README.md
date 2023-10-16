@@ -1,6 +1,6 @@
 # User Data CRUD Application
 
-A sample user data CRUD app to test Keploy integration capabilities using [Django](https://www.djangoproject.com/) and PostgreSQL. <br>
+A sample user data CRUD app to test Keploy integration capabilities using [Django](https://www.djangoproject.com/) and [PostgreSQL](https://www.postgresql.org/). <br>
 Make the following requests to the respective endpoints -  
 
 1. `GET /user/` - To get all the data at once.
@@ -138,18 +138,4 @@ Now let's run the application in test mode.
 sudo -E keploy test -c "python3 manage.py runserver" --delay 10
 ```
 
-So no need to setup fake database/apis like Postgres or write mocks for them. Keploy automatically mocks them and, **The application thinks it's talking to Postgres 😄**
-
-# Using Docker
-
-Keploy can be used on Linux & Windows through Docker, and on MacOS by the help of [Colima](https://docs.keploy.io/docs/server/macos/installation/#using-colima)
-
-## Create Keploy Alias
-
-To establish a network for your application using Keploy on Docker, follow these steps.
-
-If you're using a docker-compose network, replace keploy-network with your app's `docker_compose_network_name` below.
-
-```shell
-alias keploy='sudo docker run --pull always --name keploy-v2 -p 16789:16789 --privileged --pid=host -it -v "$(pwd)":/files -v /sys/fs/cgroup:/sys/fs/cgroup -v /sys/kernel/debug:/sys/kernel/debug -v /sys/fs/bpf:/sys/fs/bpf -v /var/run/docker.sock:/var/run/docker.sock --rm ghcr.io/keploy/keploy'
-```
+So, no need to setup fake database/apis like Postgres or write mocks for them. Keploy automatically mocks them and, **The application thinks it's talking to Postgres 😄**

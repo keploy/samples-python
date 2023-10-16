@@ -38,13 +38,16 @@ def get_update_deleteUser(request, uuid: uuid4):
             return JsonResponse({"message": "User Deleted!!"})
         except Exception as e:
             return JsonResponse({"message": str(e)[2:-2]})
-        
+
+
 @api_view(["GET", "POST"])
 def getAll_createUser(request):
 
     if request.method == "GET":
         try:
             data = UserSerializer(User.objects.all(), many=True)
+            if data.data == []:
+                return JsonResponse({"message": "No Users Found!!"})
             return Response(data.data)
         except Exception as e:  
             return JsonResponse({"message": str(e)})
