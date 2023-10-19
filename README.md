@@ -13,11 +13,11 @@ This repo contains the samples for [Keploy's](https://keploy.io) Python-based Ap
 
 ## Sample Apps with Keploy
 
-1. [Flask-Mongo](https://github.com/keploy/samples-python/tree/main/flask-mongo)
+1. [Flask-Mongo](https://github.com/keploy/samples-python/tree/main/flask-mongo) - This application is a simple student management API built using Python's Flask framework and MongoDB for data storage. It allows you to perform basic CRUD (Create, Read, Update, Delete) operations on student records. The API supports CORS (Cross-Origin Resource Sharing) to facilitate cross-domain requests.
 
-2. [Django-Postgres](https://github.com/keploy/samples-python/tree/main/django-postgres)
+2. [Django-Postgres](https://github.com/keploy/samples-python/tree/main/django-postgres) - This is an application to perform basic CRUD (Create, Read, Update, Delete) operations on user records built using Python's Django framework and PostgreSQL for data storage.
 
-3. [FastAPI-Postgres](https://github.com/keploy/samples-python/tree/main/fastapi-postgres)
+3. [FastAPI-Postgres](https://github.com/keploy/samples-python/tree/main/fastapi-postgres) - This application is a student management API built using Python's FastAPI and PostgreSQL for data storage. It allows you to perform basic CRUD (Create, Read, Update, Delete) operations on student data.
 
 ## Community Support ❤️
 
