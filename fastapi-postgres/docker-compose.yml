@@ -1,0 +1,13 @@
+version: '3'
+services:
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: studentdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"  # Map the PostgreSQL port to the host machine
+    volumes: 
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
