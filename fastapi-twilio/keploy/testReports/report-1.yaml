@@ -1,0 +1,284 @@
+version: api.keploy.io/v1beta1
+name: report-1
+status: PASSED
+success: 3
+failure: 0
+total: 3
+tests:
+    - kind: Http
+      name: report-1
+      status: PASSED
+      started: 1699954104
+      completed: 1699954106
+      test_case_path: /home/shashwat/test/python-twilio/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-1
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/send-sms/
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "75"
+            Content-Type: application/json
+            Host: 127.0.0.1:8000
+            Postman-Token: c871b715-7aae-46b6-8e0d-1341aa426624
+            User-Agent: PostmanRuntime/7.34.0
+        body: |-
+            {
+                "Body": "Test, testtt, testttttttssss :)",
+                "To": "+91700004379"
+            }
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+      resp:
+        status_code: 200
+        header:
+            Content-Length: "73"
+            Content-Type: application/json
+            Date: Tue, 14 Nov 2023 09:26:25 GMT
+            Server: uvicorn
+        body: '{"message":"Failed to send SMS. Please check the provided phone number."}'
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        header.Date: []
+      result:
+        status_code:
+            normal: true
+            expected: 200
+            actual: 200
+        headers_result:
+            - normal: true
+              expected:
+                key: Content-Length
+                value:
+                    - "73"
+              actual:
+                key: Content-Length
+                value:
+                    - "73"
+            - normal: true
+              expected:
+                key: Content-Type
+                value:
+                    - application/json
+              actual:
+                key: Content-Type
+                value:
+                    - application/json
+            - normal: true
+              expected:
+                key: Date
+                value:
+                    - Tue, 14 Nov 2023 09:26:25 GMT
+              actual:
+                key: Date
+                value:
+                    - Tue, 14 Nov 2023 09:28:24 GMT
+            - normal: true
+              expected:
+                key: Server
+                value:
+                    - uvicorn
+              actual:
+                key: Server
+                value:
+                    - uvicorn
+        body_result:
+            - normal: true
+              type: JSON
+              expected: '{"message":"Failed to send SMS. Please check the provided phone number."}'
+              actual: '{"message":"Failed to send SMS. Please check the provided phone number."}'
+        dep_result: []
+    - kind: Http
+      name: report-1
+      status: PASSED
+      started: 1699954106
+      completed: 1699954107
+      test_case_path: /home/shashwat/test/python-twilio/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-2
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/send-sms/
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "76"
+            Content-Type: application/json
+            Host: 127.0.0.1:8000
+            Postman-Token: a3780363-733f-4c88-915b-d4d69384822c
+            User-Agent: PostmanRuntime/7.34.0
+        body: |-
+            {
+                "Body": "Test, testtt, testttttttssss :)",
+                "To": "+917000043797"
+            }
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+      resp:
+        status_code: 200
+        header:
+            Content-Length: "36"
+            Content-Type: application/json
+            Date: Tue, 14 Nov 2023 09:26:33 GMT
+            Server: uvicorn
+        body: '{"message":"SMS sent successfully!"}'
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        header.Date: []
+      result:
+        status_code:
+            normal: true
+            expected: 200
+            actual: 200
+        headers_result:
+            - normal: true
+              expected:
+                key: Content-Type
+                value:
+                    - application/json
+              actual:
+                key: Content-Type
+                value:
+                    - application/json
+            - normal: true
+              expected:
+                key: Date
+                value:
+                    - Tue, 14 Nov 2023 09:26:33 GMT
+              actual:
+                key: Date
+                value:
+                    - Tue, 14 Nov 2023 09:28:26 GMT
+            - normal: true
+              expected:
+                key: Server
+                value:
+                    - uvicorn
+              actual:
+                key: Server
+                value:
+                    - uvicorn
+            - normal: true
+              expected:
+                key: Content-Length
+                value:
+                    - "36"
+              actual:
+                key: Content-Length
+                value:
+                    - "36"
+        body_result:
+            - normal: true
+              type: JSON
+              expected: '{"message":"SMS sent successfully!"}'
+              actual: '{"message":"SMS sent successfully!"}'
+        dep_result: []
+    - kind: Http
+      name: report-1
+      status: PASSED
+      started: 1699954107
+      completed: 1699954108
+      test_case_path: /home/shashwat/test/python-twilio/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-3
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/send-sms/
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "74"
+            Content-Type: application/json
+            Host: 127.0.0.1:8000
+            Postman-Token: 5e8c1a07-c35d-4816-8b32-c6bcfd28d94d
+            User-Agent: PostmanRuntime/7.34.0
+        body: |-
+            {
+                "Body": "Test, testtt, testttttttssss :)",
+                "To": "+9170000437"
+            }
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+      resp:
+        status_code: 200
+        header:
+            Content-Length: "73"
+            Content-Type: application/json
+            Date: Tue, 14 Nov 2023 09:27:18 GMT
+            Server: uvicorn
+        body: '{"message":"Failed to send SMS. Please check the provided phone number."}'
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        header.Date: []
+      result:
+        status_code:
+            normal: true
+            expected: 200
+            actual: 200
+        headers_result:
+            - normal: true
+              expected:
+                key: Content-Type
+                value:
+                    - application/json
+              actual:
+                key: Content-Type
+                value:
+                    - application/json
+            - normal: true
+              expected:
+                key: Date
+                value:
+                    - Tue, 14 Nov 2023 09:27:18 GMT
+              actual:
+                key: Date
+                value:
+                    - Tue, 14 Nov 2023 09:28:27 GMT
+            - normal: true
+              expected:
+                key: Server
+                value:
+                    - uvicorn
+              actual:
+                key: Server
+                value:
+                    - uvicorn
+            - normal: true
+              expected:
+                key: Content-Length
+                value:
+                    - "73"
+              actual:
+                key: Content-Length
+                value:
+                    - "73"
+        body_result:
+            - normal: true
+              type: JSON
+              expected: '{"message":"Failed to send SMS. Please check the provided phone number."}'
+              actual: '{"message":"Failed to send SMS. Please check the provided phone number."}'
+        dep_result: []
+test_set: test-set-0

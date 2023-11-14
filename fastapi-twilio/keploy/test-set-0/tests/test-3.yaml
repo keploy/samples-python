@@ -1,0 +1,58 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-3
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/send-sms/
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "74"
+            Content-Type: application/json
+            Host: 127.0.0.1:8000
+            Postman-Token: 5e8c1a07-c35d-4816-8b32-c6bcfd28d94d
+            User-Agent: PostmanRuntime/7.34.0
+        body: |-
+            {
+                "Body": "Test, testtt, testttttttssss :)",
+                "To": "+9170000437"
+            }
+        body_type: ""
+        timestamp: 2023-11-14T14:57:19.642139975+05:30
+    resp:
+        status_code: 200
+        header:
+            Content-Length: "73"
+            Content-Type: application/json
+            Date: Tue, 14 Nov 2023 09:27:18 GMT
+            Server: uvicorn
+        body: '{"message":"Failed to send SMS. Please check the provided phone number."}'
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2023-11-14T14:57:23.973137683+05:30
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1699954043
+curl: |-
+    curl --request POST \
+      --url http://127.0.0.1:8000/send-sms/ \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 5e8c1a07-c35d-4816-8b32-c6bcfd28d94d' \
+      --header 'Host: 127.0.0.1:8000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.34.0' \
+      --data '{
+        "Body": "Test, testtt, testttttttssss :)",
+        "To": "+9170000437"
+    }'
