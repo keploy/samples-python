@@ -19,6 +19,8 @@ This repo contains the samples for [Keploy's](https://keploy.io) Python-based Ap
 
 3. [FastAPI-Postgres](https://github.com/keploy/samples-python/tree/main/fastapi-postgres) - This application is a student management API built using Python's FastAPI and PostgreSQL for data storage. It allows you to perform basic CRUD (Create, Read, Update, Delete) operations on student data.
 
+4. [FastAPI-Twilio](https://github.com/keploy/samples-python/tree/main/fastapi-twilio) - This application is a SMS sending API built using Python's FastAPI and Twilio for their SMS sharing service.
+
 ## Community Support ❤️
 
 We'd love to collaborate with you to make Keploy great. To get started:
