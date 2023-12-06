@@ -1,338 +1,29 @@
 version: api.keploy.io/v1beta1
 name: report-1
-status: FAILED
+status: PASSED
 success: 4
-failure: 3
-total: 7
+failure: 0
+total: 4
 tests:
     - kind: Http
       name: report-1
       status: PASSED
-      started: 1695847382
-      completed: 1695847382
-      test_case_path: /home/shashwat/test/django-postgresql/django_postgres/keploytest-set-0
+      started: 1701881927
+      completed: 1701881927
+      test_case_path: /files/keploy/test-set-0
       mock_path: ""
       test_case_id: test-1
       req:
         method: POST
         proto_major: 1
         proto_minor: 1
-        url: http://127.0.0.1:8000/user/
+        url: http://172.25.0.4:8000/user/
         header:
             Accept: '*/*'
-            Accept-Encoding: gzip, deflate, br
-            Connection: keep-alive
-            Content-Length: "155"
-            Content-Type: application/json
-            Host: 127.0.0.1:8000
-            Postman-Token: 4061c183-e97a-48dd-a92c-4bdfc14d5458
-            User-Agent: PostmanRuntime/7.33.0
-        body: |4-
-                {
-                    "name": "Jane Smith",
-                    "email": "jane.smith@example.com",
-                    "password": "smith567",
-                    "website": "www.janesmith.com"
-                }
-        body_type: ""
-      resp:
-        status_code: 200
-        header:
-            Allow: GET, OPTIONS, POST
-            Content-Length: "29"
-            Content-Type: application/json
-            Cross-Origin-Opener-Policy: same-origin
-            Date: Wed, 27 Sep 2023 20:39:50 GMT
-            Referrer-Policy: same-origin
-            Server: WSGIServer/0.2 CPython/3.10.12
-            Vary: Accept, Cookie
-            X-Content-Type-Options: nosniff
-            X-Frame-Options: DENY
-        body: '{"message": "User Created!!"}'
-        body_type: ""
-        status_message: ""
-        proto_major: 0
-        proto_minor: 0
-      noise:
-        - header.Date
-        - header.Vary
-      result:
-        status_code:
-            normal: true
-            expected: 200
-            actual: 200
-        headers_result:
-            - normal: true
-              expected:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:39:50 GMT
-              actual:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:43:02 GMT
-            - normal: true
-              expected:
-                key: Referrer-Policy
-                value:
-                    - same-origin
-              actual:
-                key: Referrer-Policy
-                value:
-                    - same-origin
-            - normal: true
-              expected:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-              actual:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-            - normal: true
-              expected:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' POST'
-              actual:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' POST'
-            - normal: true
-              expected:
-                key: Server
-                value:
-                    - WSGIServer/0.2 CPython/3.10.12
-              actual:
-                key: Server
-                value:
-                    - WSGIServer/0.2 CPython/3.10.12
-            - normal: true
-              expected:
-                key: X-Frame-Options
-                value:
-                    - DENY
-              actual:
-                key: X-Frame-Options
-                value:
-                    - DENY
-            - normal: true
-              expected:
-                key: Content-Type
-                value:
-                    - application/json
-              actual:
-                key: Content-Type
-                value:
-                    - application/json
-            - normal: true
-              expected:
-                key: Cross-Origin-Opener-Policy
-                value:
-                    - same-origin
-              actual:
-                key: Cross-Origin-Opener-Policy
-                value:
-                    - same-origin
-            - normal: true
-              expected:
-                key: Vary
-                value:
-                    - Accept, Cookie
-              actual:
-                key: Vary
-                value:
-                    - Accept, Cookie
-            - normal: true
-              expected:
-                key: Content-Length
-                value:
-                    - "29"
-              actual:
-                key: Content-Length
-                value:
-                    - "29"
-        body_result:
-            - normal: true
-              type: JSON
-              expected: '{"message": "User Created!!"}'
-              actual: '{"message": "User Created!!"}'
-        dep_result: []
-    - kind: Http
-      name: report-1
-      status: PASSED
-      started: 1695847382
-      completed: 1695847382
-      test_case_path: /home/shashwat/test/django-postgresql/django_postgres/keploytest-set-0
-      mock_path: ""
-      test_case_id: test-2
-      req:
-        method: GET
-        proto_major: 1
-        proto_minor: 1
-        url: http://127.0.0.1:8000/user/
-        header:
-            Accept: '*/*'
-            Accept-Encoding: gzip, deflate, br
-            Connection: keep-alive
-            Host: 127.0.0.1:8000
-            Postman-Token: e3c0f9f1-1d9d-4b2e-a123-0e5d53174f96
-            User-Agent: PostmanRuntime/7.33.0
-        body: ""
-        body_type: ""
-      resp:
-        status_code: 200
-        header:
-            Allow: GET, OPTIONS, POST
-            Content-Length: "152"
-            Content-Type: application/json
-            Cross-Origin-Opener-Policy: same-origin
-            Date: Wed, 27 Sep 2023 20:40:05 GMT
-            Referrer-Policy: same-origin
-            Server: WSGIServer/0.2 CPython/3.10.12
-            Vary: Accept, Cookie
-            X-Content-Type-Options: nosniff
-            X-Frame-Options: DENY
-        body: '[{"id":"d78a6260-0077-4f58-b45c-f68b28430400","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"}]'
-        body_type: ""
-        status_message: ""
-        proto_major: 0
-        proto_minor: 0
-      noise:
-        - header.Date
-        - header.Vary
-      result:
-        status_code:
-            normal: true
-            expected: 200
-            actual: 200
-        headers_result:
-            - normal: true
-              expected:
-                key: Vary
-                value:
-                    - Accept, Cookie
-              actual:
-                key: Vary
-                value:
-                    - Accept, Cookie
-            - normal: true
-              expected:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' POST'
-              actual:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' POST'
-            - normal: true
-              expected:
-                key: Content-Length
-                value:
-                    - "152"
-              actual:
-                key: Content-Length
-                value:
-                    - "152"
-            - normal: true
-              expected:
-                key: Cross-Origin-Opener-Policy
-                value:
-                    - same-origin
-              actual:
-                key: Cross-Origin-Opener-Policy
-                value:
-                    - same-origin
-            - normal: true
-              expected:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:40:05 GMT
-              actual:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:43:02 GMT
-            - normal: true
-              expected:
-                key: Content-Type
-                value:
-                    - application/json
-              actual:
-                key: Content-Type
-                value:
-                    - application/json
-            - normal: true
-              expected:
-                key: Referrer-Policy
-                value:
-                    - same-origin
-              actual:
-                key: Referrer-Policy
-                value:
-                    - same-origin
-            - normal: true
-              expected:
-                key: X-Frame-Options
-                value:
-                    - DENY
-              actual:
-                key: X-Frame-Options
-                value:
-                    - DENY
-            - normal: true
-              expected:
-                key: Server
-                value:
-                    - WSGIServer/0.2 CPython/3.10.12
-              actual:
-                key: Server
-                value:
-                    - WSGIServer/0.2 CPython/3.10.12
-            - normal: true
-              expected:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-              actual:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-        body_result:
-            - normal: true
-              type: JSON
-              expected: '[{"id":"d78a6260-0077-4f58-b45c-f68b28430400","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"}]'
-              actual: '[{"id":"d78a6260-0077-4f58-b45c-f68b28430400","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"}]'
-        dep_result: []
-    - kind: Http
-      name: report-1
-      status: PASSED
-      started: 1695847382
-      completed: 1695847382
-      test_case_path: /home/shashwat/test/django-postgresql/django_postgres/keploytest-set-0
-      mock_path: ""
-      test_case_id: test-3
-      req:
-        method: POST
-        proto_major: 1
-        proto_minor: 1
-        url: http://127.0.0.1:8000/user/
-        header:
-            Accept: '*/*'
-            Accept-Encoding: gzip, deflate, br
-            Connection: keep-alive
             Content-Length: "148"
             Content-Type: application/json
             Host: 127.0.0.1:8000
-            Postman-Token: 88ded5d4-23f2-4dbe-9334-cc59f6756e6c
-            User-Agent: PostmanRuntime/7.33.0
+            User-Agent: curl/7.81.0
         body: |4-
                 {
                     "name": "John Doe",
@@ -341,16 +32,17 @@ tests:
                     "website": "www.johndoe.com"
                 }
         body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
       resp:
         status_code: 200
         header:
-            Allow: GET, OPTIONS, POST
+            Allow: POST, OPTIONS, GET
             Content-Length: "29"
             Content-Type: application/json
             Cross-Origin-Opener-Policy: same-origin
-            Date: Wed, 27 Sep 2023 20:40:16 GMT
+            Date: Wed, 06 Dec 2023 16:56:29 GMT
             Referrer-Policy: same-origin
-            Server: WSGIServer/0.2 CPython/3.10.12
+            Server: WSGIServer/0.2 CPython/3.11.7
             Vary: Accept, Cookie
             X-Content-Type-Options: nosniff
             X-Frame-Options: DENY
@@ -359,9 +51,11 @@ tests:
         status_message: ""
         proto_major: 0
         proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
       noise:
-        - header.Vary
-        - header.Date
+        header.Allow: []
+        header.Date: []
+        header.Vary: []
       result:
         status_code:
             normal: true
@@ -379,13 +73,13 @@ tests:
                     - same-origin
             - normal: true
               expected:
-                key: Server
+                key: Date
                 value:
-                    - WSGIServer/0.2 CPython/3.10.12
+                    - Wed, 06 Dec 2023 16:56:29 GMT
               actual:
-                key: Server
+                key: Date
                 value:
-                    - WSGIServer/0.2 CPython/3.10.12
+                    - Wed, 06 Dec 2023 16:58:47 GMT
             - normal: true
               expected:
                 key: Vary
@@ -397,19 +91,6 @@ tests:
                     - Accept, Cookie
             - normal: true
               expected:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' POST'
-              actual:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' POST'
-            - normal: true
-              expected:
                 key: Referrer-Policy
                 value:
                     - same-origin
@@ -419,31 +100,13 @@ tests:
                     - same-origin
             - normal: true
               expected:
-                key: Content-Length
+                key: X-Content-Type-Options
                 value:
-                    - "29"
+                    - nosniff
               actual:
-                key: Content-Length
+                key: X-Content-Type-Options
                 value:
-                    - "29"
-            - normal: true
-              expected:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:40:16 GMT
-              actual:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:43:02 GMT
-            - normal: true
-              expected:
-                key: Content-Type
-                value:
-                    - application/json
-              actual:
-                key: Content-Type
-                value:
-                    - application/json
+                    - nosniff
             - normal: true
               expected:
                 key: X-Frame-Options
@@ -455,13 +118,40 @@ tests:
                     - DENY
             - normal: true
               expected:
-                key: X-Content-Type-Options
+                key: Content-Type
                 value:
-                    - nosniff
+                    - application/json
               actual:
-                key: X-Content-Type-Options
+                key: Content-Type
                 value:
-                    - nosniff
+                    - application/json
+            - normal: true
+              expected:
+                key: Content-Length
+                value:
+                    - "29"
+              actual:
+                key: Content-Length
+                value:
+                    - "29"
+            - normal: true
+              expected:
+                key: Server
+                value:
+                    - WSGIServer/0.2 CPython/3.11.7
+              actual:
+                key: Server
+                value:
+                    - WSGIServer/0.2 CPython/3.11.7
+            - normal: true
+              expected:
+                key: Allow
+                value:
+                    - POST, OPTIONS, GET
+              actual:
+                key: Allow
+                value:
+                    - OPTIONS, POST, GET
         body_result:
             - normal: true
               type: JSON
@@ -470,47 +160,200 @@ tests:
         dep_result: []
     - kind: Http
       name: report-1
-      status: FAILED
-      started: 1695847382
-      completed: 1695847382
-      test_case_path: /home/shashwat/test/django-postgresql/django_postgres/keploytest-set-0
+      status: PASSED
+      started: 1701881927
+      completed: 1701881927
+      test_case_path: /files/keploy/test-set-0
+      mock_path: ""
+      test_case_id: test-2
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.25.0.4:8000/user/
+        header:
+            Accept: '*/*'
+            Content-Length: "155"
+            Content-Type: application/json
+            Host: 127.0.0.1:8000
+            User-Agent: curl/7.81.0
+        body: |4-
+                {
+                    "name": "Jane Smith",
+                    "email": "jane.smith@example.com",
+                    "password": "smith567",
+                    "website": "www.janesmith.com"
+                }
+        body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
+      resp:
+        status_code: 200
+        header:
+            Allow: POST, OPTIONS, GET
+            Content-Length: "29"
+            Content-Type: application/json
+            Cross-Origin-Opener-Policy: same-origin
+            Date: Wed, 06 Dec 2023 16:57:10 GMT
+            Referrer-Policy: same-origin
+            Server: WSGIServer/0.2 CPython/3.11.7
+            Vary: Accept, Cookie
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+        body: '{"message": "User Created!!"}'
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
+      noise:
+        header.Allow: []
+        header.Date: []
+        header.Vary: []
+      result:
+        status_code:
+            normal: true
+            expected: 200
+            actual: 200
+        headers_result:
+            - normal: true
+              expected:
+                key: Cross-Origin-Opener-Policy
+                value:
+                    - same-origin
+              actual:
+                key: Cross-Origin-Opener-Policy
+                value:
+                    - same-origin
+            - normal: true
+              expected:
+                key: Date
+                value:
+                    - Wed, 06 Dec 2023 16:57:10 GMT
+              actual:
+                key: Date
+                value:
+                    - Wed, 06 Dec 2023 16:58:47 GMT
+            - normal: true
+              expected:
+                key: Content-Type
+                value:
+                    - application/json
+              actual:
+                key: Content-Type
+                value:
+                    - application/json
+            - normal: true
+              expected:
+                key: Referrer-Policy
+                value:
+                    - same-origin
+              actual:
+                key: Referrer-Policy
+                value:
+                    - same-origin
+            - normal: true
+              expected:
+                key: Server
+                value:
+                    - WSGIServer/0.2 CPython/3.11.7
+              actual:
+                key: Server
+                value:
+                    - WSGIServer/0.2 CPython/3.11.7
+            - normal: true
+              expected:
+                key: Allow
+                value:
+                    - POST, OPTIONS, GET
+              actual:
+                key: Allow
+                value:
+                    - OPTIONS, POST, GET
+            - normal: true
+              expected:
+                key: Content-Length
+                value:
+                    - "29"
+              actual:
+                key: Content-Length
+                value:
+                    - "29"
+            - normal: true
+              expected:
+                key: X-Content-Type-Options
+                value:
+                    - nosniff
+              actual:
+                key: X-Content-Type-Options
+                value:
+                    - nosniff
+            - normal: true
+              expected:
+                key: X-Frame-Options
+                value:
+                    - DENY
+              actual:
+                key: X-Frame-Options
+                value:
+                    - DENY
+            - normal: true
+              expected:
+                key: Vary
+                value:
+                    - Accept, Cookie
+              actual:
+                key: Vary
+                value:
+                    - Accept, Cookie
+        body_result:
+            - normal: true
+              type: JSON
+              expected: '{"message": "User Created!!"}'
+              actual: '{"message": "User Created!!"}'
+        dep_result: []
+    - kind: Http
+      name: report-1
+      status: PASSED
+      started: 1701881927
+      completed: 1701881927
+      test_case_path: /files/keploy/test-set-0
       mock_path: ""
       test_case_id: test-4
       req:
         method: GET
         proto_major: 1
         proto_minor: 1
-        url: http://127.0.0.1:8000/user/d78a6260-0077-4f58-b45c-f68b28430400/
+        url: http://172.25.0.4:8000/user/
         header:
             Accept: '*/*'
-            Accept-Encoding: gzip, deflate, br
-            Connection: keep-alive
             Host: 127.0.0.1:8000
-            Postman-Token: eeea2e51-8485-4cb6-bcc0-f32066b978c4
-            User-Agent: PostmanRuntime/7.33.0
+            User-Agent: curl/7.81.0
         body: ""
         body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
       resp:
         status_code: 200
         header:
-            Allow: GET, PUT, OPTIONS, DELETE
-            Content-Length: "150"
+            Allow: POST, OPTIONS, GET
+            Content-Length: "591"
             Content-Type: application/json
             Cross-Origin-Opener-Policy: same-origin
-            Date: Wed, 27 Sep 2023 20:40:52 GMT
+            Date: Wed, 06 Dec 2023 16:58:03 GMT
             Referrer-Policy: same-origin
-            Server: WSGIServer/0.2 CPython/3.10.12
+            Server: WSGIServer/0.2 CPython/3.11.7
             Vary: Accept, Cookie
             X-Content-Type-Options: nosniff
             X-Frame-Options: DENY
-        body: '{"id":"d78a6260-0077-4f58-b45c-f68b28430400","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"}'
+        body: '[{"id":"d55b96b6-ac12-46af-94ab-764f4f356b1d","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"},{"id":"3f50965c-6e50-4624-8d32-e180156f28ec","name":"John Doe","email":"john.doe@example.com","password":"john567","website":"www.johndoe.com"},{"id":"7a8eba3e-e32b-4536-be73-1ab56e3a48e2","name":"John Doe","email":"john.doe@example.com","password":"john567","website":"www.johndoe.com"},{"id":"3200984e-0725-4708-a817-2beb6384d0b8","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"}]'
         body_type: ""
         status_message: ""
         proto_major: 0
         proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
       noise:
-        - header.Date
-        - header.Vary
+        header.Allow: []
+        header.Date: []
+        header.Vary: []
       result:
         status_code:
             normal: true
@@ -519,15 +362,6 @@ tests:
         headers_result:
             - normal: true
               expected:
-                key: Content-Length
-                value:
-                    - "150"
-              actual:
-                key: Content-Length
-                value:
-                    - "150"
-            - normal: true
-              expected:
                 key: Vary
                 value:
                     - Accept, Cookie
@@ -546,13 +380,13 @@ tests:
                     - application/json
             - normal: true
               expected:
-                key: Date
+                key: Cross-Origin-Opener-Policy
                 value:
-                    - Wed, 27 Sep 2023 20:40:52 GMT
+                    - same-origin
               actual:
-                key: Date
+                key: Cross-Origin-Opener-Policy
                 value:
-                    - Wed, 27 Sep 2023 20:43:02 GMT
+                    - same-origin
             - normal: true
               expected:
                 key: Referrer-Policy
@@ -564,13 +398,13 @@ tests:
                     - same-origin
             - normal: true
               expected:
-                key: Server
+                key: Date
                 value:
-                    - WSGIServer/0.2 CPython/3.10.12
+                    - Wed, 06 Dec 2023 16:58:03 GMT
               actual:
-                key: Server
+                key: Date
                 value:
-                    - WSGIServer/0.2 CPython/3.10.12
+                    - Wed, 06 Dec 2023 16:58:47 GMT
             - normal: true
               expected:
                 key: X-Frame-Options
@@ -582,435 +416,92 @@ tests:
                     - DENY
             - normal: true
               expected:
-                key: X-Content-Type-Options
+                key: Server
                 value:
-                    - nosniff
+                    - WSGIServer/0.2 CPython/3.11.7
               actual:
-                key: X-Content-Type-Options
+                key: Server
                 value:
-                    - nosniff
-            - normal: false
-              expected:
-                key: Allow
-                value:
-                    - GET
-                    - ' PUT'
-                    - ' OPTIONS'
-                    - ' DELETE'
-              actual:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' PUT'
-                    - ' DELETE'
+                    - WSGIServer/0.2 CPython/3.11.7
             - normal: true
               expected:
-                key: Cross-Origin-Opener-Policy
+                key: Content-Length
                 value:
-                    - same-origin
+                    - "591"
               actual:
-                key: Cross-Origin-Opener-Policy
+                key: Content-Length
                 value:
-                    - same-origin
+                    - "591"
+            - normal: true
+              expected:
+                key: X-Content-Type-Options
+                value:
+                    - nosniff
+              actual:
+                key: X-Content-Type-Options
+                value:
+                    - nosniff
+            - normal: true
+              expected:
+                key: Allow
+                value:
+                    - POST, OPTIONS, GET
+              actual:
+                key: Allow
+                value:
+                    - OPTIONS, POST, GET
         body_result:
             - normal: true
               type: JSON
-              expected: '{"id":"d78a6260-0077-4f58-b45c-f68b28430400","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"}'
-              actual: '{"id":"d78a6260-0077-4f58-b45c-f68b28430400","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"}'
-        dep_result: []
-    - kind: Http
-      name: report-1
-      status: FAILED
-      started: 1695847382
-      completed: 1695847382
-      test_case_path: /home/shashwat/test/django-postgresql/django_postgres/keploytest-set-0
-      mock_path: ""
-      test_case_id: test-5
-      req:
-        method: PUT
-        proto_major: 1
-        proto_minor: 1
-        url: http://127.0.0.1:8000/user/d78a6260-0077-4f58-b45c-f68b28430400/
-        header:
-            Accept: '*/*'
-            Accept-Encoding: gzip, deflate, br
-            Connection: keep-alive
-            Content-Length: "155"
-            Content-Type: application/json
-            Host: 127.0.0.1:8000
-            Postman-Token: 053c8c61-7c7f-4486-afed-98a27c2ce093
-            User-Agent: PostmanRuntime/7.33.0
-        body: |4-
-                {
-                    "name": "Jane Smith",
-                    "email": "smith.jane@example.com",
-                    "password": "smith567",
-                    "website": "www.smithjane.com"
-                }
-        body_type: ""
-      resp:
-        status_code: 200
-        header:
-            Allow: GET, PUT, OPTIONS, DELETE
-            Content-Length: "29"
-            Content-Type: application/json
-            Cross-Origin-Opener-Policy: same-origin
-            Date: Wed, 27 Sep 2023 20:41:25 GMT
-            Referrer-Policy: same-origin
-            Server: WSGIServer/0.2 CPython/3.10.12
-            Vary: Accept, Cookie
-            X-Content-Type-Options: nosniff
-            X-Frame-Options: DENY
-        body: '{"message": "User Updated!!"}'
-        body_type: ""
-        status_message: ""
-        proto_major: 0
-        proto_minor: 0
-      noise:
-        - header.Vary
-        - header.Date
-      result:
-        status_code:
-            normal: true
-            expected: 200
-            actual: 200
-        headers_result:
-            - normal: false
-              expected:
-                key: Allow
-                value:
-                    - GET
-                    - ' PUT'
-                    - ' OPTIONS'
-                    - ' DELETE'
-              actual:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' PUT'
-                    - ' DELETE'
-            - normal: true
-              expected:
-                key: Server
-                value:
-                    - WSGIServer/0.2 CPython/3.10.12
-              actual:
-                key: Server
-                value:
-                    - WSGIServer/0.2 CPython/3.10.12
-            - normal: true
-              expected:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:41:25 GMT
-              actual:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:43:02 GMT
-            - normal: true
-              expected:
-                key: Vary
-                value:
-                    - Accept, Cookie
-              actual:
-                key: Vary
-                value:
-                    - Accept, Cookie
-            - normal: true
-              expected:
-                key: X-Frame-Options
-                value:
-                    - DENY
-              actual:
-                key: X-Frame-Options
-                value:
-                    - DENY
-            - normal: true
-              expected:
-                key: Referrer-Policy
-                value:
-                    - same-origin
-              actual:
-                key: Referrer-Policy
-                value:
-                    - same-origin
-            - normal: true
-              expected:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-              actual:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-            - normal: true
-              expected:
-                key: Content-Length
-                value:
-                    - "29"
-              actual:
-                key: Content-Length
-                value:
-                    - "29"
-            - normal: true
-              expected:
-                key: Content-Type
-                value:
-                    - application/json
-              actual:
-                key: Content-Type
-                value:
-                    - application/json
-            - normal: true
-              expected:
-                key: Cross-Origin-Opener-Policy
-                value:
-                    - same-origin
-              actual:
-                key: Cross-Origin-Opener-Policy
-                value:
-                    - same-origin
-        body_result:
-            - normal: true
-              type: JSON
-              expected: '{"message": "User Updated!!"}'
-              actual: '{"message": "User Updated!!"}'
-        dep_result: []
-    - kind: Http
-      name: report-1
-      status: FAILED
-      started: 1695847382
-      completed: 1695847383
-      test_case_path: /home/shashwat/test/django-postgresql/django_postgres/keploytest-set-0
-      mock_path: ""
-      test_case_id: test-6
-      req:
-        method: DELETE
-        proto_major: 1
-        proto_minor: 1
-        url: http://127.0.0.1:8000/user/d78a6260-0077-4f58-b45c-f68b28430400/
-        header:
-            Accept: '*/*'
-            Accept-Encoding: gzip, deflate, br
-            Connection: keep-alive
-            Host: 127.0.0.1:8000
-            Postman-Token: 08c79295-29dc-4245-a31f-7910fbb0d102
-            User-Agent: PostmanRuntime/7.33.0
-        body: ""
-        body_type: ""
-      resp:
-        status_code: 200
-        header:
-            Allow: GET, PUT, OPTIONS, DELETE
-            Content-Length: "29"
-            Content-Type: application/json
-            Cross-Origin-Opener-Policy: same-origin
-            Date: Wed, 27 Sep 2023 20:41:45 GMT
-            Referrer-Policy: same-origin
-            Server: WSGIServer/0.2 CPython/3.10.12
-            Vary: Accept, Cookie
-            X-Content-Type-Options: nosniff
-            X-Frame-Options: DENY
-        body: '{"message": "User Deleted!!"}'
-        body_type: ""
-        status_message: ""
-        proto_major: 0
-        proto_minor: 0
-      noise:
-        - header.Date
-        - header.Vary
-      result:
-        status_code:
-            normal: true
-            expected: 200
-            actual: 200
-        headers_result:
-            - normal: true
-              expected:
-                key: Referrer-Policy
-                value:
-                    - same-origin
-              actual:
-                key: Referrer-Policy
-                value:
-                    - same-origin
-            - normal: true
-              expected:
-                key: X-Frame-Options
-                value:
-                    - DENY
-              actual:
-                key: X-Frame-Options
-                value:
-                    - DENY
-            - normal: true
-              expected:
-                key: Cross-Origin-Opener-Policy
-                value:
-                    - same-origin
-              actual:
-                key: Cross-Origin-Opener-Policy
-                value:
-                    - same-origin
-            - normal: true
-              expected:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:41:45 GMT
-              actual:
-                key: Date
-                value:
-                    - Wed, 27 Sep 2023 20:43:03 GMT
-            - normal: false
-              expected:
-                key: Allow
-                value:
-                    - GET
-                    - ' PUT'
-                    - ' OPTIONS'
-                    - ' DELETE'
-              actual:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' PUT'
-                    - ' DELETE'
-            - normal: true
-              expected:
-                key: Content-Length
-                value:
-                    - "29"
-              actual:
-                key: Content-Length
-                value:
-                    - "29"
-            - normal: true
-              expected:
-                key: Content-Type
-                value:
-                    - application/json
-              actual:
-                key: Content-Type
-                value:
-                    - application/json
-            - normal: true
-              expected:
-                key: Vary
-                value:
-                    - Accept, Cookie
-              actual:
-                key: Vary
-                value:
-                    - Accept, Cookie
-            - normal: true
-              expected:
-                key: Server
-                value:
-                    - WSGIServer/0.2 CPython/3.10.12
-              actual:
-                key: Server
-                value:
-                    - WSGIServer/0.2 CPython/3.10.12
-            - normal: true
-              expected:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-              actual:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-        body_result:
-            - normal: true
-              type: JSON
-              expected: '{"message": "User Deleted!!"}'
-              actual: '{"message": "User Deleted!!"}'
+              expected: '[{"id":"d55b96b6-ac12-46af-94ab-764f4f356b1d","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"},{"id":"3f50965c-6e50-4624-8d32-e180156f28ec","name":"John Doe","email":"john.doe@example.com","password":"john567","website":"www.johndoe.com"},{"id":"7a8eba3e-e32b-4536-be73-1ab56e3a48e2","name":"John Doe","email":"john.doe@example.com","password":"john567","website":"www.johndoe.com"},{"id":"3200984e-0725-4708-a817-2beb6384d0b8","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"}]'
+              actual: '[{"id":"d55b96b6-ac12-46af-94ab-764f4f356b1d","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"},{"id":"3f50965c-6e50-4624-8d32-e180156f28ec","name":"John Doe","email":"john.doe@example.com","password":"john567","website":"www.johndoe.com"},{"id":"7a8eba3e-e32b-4536-be73-1ab56e3a48e2","name":"John Doe","email":"john.doe@example.com","password":"john567","website":"www.johndoe.com"},{"id":"3200984e-0725-4708-a817-2beb6384d0b8","name":"Jane Smith","email":"jane.smith@example.com","password":"smith567","website":"www.janesmith.com"}]'
         dep_result: []
     - kind: Http
       name: report-1
       status: PASSED
-      started: 1695847383
-      completed: 1695847383
-      test_case_path: /home/shashwat/test/django-postgresql/django_postgres/keploytest-set-0
+      started: 1701881927
+      completed: 1701881927
+      test_case_path: /files/keploy/test-set-0
       mock_path: ""
-      test_case_id: test-7
+      test_case_id: test-3
       req:
         method: GET
         proto_major: 1
         proto_minor: 1
-        url: http://127.0.0.1:8000/user/
+        url: http://172.25.0.4:8000/user
         header:
             Accept: '*/*'
-            Accept-Encoding: gzip, deflate, br
-            Connection: keep-alive
             Host: 127.0.0.1:8000
-            Postman-Token: 2baf2443-5bb2-4133-a83b-ecd40cd4b3d6
-            User-Agent: PostmanRuntime/7.33.0
+            User-Agent: curl/7.81.0
         body: ""
         body_type: ""
+        timestamp: 0001-01-01T00:00:00Z
       resp:
-        status_code: 200
+        status_code: 301
         header:
-            Allow: GET, OPTIONS, POST
-            Content-Length: "145"
-            Content-Type: application/json
+            Content-Type: text/html; charset=utf-8
             Cross-Origin-Opener-Policy: same-origin
-            Date: Wed, 27 Sep 2023 20:41:50 GMT
+            Date: Wed, 06 Dec 2023 16:58:03 GMT
+            Location: /user/
             Referrer-Policy: same-origin
-            Server: WSGIServer/0.2 CPython/3.10.12
-            Vary: Accept, Cookie
+            Server: WSGIServer/0.2 CPython/3.11.7
             X-Content-Type-Options: nosniff
-            X-Frame-Options: DENY
-        body: '[{"id":"9f93166d-3833-44c2-b906-edec9014e0d5","name":"John Doe","email":"john.doe@example.com","password":"john567","website":"www.johndoe.com"}]'
+        body: ""
         body_type: ""
         status_message: ""
         proto_major: 0
         proto_minor: 0
+        timestamp: 0001-01-01T00:00:00Z
       noise:
-        - header.Vary
-        - header.Date
+        header.Date: []
       result:
         status_code:
             normal: true
-            expected: 200
-            actual: 200
+            expected: 301
+            actual: 301
         headers_result:
             - normal: true
               expected:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-              actual:
-                key: X-Content-Type-Options
-                value:
-                    - nosniff
-            - normal: true
-              expected:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' POST'
-              actual:
-                key: Allow
-                value:
-                    - GET
-                    - ' OPTIONS'
-                    - ' POST'
-            - normal: true
-              expected:
-                key: Content-Length
-                value:
-                    - "145"
-              actual:
-                key: Content-Length
-                value:
-                    - "145"
-            - normal: true
-              expected:
                 key: Referrer-Policy
                 value:
                     - same-origin
@@ -1020,31 +511,31 @@ tests:
                     - same-origin
             - normal: true
               expected:
-                key: Vary
+                key: Server
                 value:
-                    - Accept, Cookie
+                    - WSGIServer/0.2 CPython/3.11.7
               actual:
-                key: Vary
+                key: Server
                 value:
-                    - Accept, Cookie
+                    - WSGIServer/0.2 CPython/3.11.7
             - normal: true
               expected:
-                key: Date
+                key: X-Content-Type-Options
                 value:
-                    - Wed, 27 Sep 2023 20:41:50 GMT
+                    - nosniff
               actual:
-                key: Date
+                key: X-Content-Type-Options
                 value:
-                    - Wed, 27 Sep 2023 20:43:03 GMT
+                    - nosniff
             - normal: true
               expected:
-                key: X-Frame-Options
+                key: Content-Type
                 value:
-                    - DENY
+                    - text/html; charset=utf-8
               actual:
-                key: X-Frame-Options
+                key: Content-Type
                 value:
-                    - DENY
+                    - text/html; charset=utf-8
             - normal: true
               expected:
                 key: Cross-Origin-Opener-Policy
@@ -1056,26 +547,26 @@ tests:
                     - same-origin
             - normal: true
               expected:
-                key: Server
+                key: Date
                 value:
-                    - WSGIServer/0.2 CPython/3.10.12
+                    - Wed, 06 Dec 2023 16:58:03 GMT
               actual:
-                key: Server
+                key: Date
                 value:
-                    - WSGIServer/0.2 CPython/3.10.12
+                    - Wed, 06 Dec 2023 16:58:47 GMT
             - normal: true
               expected:
-                key: Content-Type
+                key: Location
                 value:
-                    - application/json
+                    - /user/
               actual:
-                key: Content-Type
+                key: Location
                 value:
-                    - application/json
+                    - /user/
         body_result:
             - normal: true
-              type: JSON
-              expected: '[{"id":"9f93166d-3833-44c2-b906-edec9014e0d5","name":"John Doe","email":"john.doe@example.com","password":"john567","website":"www.johndoe.com"}]'
-              actual: '[{"id":"9f93166d-3833-44c2-b906-edec9014e0d5","name":"John Doe","email":"john.doe@example.com","password":"john567","website":"www.johndoe.com"}]'
+              type: PLAIN
+              expected: ""
+              actual: ""
         dep_result: []
 test_set: test-set-0

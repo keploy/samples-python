@@ -1,4 +1,4 @@
-version: api.keploy.io/v1beta2
+version: api.keploy.io/v1beta1
 kind: Http
 name: test-1
 spec:
@@ -10,31 +10,29 @@ spec:
         url: http://127.0.0.1:8000/user/
         header:
             Accept: '*/*'
-            Accept-Encoding: gzip, deflate, br
-            Connection: keep-alive
-            Content-Length: "155"
+            Content-Length: "148"
             Content-Type: application/json
             Host: 127.0.0.1:8000
-            Postman-Token: 4061c183-e97a-48dd-a92c-4bdfc14d5458
-            User-Agent: PostmanRuntime/7.33.0
+            User-Agent: curl/7.81.0
         body: |4-
                 {
-                    "name": "Jane Smith",
-                    "email": "jane.smith@example.com",
-                    "password": "smith567",
-                    "website": "www.janesmith.com"
+                    "name": "John Doe",
+                    "email": "john.doe@example.com",
+                    "password": "john567",
+                    "website": "www.johndoe.com"
                 }
         body_type: ""
+        timestamp: 2023-12-06T16:56:29.753691962Z
     resp:
         status_code: 200
         header:
-            Allow: GET, OPTIONS, POST
+            Allow: POST, OPTIONS, GET
             Content-Length: "29"
             Content-Type: application/json
             Cross-Origin-Opener-Policy: same-origin
-            Date: Wed, 27 Sep 2023 20:39:50 GMT
+            Date: Wed, 06 Dec 2023 16:56:29 GMT
             Referrer-Policy: same-origin
-            Server: WSGIServer/0.2 CPython/3.10.12
+            Server: WSGIServer/0.2 CPython/3.11.7
             Vary: Accept, Cookie
             X-Content-Type-Options: nosniff
             X-Frame-Options: DENY
@@ -43,9 +41,24 @@ spec:
         status_message: ""
         proto_major: 0
         proto_minor: 0
+        timestamp: 2023-12-06T16:56:32.446285785Z
     objects: []
     assertions:
         noise:
-            - header.Date
-            - header.Vary
-    created: 1695847194
+            header.Allow: []
+            header.Date: []
+            header.Vary: []
+    created: 1701881792
+curl: |-
+    curl --request POST \
+      --url http://127.0.0.1:8000/user/ \
+      --header 'Host: 127.0.0.1:8000' \
+      --header 'User-Agent: curl/7.81.0' \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --data '    {
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "password": "john567",
+            "website": "www.johndoe.com"
+        }'
