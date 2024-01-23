@@ -597,34 +597,4 @@ Depending on your OS, choose your adventure:
   Congrats on the journey so far! You've seen Keploy's power, flexed your coding muscles, and had a bit of fun too! Now, go out there and keep exploring, innovating, and creating! Remember, with the right tools and a sprinkle of fun, anything's possible.😊🚀
 
   Happy coding! ✨👩‍💻👨‍💻✨
-   </details>
-
-
-
-Usage:
-
-1. Get List of Students: Retrieve a list of all students.
-```
-curl http://localhost:6000/students
-```
-
-2. Get Student by ID: Retrieve details of a specific student using their student ID.
-```
-curl http://localhost:6000/students/12345
-```
-
-3. Create a New Student: Add a new student record to the database.
-
-```
-curl -X POST -H "Content-Type: application/json" -d '{"student_id": "12345", "name": "John Doe", "age": 20}' http://localhost:6000/students
-```
-
-4. Update Student Information: Update details of an existing student using their student ID.
-```
-curl -X PUT -H "Content-Type: application/json" -d '{"name": "Jane Smith", "age": 21}' http://localhost:6000/students/12345
-```
-
-5. Delete Student: Delete a student record by their student ID.
-```
-curl -X DELETE http://localhost:6000/students/12345
-```
+  </details>
