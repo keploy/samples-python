@@ -1,6 +1,13 @@
 # Use the official Python image as the base image
 FROM python:3.11.5-bullseye
 
+# Install PostgreSQL client
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+	postgresql-client \
+    curl \
+    netcat-traditional
+
 # Set the working directory to /app
 WORKDIR /app
 
@@ -20,11 +27,8 @@ COPY . .
 #     POSTGRES_HOST=0.0.0.0 \
 #     POSTGRES_PORT=5432
 
-# Install PostgreSQL client
-RUN apt-get update && apt-get install -y postgresql-client
-
 # Expose port 80 for the FastAPI application
 EXPOSE 8000
 
 # Start the FastAPI application
-CMD ["uvicorn", "application.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD [ "/app/entrypoint.sh" ]
