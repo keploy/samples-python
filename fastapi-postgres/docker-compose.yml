@@ -11,3 +11,19 @@ services:
       - "5432:5432"  # Map the PostgreSQL port to the host machine
     volumes: 
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - keploy-network
+  
+  app:
+    container_name: fastapi-app
+    image: fastapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+    networks:
+      - keploy-network
