@@ -32,6 +32,8 @@ Keploy can be installed on Linux directly and on Windows with the help of WSL. B
 docker-compose up -d
 ```
 
+> Note: Update the `SQLALCHEMY_DATABASE_URL` in the `database.py` file if you want to use a keploy with docker.
+
 ### Capture the Testcases
 
 This command will start the recording of API calls using ebpf:-
