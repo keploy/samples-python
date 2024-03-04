@@ -1,7 +1,7 @@
 This application is a simple student management API built using Python's Flask framework and MongoDB for data storage. It allows you to perform basic CRUD (Create, Read, Update, Delete) operations on student records. The API supports CORS (Cross-Origin Resource Sharing) to facilitate cross-domain requests.
 
 
-Usage:
+### Usage:
 
 1. Get List of Students: Retrieve a list of all students.
 ```
