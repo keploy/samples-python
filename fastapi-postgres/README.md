@@ -20,24 +20,10 @@ pip3 install -r requirements.txt
 
 Keploy can be installed on Linux directly and on Windows with the help of WSL. Based on your system architecture, install the keploy latest binary release
 
-**1. AMD Architecture**
-
-```shell
-curl --silent --location "https://github.com/keploy/keploy/releases/latest/download/keploy_linux_amd64.tar.gz" | tar xz -C /tmp
-
-sudo mkdir -p /usr/local/bin && sudo mv /tmp/keploy /usr/local/bin && keploy
+```bash
+ curl -O https://raw.githubusercontent.com/keploy/keploy/main/keploy.sh && source keploy.sh
+ keploy
 ```
-
-<details>
-<summary> 2. ARM Architecture </summary>
-
-```shell
-curl --silent --location "https://github.com/keploy/keploy/releases/latest/download/keploy_linux_arm64.tar.gz" | tar xz -C /tmp
-
-sudo mkdir -p /usr/local/bin && sudo mv /tmp/keploy /usr/local/bin && keploy
-```
-
-</details>
 
 ### Starting the PostgreSQL Instance
 
@@ -46,12 +32,14 @@ sudo mkdir -p /usr/local/bin && sudo mv /tmp/keploy /usr/local/bin && keploy
 docker-compose up -d
 ```
 
+> Note: Update the `SQLALCHEMY_DATABASE_URL` in the `database.py` file if you want to use a keploy with docker.
+
 ### Capture the Testcases
 
 This command will start the recording of API calls using ebpf:-
 
 ```shell
-sudo -E keploy record -c "uvicorn application.main:app --reload"
+sudo -E PATH=$PATH keploy record -c "uvicorn application.main:app --reload"
 ```
 
 Make API Calls using Hoppscotch, Postman or cURL command. Keploy with capture those calls to generate the test-suites containing testcases and data mocks.
@@ -118,7 +106,7 @@ Now all these API calls were captured as **editable** testcases and written to `
 Now let's run the application in test mode.
 
 ```shell
-sudo -E keploy test -c "uvicorn application.main:app --reload" --delay 10
+sudo -E PATH=$PATH keploy test -c "uvicorn application.main:app --reload" --delay 10
 ```
 
 So, no need to setup fake database/apis like Postgres or write mocks for them. Keploy automatically mocks them and, **The application thinks it's talking to Postgres 😄**
