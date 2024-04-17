@@ -18,8 +18,6 @@ This application is a simple movie management API built using Python's Sanic fra
 
 Depending on your OS, choose your adventure:
 
-- <details>
-   <summary><img src="https://keploy.io/docs/img/os/linux.png" alt="Linux" width="3%" /> Linux or <img src="https://keploy.io/docs/img/os/windows.png" alt="Windows" width="3%" /> Windows</summary>
 
   Alright, let's equip ourselves with the **latest Keploy binary**:
 
@@ -28,12 +26,6 @@ Depending on your OS, choose your adventure:
 
   sudo mkdir -p /usr/local/bin && sudo mv /tmp/keploy /usr/local/bin && keploy
   ```
-
-  If everything goes right, your screen should look a bit like this:
-
-  Moving on...
-   <details>
-   <summary style={{ fontWeight: 'bold', fontSize: '1.17em', marginLeft: '0.5em' }}> Run App with <img src="https://keploy.io/docs/img/os/docker.png" alt="Docker Container" width="3%" /> Docker </summary>
 
   #### Add alias for Keploy:
 
@@ -127,5 +119,4 @@ Depending on your OS, choose your adventure:
 
   Happy coding! ✨👩‍💻👨‍💻✨
 
-   </details>
    <br/>
