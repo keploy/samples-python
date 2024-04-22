@@ -1,0 +1,55 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-3
+spec:
+    metadata: {}
+    req:
+        method: PUT
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:5000/api/tasks/6626362fc7c5eddf174c88e4
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Cache-Control: no-cache
+            Connection: keep-alive
+            Content-Length: "53"
+            Content-Type: application/json
+            Host: localhost:5000
+            Postman-Token: 89d42b67-eafb-474e-ac5a-1df4982a9fe3
+            User-Agent: PostmanRuntime/7.32.1
+        body: '{"title": "Updated again","description": "hey there"}'
+        timestamp: 2024-04-22T16:39:52.181533473+05:30
+    resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Content-Length: "45"
+            Content-Type: application/json
+            Date: Mon, 22 Apr 2024 11:09:52 GMT
+            Server: Werkzeug/3.0.2 Python/3.10.12
+        body: |
+            {
+              "message": "Task updated successfully"
+            }
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-04-22T16:39:54.273657454+05:30
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1713784194
+curl: |-
+    curl --request PUT \
+      --url http://localhost:5000/api/tasks/6626362fc7c5eddf174c88e4 \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.32.1' \
+      --header 'Host: localhost:5000' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Cache-Control: no-cache' \
+      --header 'Postman-Token: 89d42b67-eafb-474e-ac5a-1df4982a9fe3' \
+      --header 'Connection: keep-alive' \
+      --data '{"title": "Updated again","description": "hey there"}'
