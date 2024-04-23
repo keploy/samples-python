@@ -1,0 +1,181 @@
+version: api.keploy.io/v1beta1
+name: report-1
+status: PASSED
+success: 2
+failure: 0
+total: 2
+tests:
+    - kind: Http
+      name: report-1
+      status: PASSED
+      started: 1692258836
+      completed: 1692258836
+      test_case_path: /files/keploy
+      mock_path: ""
+      test_case_id: test-1
+      req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.19.0.4:6000/students
+        header:
+            Accept: '*/*'
+            Content-Length: "51"
+            Content-Type: application/json
+            Host: localhost:6000
+            User-Agent: curl/7.77.0
+        body: '{"student_id": "123", "name": "Sarthak", "age": 20}'
+        body_type: ""
+      resp:
+        status_code: 200
+        header:
+            Content-Length: "48"
+            Content-Type: application/json
+            Date: Wed, 16 Aug 2023 12:54:08 GMT
+            Server: Werkzeug/2.3.7 Python/3.9.17
+        body: |
+            {
+              "message": "Student created successfully"
+            }
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+      noise:
+        - header.Date
+      result:
+        status_code:
+            normal: true
+            expected: 200
+            actual: 200
+        headers_result:
+            - normal: true
+              expected:
+                key: Server
+                value:
+                    - Werkzeug/2.3.7 Python/3.9.17
+              actual:
+                key: Server
+                value:
+                    - Werkzeug/2.3.7 Python/3.9.17
+            - normal: true
+              expected:
+                key: Content-Length
+                value:
+                    - "48"
+              actual:
+                key: Content-Length
+                value:
+                    - "48"
+            - normal: true
+              expected:
+                key: Content-Type
+                value:
+                    - application/json
+              actual:
+                key: Content-Type
+                value:
+                    - application/json
+            - normal: true
+              expected:
+                key: Date
+                value:
+                    - Wed, 16 Aug 2023 12:54:08 GMT
+              actual:
+                key: Date
+                value:
+                    - Thu, 17 Aug 2023 07:53:56 GMT
+        body_result:
+            - normal: true
+              type: JSON
+              expected: |
+                {
+                  "message": "Student created successfully"
+                }
+              actual: |
+                {
+                  "message": "Student created successfully"
+                }
+        dep_result: []
+    - kind: Http
+      name: report-1
+      status: PASSED
+      started: 1692258836
+      completed: 1692258836
+      test_case_path: /files/keploy
+      mock_path: ""
+      test_case_id: test-2
+      req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://172.19.0.4:6000/students
+        header:
+            Accept: '*/*'
+            Host: localhost:6000
+            User-Agent: curl/7.77.0
+        body: ""
+        body_type: ""
+      resp:
+        status_code: 200
+        header:
+            Content-Length: "224"
+            Content-Type: application/json
+            Date: Wed, 16 Aug 2023 12:54:18 GMT
+            Server: Werkzeug/2.3.7 Python/3.9.17
+        body: "[\n  {\n    \"age\": 20, \n    \"name\": \"Sarthak\", \n    \"student_id\": \"123\"\n  }, \n  {\n    \"age\": 20, \n    \"name\": \"Sarthak\", \n    \"student_id\": \"123\"\n  }, \n  {\n    \"age\": 20, \n    \"name\": \"Sarthak\", \n    \"student_id\": \"123\"\n  }\n]\n"
+        body_type: ""
+        status_message: ""
+        proto_major: 0
+        proto_minor: 0
+      noise:
+        - header.Date
+        - body.name
+      result:
+        status_code:
+            normal: true
+            expected: 200
+            actual: 200
+        headers_result:
+            - normal: true
+              expected:
+                key: Date
+                value:
+                    - Wed, 16 Aug 2023 12:54:18 GMT
+              actual:
+                key: Date
+                value:
+                    - Thu, 17 Aug 2023 07:53:56 GMT
+            - normal: true
+              expected:
+                key: Server
+                value:
+                    - Werkzeug/2.3.7 Python/3.9.17
+              actual:
+                key: Server
+                value:
+                    - Werkzeug/2.3.7 Python/3.9.17
+            - normal: true
+              expected:
+                key: Content-Length
+                value:
+                    - "224"
+              actual:
+                key: Content-Length
+                value:
+                    - "224"
+            - normal: true
+              expected:
+                key: Content-Type
+                value:
+                    - application/json
+              actual:
+                key: Content-Type
+                value:
+                    - application/json
+        body_result:
+            - normal: true
+              type: JSON
+              expected: "[\n  {\n    \"age\": 20, \n    \"name\": \"Sarthak\", \n    \"student_id\": \"123\"\n  }, \n  {\n    \"age\": 20, \n    \"name\": \"Sarthak\", \n    \"student_id\": \"123\"\n  }, \n  {\n    \"age\": 20, \n    \"name\": \"Sarthak\", \n    \"student_id\": \"123\"\n  }\n]\n"
+              actual: "[\n  {\n    \"age\": 20, \n    \"name\": \"Sarthak\", \n    \"student_id\": \"123\"\n  }, \n  {\n    \"age\": 20, \n    \"name\": \"Sarthak\", \n    \"student_id\": \"123\"\n  }, \n  {\n    \"age\": 20, \n    \"name\": \"Sarthak\", \n    \"student_id\": \"123\"\n  }\n]\n"
+        dep_result: []
