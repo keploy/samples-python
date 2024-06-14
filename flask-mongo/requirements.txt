@@ -1,6 +1,4 @@
-Flask==3.0.3
-Flask-Cors==4.0.0
-pymongo==4.6.3
-coverage==7.4.4
-bson==0.5.10
-keploy==2.0.0a33
+Flask
+pymongo==4.4.1
+Flask-Cors==3.0.10
+Werkzeug==2.2.2
