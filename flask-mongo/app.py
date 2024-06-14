@@ -1,42 +1,56 @@
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
-import collections.abc
+from bson import ObjectId
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-# Connect to MongoDB
-client = MongoClient('mongodb://mongo:27017/')
-db = client['studentsdb']
-students_collection = db['students']
+client = MongoClient('mongodb://localhost:27017/task_manager')
+db = client['task_manager']
+collection = db['tasks']
 
-@app.route('/students', methods=['GET'])
-def get_students():
-    students = list(students_collection.find({}, {'_id': 0}))
-    return jsonify(students)
+@app.route('/api/tasks', methods=['POST'])
+def create_task():
+    data = request.get_json()
+    task = {
+        'title': data['title'],
+        'description': data['description']
+    }
+    result = collection.insert_one(task)
+    return jsonify({'message': 'Task created successfully', 'id': str(result.inserted_id)}), 201
 
-@app.route('/students/<student_id>', methods=['GET'])
-def get_student(student_id):
-    student = students_collection.find_one({'student_id': student_id}, {'_id': 0})
-    return jsonify(student)
+@app.route('/api/tasks', methods=['GET'])
+def get_all_tasks():
+    tasks = []
+    for task in collection.find():
+        tasks.append({
+            'id': str(task['_id']),
+            'title': task['title'],
+            'description': task['description']
+        })
+    return jsonify({'tasks': tasks})
 
-@app.route('/students', methods=['POST'])
-def create_student():
-    new_student = request.json
-    students_collection.insert_one(new_student)
-    return jsonify({'message': 'Student created successfully'})
+@app.route('/api/tasks/<task_id>', methods=['PUT'])
+def update_task(task_id):
+    data = request.get_json()
+    updated_task = {
+        'title': data['title'],
+        'description': data['description']
+    }
+    try:
+        result = collection.update_one({'_id': ObjectId(task_id)}, {'$set': updated_task})
+        if result.modified_count == 0:
+            return jsonify({'error': 'Task not found or no changes were made'}), 404
+        else:
+            return jsonify({'message': 'Task updated successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-@app.route('/students/<student_id>', methods=['PUT'])
-def update_student(student_id):
-    updated_student = request.json
-    students_collection.update_one({'student_id': student_id}, {'$set': updated_student})
-    return jsonify({'message': 'Student updated successfully'})
-
-@app.route('/students/<student_id>', methods=['DELETE'])
-def delete_student(student_id):
-    students_collection.delete_one({'student_id': student_id})
-    return jsonify({'message': 'Student deleted successfully'})
+@app.route('/api/tasks/<task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    collection.delete_one({'_id': ObjectId(task_id)})
+    return jsonify({'message': 'Task deleted successfully'})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=6000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
