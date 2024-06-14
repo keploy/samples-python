@@ -1,0 +1,66 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:5000/api/tasks
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Cache-Control: no-cache
+            Connection: keep-alive
+            Content-Length: "59"
+            Content-Type: application/json
+            Host: localhost:5000
+            Postman-Token: 10512b5c-4da7-4ef3-b145-101cdd1357f1
+            User-Agent: PostmanRuntime/7.32.1
+        body: '{"title": "Task 6","description": "Description for Task 6"}'
+        timestamp: 2024-04-22T16:38:39.232565209+05:30
+    resp:
+        status_code: 200
+        header:
+            Access-Control-Allow-Origin: '*'
+            Content-Length: "267"
+            Content-Type: application/json
+            Date: Mon, 22 Apr 2024 11:08:39 GMT
+            Server: Werkzeug/3.0.2 Python/3.10.12
+        body: |
+            {
+              "tasks": [
+                {
+                  "description": "should update",
+                  "id": "6626362fc7c5eddf174c88e4",
+                  "title": "Updated"
+                },
+                {
+                  "description": "Should work",
+                  "id": "66263667c7c5eddf174c88e5",
+                  "title": "Let's Check another time"
+                }
+              ]
+            }
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-04-22T16:38:41.245704918+05:30
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1713784121
+curl: |-
+    curl --request GET \
+      --url http://localhost:5000/api/tasks \
+      --header 'Host: localhost:5000' \
+      --header 'User-Agent: PostmanRuntime/7.32.1' \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --header 'Connection: keep-alive' \
+      --header 'Cache-Control: no-cache' \
+      --header 'Postman-Token: 10512b5c-4da7-4ef3-b145-101cdd1357f1' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --data '{"title": "Task 6","description": "Description for Task 6"}'
