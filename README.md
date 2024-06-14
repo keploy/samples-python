@@ -1,4 +1,4 @@
-<h1 align="center"> Keploy Python Samples </h1>
+<h1 align="center"> Keploy Python Sample Applications </h1>
 <p align="center">
 
   <a href="CODE_OF_CONDUCT.md" alt="Contributions welcome">
@@ -11,7 +11,7 @@
     <img src=".github/License-Apache_2.0-blue.svg" /></a>
 </p>
 
-This repo contains the samples for [Keploy's](https://keploy.io) Python-based Application. Please feel free to contribute if you'd like submit a sample for another use-case or library.
+This repo contains the samples for [Keploy's](https://keploy.io) integration with Python-based Application. Please feel free to contribute if you'd like submit a sample for another use-case or library.
 
 > **Note** :- Issue Creation is disabled on this Repository, please visit [here](https://github.com/keploy/keploy/issues/new/choose) to submit Issue.
 
