@@ -46,9 +46,7 @@ Depending on your OS, choose your adventure:
   Alright, let's equip ourselves with the **latest Keploy binary**:
 
   ```bash
-  curl --silent --location "https://github.com/keploy/keploy/releases/latest/download/keploy_linux_amd64.tar.gz" | tar xz -C /tmp
-
-  sudo mkdir -p /usr/local/bin && sudo mv /tmp/keploy /usr/local/bin && keploy
+  curl --silent -O -L https://keploy.io/install.sh && source install.sh
   ```
 
   If everything goes right, your screen should look a bit like this:
