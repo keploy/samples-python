@@ -1,0 +1,40 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-4
+spec:
+    metadata: {}
+    req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/movies
+        header:
+            Accept: application/json
+            Content-Type: application/json; charset=utf-8
+            Host: 127.0.0.1:8000
+            User-Agent: curl/7.81.0
+        body: ""
+        timestamp: 2024-06-26T01:16:42.071382334+05:30
+    resp:
+        status_code: 200
+        header:
+            Alt-Svc: ""
+            Connection: keep-alive
+            Content-Length: "211"
+            Content-Type: application/json
+        body: '[{"_id":"667b1e6d33a7849da6520cea","name":"Whiplash"},{"_id":"667b1e8fd71cb97567de07c5","name":"Whiplash"},{"_id":"667b1e95d71cb97567de07c6","name":"Chappie"},{"_id":"667b1e9bd71cb97567de07c7","name":"Titanic"}]'
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-26T01:16:44.167252247+05:30
+    objects: []
+    assertions:
+        noise: {}
+    created: 1719344804
+curl: |
+    curl --request GET \
+      --url http://127.0.0.1:8000/movies \
+      --header 'Host: 127.0.0.1:8000' \
+      --header 'User-Agent: curl/7.81.0' \
+      --header 'Accept: application/json' \
+      --header 'Content-Type: application/json; charset=utf-8' \
