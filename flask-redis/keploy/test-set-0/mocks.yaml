@@ -1,0 +1,246 @@
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-0
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*4\r\n$6\r\nCLIENT\r\n$7\r\nSETINFO\r\n$8\r\nLIB-NAME\r\n$8\r\nredis-py\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "+OK\r\n"
+    reqtimestampmock: 2024-07-22T20:05:28.73868767+05:30
+    restimestampmock: 2024-07-22T20:05:28.738872821+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-1
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*4\r\n$6\r\nCLIENT\r\n$7\r\nSETINFO\r\n$7\r\nLIB-VER\r\n$5\r\n5.0.7\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "+OK\r\n"
+    reqtimestampmock: 2024-07-22T20:05:28.739170209+05:30
+    restimestampmock: 2024-07-22T20:05:28.739352498+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-2
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*3\r\n$3\r\nSET\r\n$6\r\ng_EwTj\r\n$63\r\n{\"title\": \"Example TODO 01\", \"description\": \"An Example TODO.\"}\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "+OK\r\n"
+    reqtimestampmock: 2024-07-22T20:05:28.739623974+05:30
+    restimestampmock: 2024-07-22T20:05:28.739738026+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-3
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*3\r\n$3\r\nSET\r\n$6\r\nBd2_aR\r\n$28\r\n{\"title\": \"Example TODO 01\"}\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "+OK\r\n"
+    reqtimestampmock: 2024-07-22T20:05:45.921454264+05:30
+    restimestampmock: 2024-07-22T20:05:45.92178783+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-4
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*4\r\n$6\r\nCLIENT\r\n$7\r\nSETINFO\r\n$8\r\nLIB-NAME\r\n$8\r\nredis-py\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "+OK\r\n"
+    reqtimestampmock: 2024-07-22T20:06:31.961805347+05:30
+    restimestampmock: 2024-07-22T20:06:31.962030588+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-5
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*4\r\n$6\r\nCLIENT\r\n$7\r\nSETINFO\r\n$7\r\nLIB-VER\r\n$5\r\n5.0.7\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "+OK\r\n"
+    reqtimestampmock: 2024-07-22T20:06:31.962384479+05:30
+    restimestampmock: 2024-07-22T20:06:31.962508379+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-6
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*2\r\n$3\r\nGET\r\n$6\r\ng_EwTj\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "$63\r\n{\"title\": \"Example TODO 01\", \"description\": \"An Example TODO.\"}\r\n"
+    reqtimestampmock: 2024-07-22T20:06:31.96271588+05:30
+    restimestampmock: 2024-07-22T20:06:31.962862269+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-7
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*3\r\n$3\r\nSET\r\n$6\r\ng_EwTj\r\n$65\r\n{\"title\": \"Example TODO 02\", \"description\": \"An Example TODO 02\"}\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "+OK\r\n"
+    reqtimestampmock: 2024-07-22T20:06:31.964285235+05:30
+    restimestampmock: 2024-07-22T20:06:31.964469758+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-8
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*2\r\n$3\r\nGET\r\n$6\r\ng_EwTj\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "$65\r\n{\"title\": \"Example TODO 02\", \"description\": \"An Example TODO 02\"}\r\n"
+    reqtimestampmock: 2024-07-22T20:06:42.497140541+05:30
+    restimestampmock: 2024-07-22T20:06:42.49734022+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-9
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*2\r\n$4\r\nKEYS\r\n$1\r\n*\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "*2\r\n$6\r\ng_EwTj\r\n$6\r\nBd2_aR\r\n"
+    reqtimestampmock: 2024-07-22T20:06:45.811740293+05:30
+    restimestampmock: 2024-07-22T20:06:45.811971681+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-10
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*2\r\n$3\r\nGET\r\n$6\r\ng_EwTj\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "$65\r\n{\"title\": \"Example TODO 02\", \"description\": \"An Example TODO 02\"}\r\n"
+    reqtimestampmock: 2024-07-22T20:06:45.812264808+05:30
+    restimestampmock: 2024-07-22T20:06:45.812451008+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-11
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*2\r\n$3\r\nGET\r\n$6\r\nBd2_aR\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: "$28\r\n{\"title\": \"Example TODO 01\"}\r\n"
+    reqtimestampmock: 2024-07-22T20:06:45.812816702+05:30
+    restimestampmock: 2024-07-22T20:06:45.81296337+05:30
+---
+version: api.keploy.io/v1beta1
+kind: Redis
+name: mock-12
+spec:
+    metadata:
+        type: config
+    redisrequests:
+        - origin: client
+          message:
+            - type: string
+              data: "*2\r\n$3\r\nDEL\r\n$6\r\nBd2_aR\r\n"
+    redisresponses:
+        - origin: server
+          message:
+            - type: string
+              data: ":1\r\n"
+    reqtimestampmock: 2024-07-22T20:07:02.487151778+05:30
+    restimestampmock: 2024-07-22T20:07:02.487372689+05:30

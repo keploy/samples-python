@@ -1,0 +1,60 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-2
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:3000/todos/
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "73"
+            Content-Type: application/json
+            Host: localhost:3000
+            Postman-Token: 95c06185-f3a6-4830-b68d-d6674cd1c728
+            Referer: http://localhost:3000/todos
+            User-Agent: PostmanRuntime/7.40.0
+        body: |-
+            {
+                "title": "Example TODO 01",
+                "description": "An Example TODO."
+            }
+        timestamp: 2024-07-22T20:05:28.735213232+05:30
+    resp:
+        status_code: 200
+        header:
+            Connection: keep-alive
+            Content-Length: "99"
+            Content-Type: application/json
+            Date: Mon, 22 Jul 2024 14:35:28 GMT
+            Server: gunicorn
+        body: |
+            {"data":{"description":"An Example TODO.","id":"g_EwTj","title":"Example TODO 01"},"success":true}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-07-22T20:05:30.803153552+05:30
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1721658930
+curl: |-
+    curl --request POST \
+      --url http://localhost:3000/todos/ \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --header 'Postman-Token: 95c06185-f3a6-4830-b68d-d6674cd1c728' \
+      --header 'Connection: keep-alive' \
+      --header 'Host: localhost:3000' \
+      --header 'Referer: http://localhost:3000/todos' \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'User-Agent: PostmanRuntime/7.40.0' \
+      --data '{
+        "title": "Example TODO 01",
+        "description": "An Example TODO."
+    }'

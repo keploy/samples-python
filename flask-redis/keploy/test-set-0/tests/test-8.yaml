@@ -1,0 +1,47 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-8
+spec:
+    metadata: {}
+    req:
+        method: DELETE
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:3000/todos/Bd2_aR
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Host: localhost:3000
+            Postman-Token: 0b8b2977-b387-4c0b-a9cf-030b7c283bb7
+            User-Agent: PostmanRuntime/7.40.0
+        body: ""
+        timestamp: 2024-07-22T20:07:02.486055325+05:30
+    resp:
+        status_code: 200
+        header:
+            Connection: keep-alive
+            Content-Length: "17"
+            Content-Type: application/json
+            Date: Mon, 22 Jul 2024 14:37:02 GMT
+            Server: gunicorn
+        body: |
+            {"success":true}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-07-22T20:07:04.562705189+05:30
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1721659024
+curl: |
+    curl --request DELETE \
+      --url http://localhost:3000/todos/Bd2_aR \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'User-Agent: PostmanRuntime/7.40.0' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 0b8b2977-b387-4c0b-a9cf-030b7c283bb7' \
+      --header 'Host: localhost:3000' \

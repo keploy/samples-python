@@ -1,0 +1,58 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-5
+spec:
+    metadata: {}
+    req:
+        method: PUT
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:3000/todos/g_EwTj
+        header:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Content-Length: "75"
+            Content-Type: application/json
+            Host: localhost:3000
+            Postman-Token: 6f6c626a-a8b6-47da-8082-b4680d860ea9
+            User-Agent: PostmanRuntime/7.40.0
+        body: |-
+            {
+                "title": "Example TODO 02",
+                "description": "An Example TODO 02"
+            }
+        timestamp: 2024-07-22T20:06:31.95777189+05:30
+    resp:
+        status_code: 200
+        header:
+            Connection: keep-alive
+            Content-Length: "77"
+            Content-Type: application/json
+            Date: Mon, 22 Jul 2024 14:36:31 GMT
+            Server: gunicorn
+        body: |
+            {"description":"An Example TODO 02","id":"g_EwTj","title":"Example TODO 02"}
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-07-22T20:06:34.047727882+05:30
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1721658994
+curl: |-
+    curl --request PUT \
+      --url http://localhost:3000/todos/g_EwTj \
+      --header 'Accept-Encoding: gzip, deflate, br' \
+      --header 'Connection: keep-alive' \
+      --header 'Content-Type: application/json' \
+      --header 'User-Agent: PostmanRuntime/7.40.0' \
+      --header 'Accept: */*' \
+      --header 'Postman-Token: 6f6c626a-a8b6-47da-8082-b4680d860ea9' \
+      --header 'Host: localhost:3000' \
+      --data '{
+        "title": "Example TODO 02",
+        "description": "An Example TODO 02"
+    }'
