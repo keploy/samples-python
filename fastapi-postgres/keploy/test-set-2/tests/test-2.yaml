@@ -1,0 +1,52 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-2
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/students/
+        header:
+            Accept: '*/*'
+            Content-Length: "122"
+            Content-Type: application/json
+            Host: 127.0.0.1:8000
+            User-Agent: curl/8.2.1
+        body: |4-
+                {
+                      "name": "John Doe",
+                      "email": "johndoe@example.com",
+                      "password": "johndoe123"
+                    }
+        timestamp: 2024-07-25T17:01:11.082779289+05:30
+    resp:
+        status_code: 200
+        header:
+            Content-Length: "104"
+            Content-Type: application/json
+            Date: Thu, 25 Jul 2024 11:31:11 GMT
+            Server: uvicorn
+        body: '{"name":"John Doe","email":"johndoe@example.com","password":"skpioepf234","stream":"Mathematics","id":2}'
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-07-25T17:01:13.117384253+05:30
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1721907073
+curl: |-
+    curl --request POST \
+      --url http://127.0.0.1:8000/students/ \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --header 'Host: 127.0.0.1:8000' \
+      --header 'User-Agent: curl/8.2.1' \
+      --data '    {
+              "name": "John Doe",
+              "email": "johndoe@example.com",
+              "password": "johndoe123"
+            }'

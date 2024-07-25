@@ -21,8 +21,7 @@ pip3 install -r requirements.txt
 Keploy can be installed on Linux directly and on Windows with the help of WSL. Based on your system architecture, install the keploy latest binary release
 
 ```bash
- curl -O https://raw.githubusercontent.com/keploy/keploy/main/keploy.sh && source keploy.sh
- keploy
+curl -O https:///keploy.io/install.sh && source install.sh
 ```
 
 ### Starting the PostgreSQL Instance
@@ -34,9 +33,9 @@ docker-compose up -d
 
 ### Capture the Testcases
 
-This command will start the recording of API calls using ebpf:-
+This command will start the recording of API calls :
 
-```shell
+```sh
 sudo -E PATH=$PATH keploy record -c "uvicorn application.main:app --reload"
 ```
 
@@ -99,12 +98,20 @@ curl --location --request DELETE 'http://127.0.0.1:8000/students/1'
 
 Now all these API calls were captured as **editable** testcases and written to `keploy/tests` folder. The keploy directory would also have `mocks` file that contains all the outputs of postgres operations.
 
+![keploy testcase](./img/testcases.png)
+
 ## Run the Testcases
 
 Now let's run the application in test mode.
 
 ```shell
-sudo -E PATH=$PATH keploy test -c "uvicorn application.main:app --reload" --delay 10
+sudo -E PATH=$PATH keploy test -c "python3 -m uvicorn application.main:app" --delay 10
 ```
+We will get output something like below -
 
-So, no need to setup fake database/apis like Postgres or write mocks for them. Keploy automatically mocks them and, **The application thinks it's talking to Postgres 😄**
+![keploy testcase](./img/testrun.png)
+
+By making just 2 api call, we have generated a complete test suite for our application and acheived 72% coverage.
+
+So, no need to setup fake database/apis like Postgres or write mocks for them. Keploy automatically mocks them and, **The application thinks it's talking to Postgres 😄** 
+

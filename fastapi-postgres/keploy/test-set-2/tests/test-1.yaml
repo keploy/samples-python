@@ -1,0 +1,52 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/students/
+        header:
+            Accept: '*/*'
+            Content-Length: "121"
+            Content-Type: application/json
+            Host: 127.0.0.1:8000
+            User-Agent: curl/8.2.1
+        body: |-
+            {
+                      "name": "Eva White",
+                      "email": "evawhite@example.com",
+                      "password": "evawhite111"
+                    }
+        timestamp: 2024-07-25T17:01:00.642805609+05:30
+    resp:
+        status_code: 200
+        header:
+            Content-Length: "107"
+            Content-Type: application/json
+            Date: Thu, 25 Jul 2024 11:30:59 GMT
+            Server: uvicorn
+        body: '{"name":"Eva White","email":"evawhite@example.com","password":"sfwbxijuf222","stream":"Mathematics","id":1}'
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-07-25T17:01:02.681705017+05:30
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1721907062
+curl: |-
+    curl --request POST \
+      --url http://127.0.0.1:8000/students/ \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --header 'Host: 127.0.0.1:8000' \
+      --header 'User-Agent: curl/8.2.1' \
+      --data '{
+              "name": "Eva White",
+              "email": "evawhite@example.com",
+              "password": "evawhite111"
+            }'
