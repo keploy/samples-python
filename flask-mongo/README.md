@@ -1,6 +1,7 @@
+# Flask-Mongo Sample Application
+
 This application is a simple student management API built using Python's Flask framework and MongoDB for data storage. It allows you to perform basic CRUD (Create, Read, Update, Delete) operations on student records. The API supports CORS (Cross-Origin Resource Sharing) to facilitate cross-domain requests.
 
-## Table of Contents
 
 # Introduction
 
@@ -10,9 +11,17 @@ This application is a simple student management API built using Python's Flask f
 
 - Install WSL (`wsl --install`) for <img src="https://keploy.io/docs/img/os/windows.png" alt="Windows" width="3%" /> Windows.
 
-## Optional 🛠️
+#### Optional 🛠️
 
 - Install Colima( `brew install colima && colima start` ) for <img src="https://keploy.io/docs/img/os/macos.png" alt="MacOS" width="3%" /> MacOs.
+
+## Install Keploy
+
+- Install Keploy CLI using the following command:
+
+```bash
+curl -O -L https://keploy.io/install.sh && source install.sh
+```
 
 ## Get Started! 🎬
 
@@ -34,6 +43,7 @@ docker run -p 27017:27017 -d --network backend --name mongo mongo
 
 ```bash
 git clone https://github.com/keploy/samples-python.git && cd samples-python/flask-mongo
+pip3 install -r requirements.txt
 ```
 
 ## Installation 📥
@@ -42,7 +52,7 @@ git clone https://github.com/keploy/samples-python.git && cd samples-python/flas
 
   Build the app image:
 
-  ```bash
+  ```sh
   docker build -t flask-app:1.0 .
   ```
 
@@ -64,6 +74,11 @@ git clone https://github.com/keploy/samples-python.git && cd samples-python/flas
 
   ```bash
   curl -X POST -H "Content-Type: application/json" -d '{"student_id": "12345", "name": "John Doe", "age": 20}' http://localhost:6000/students
+  ```
+
+  Let's add one more student: 
+
+  ```sh
   curl -X POST -H "Content-Type: application/json" -d '{"student_id": "12346", "name": "Alice Green", "age": 22}' http://localhost:6000/students
   ```
 
@@ -235,8 +250,13 @@ git clone https://github.com/keploy/samples-python.git && cd samples-python/flas
 
   **1. Make a POST request**
 
-  ```bash
+    ```bash
   curl -X POST -H "Content-Type: application/json" -d '{"student_id": "12345", "name": "John Doe", "age": 20}' http://localhost:6000/students
+  ```
+
+  Let's add one more student: 
+
+  ```sh
   curl -X POST -H "Content-Type: application/json" -d '{"student_id": "12346", "name": "Alice Green", "age": 22}' http://localhost:6000/students
   ```
 

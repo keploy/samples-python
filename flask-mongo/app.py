@@ -2,9 +2,11 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
 import collections.abc
+from keploy import FlaskCoverageMiddleware
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+app.wsgi_app = FlaskCoverageMiddleware(app.wsgi_app)
 
 # Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017/')

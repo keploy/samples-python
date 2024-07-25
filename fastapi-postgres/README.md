@@ -13,6 +13,7 @@ Make the following requests to the respective endpoints -
 
 ```bash
 git clone https://github.com/keploy/samples-python.git && cd samples-python/fastapi-postgres
+pip3 install coverage
 pip3 install -r requirements.txt
 ```
 
