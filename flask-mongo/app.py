@@ -7,7 +7,7 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Connect to MongoDB
-client = MongoClient('mongodb://mongo:27017/')
+client = MongoClient('mongodb://localhost:27017/')
 db = client['studentsdb']
 students_collection = db['students']
 

@@ -1,21 +1,21 @@
 version: api.keploy.io/v1beta1
 kind: Http
-name: test-2
+name: test-5
 spec:
     metadata: {}
     req:
-        method: POST
+        method: PUT
         proto_major: 1
         proto_minor: 1
-        url: http://localhost:6000/students
+        url: http://localhost:6000/students/12345
         header:
             Accept: '*/*'
-            Content-Length: "55"
+            Content-Length: "33"
             Content-Type: application/json
             Host: localhost:6000
             User-Agent: curl/7.88.1
-        body: '{"student_id": "12347", "name": "Bob Brown", "age": 24}'
-        timestamp: 2024-07-25T16:40:35.155885209+05:30
+        body: '{"name": "Jane Smith", "age": 21}'
+        timestamp: 2024-07-25T16:40:35.174189197+05:30
     resp:
         status_code: 200
         header:
@@ -25,22 +25,22 @@ spec:
             Server: Werkzeug/2.2.2 Python/3.11.2
         body: |
             {
-              "message": "Student created successfully"
+              "message": "Student updated successfully"
             }
         status_message: OK
         proto_major: 0
         proto_minor: 0
-        timestamp: 2024-07-25T16:40:37.229762646+05:30
+        timestamp: 2024-07-25T16:40:37.22986477+05:30
     objects: []
     assertions:
         noise:
             header.Date: []
     created: 1721905837
 curl: |-
-    curl --request POST \
-      --url http://localhost:6000/students \
+    curl --request PUT \
+      --url http://localhost:6000/students/12345 \
       --header 'Host: localhost:6000' \
       --header 'User-Agent: curl/7.88.1' \
       --header 'Accept: */*' \
       --header 'Content-Type: application/json' \
-      --data '{"student_id": "12347", "name": "Bob Brown", "age": 24}'
+      --data '{"name": "Jane Smith", "age": 21}'

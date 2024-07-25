@@ -4,48 +4,41 @@ name: test-4
 spec:
     metadata: {}
     req:
-        method: DELETE
+        method: GET
         proto_major: 1
         proto_minor: 1
-        url: http://localhost:5000/api/tasks/66263667c7c5eddf174c88e5
+        url: http://localhost:6000/students/12345
         header:
             Accept: '*/*'
-            Accept-Encoding: gzip, deflate, br
-            Cache-Control: no-cache
-            Connection: keep-alive
-            Host: localhost:5000
-            Postman-Token: 0f3d6037-f57c-4fb3-be52-e6ffed1566e6
-            User-Agent: PostmanRuntime/7.32.1
+            Host: localhost:6000
+            User-Agent: curl/7.88.1
         body: ""
-        timestamp: 2024-04-22T16:40:08.615353613+05:30
+        timestamp: 2024-07-25T16:40:35.168116743+05:30
     resp:
         status_code: 200
         header:
-            Access-Control-Allow-Origin: '*'
-            Content-Length: "45"
+            Content-Length: "63"
             Content-Type: application/json
-            Date: Mon, 22 Apr 2024 11:10:08 GMT
-            Server: Werkzeug/3.0.2 Python/3.10.12
+            Date: Thu, 25 Jul 2024 11:10:35 GMT
+            Server: Werkzeug/2.2.2 Python/3.11.2
         body: |
             {
-              "message": "Task deleted successfully"
+              "age": 20,
+              "name": "John Doe",
+              "student_id": "12345"
             }
         status_message: OK
         proto_major: 0
         proto_minor: 0
-        timestamp: 2024-04-22T16:40:10.646676187+05:30
+        timestamp: 2024-07-25T16:40:37.22984277+05:30
     objects: []
     assertions:
         noise:
             header.Date: []
-    created: 1713784210
+    created: 1721905837
 curl: |
-    curl --request DELETE \
-      --url http://localhost:5000/api/tasks/66263667c7c5eddf174c88e5 \
-      --header 'Accept-Encoding: gzip, deflate, br' \
-      --header 'Connection: keep-alive' \
-      --header 'User-Agent: PostmanRuntime/7.32.1' \
+    curl --request GET \
+      --url http://localhost:6000/students/12345 \
+      --header 'Host: localhost:6000' \
+      --header 'User-Agent: curl/7.88.1' \
       --header 'Accept: */*' \
-      --header 'Cache-Control: no-cache' \
-      --header 'Postman-Token: 0f3d6037-f57c-4fb3-be52-e6ffed1566e6' \
-      --header 'Host: localhost:5000' \

@@ -1,6 +1,6 @@
 version: api.keploy.io/v1beta1
 kind: Http
-name: test-2
+name: test-7
 spec:
     metadata: {}
     req:
@@ -10,12 +10,12 @@ spec:
         url: http://localhost:6000/students
         header:
             Accept: '*/*'
-            Content-Length: "55"
+            Content-Length: "54"
             Content-Type: application/json
             Host: localhost:6000
             User-Agent: curl/7.88.1
-        body: '{"student_id": "12347", "name": "Bob Brown", "age": 24}'
-        timestamp: 2024-07-25T16:40:35.155885209+05:30
+        body: '{"student_id": "12345", "name": "John Doe", "age": 20}'
+        timestamp: 2024-07-25T16:40:35.135840566+05:30
     resp:
         status_code: 200
         header:
@@ -30,7 +30,7 @@ spec:
         status_message: OK
         proto_major: 0
         proto_minor: 0
-        timestamp: 2024-07-25T16:40:37.229762646+05:30
+        timestamp: 2024-07-25T16:40:37.229899895+05:30
     objects: []
     assertions:
         noise:
@@ -39,8 +39,8 @@ spec:
 curl: |-
     curl --request POST \
       --url http://localhost:6000/students \
+      --header 'Content-Type: application/json' \
       --header 'Host: localhost:6000' \
       --header 'User-Agent: curl/7.88.1' \
       --header 'Accept: */*' \
-      --header 'Content-Type: application/json' \
-      --data '{"student_id": "12347", "name": "Bob Brown", "age": 24}'
+      --data '{"student_id": "12345", "name": "John Doe", "age": 20}'
