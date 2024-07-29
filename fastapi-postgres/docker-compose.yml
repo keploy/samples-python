@@ -13,7 +13,7 @@ services:
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - keploy-network
-  
+
   app:
     container_name: fastapi-app
     image: fastapi
