@@ -22,7 +22,7 @@ pip3 install -r requirements.txt
 Keploy can be installed on Linux directly and on Windows with the help of WSL. Based on your system architecture, install the keploy latest binary release
 
 ```bash
-curl -O https:///keploy.io/install.sh && source install.sh
+curl -O -L https:///keploy.io/install.sh && source install.sh
 ```
 
 ### Starting the PostgreSQL Instance
