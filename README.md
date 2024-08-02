@@ -25,6 +25,8 @@ This repo contains the samples for [Keploy's](https://keploy.io) integration wit
 
 4. [FastAPI-Twilio](https://github.com/keploy/samples-python/tree/main/fastapi-twilio) - This application is a SMS sending API built using Python's FastAPI and Twilio for their SMS sharing service.
 
+4. [Flask-Redis](https://github.com/keploy/samples-python/tree/main/flask-redis) - This is an Application to Signup, Login and Fetch all users from a database. 
+
 ## Community Support ❤️
 
 ### 🤔 Questions?
