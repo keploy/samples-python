@@ -1,0 +1,47 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:5000/books/
+        header:
+            Accept: '*/*'
+            Content-Length: "44"
+            Content-Type: application/json
+            Host: localhost:5000
+            User-Agent: curl/8.6.0
+        body: '{"title": "1984", "author": "George Orwell"}'
+        timestamp: 2024-08-02T22:15:10.596402605Z
+    resp:
+        status_code: 201
+        header:
+            Content-Length: "59"
+            Content-Type: application/json
+            Date: Fri, 02 Aug 2024 22:15:10 GMT
+            Server: Werkzeug/3.0.3 Python/3.10.14
+        body: |
+            {
+              "book_id": 1,
+              "message": "Book added successfully"
+            }
+        status_message: Created
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-08-02T22:15:12.681157884Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1722636912
+curl: |-
+    curl --request POST \
+      --url http://localhost:5000/books/ \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --header 'Host: localhost:5000' \
+      --header 'User-Agent: curl/8.6.0' \
+      --data '{"title": "1984", "author": "George Orwell"}'

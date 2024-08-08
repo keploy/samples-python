@@ -1,0 +1,50 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-5
+spec:
+    metadata: {}
+    req:
+        method: PUT
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:5000/books/1
+        header:
+            Accept: '*/*'
+            Content-Length: "54"
+            Content-Type: application/json
+            Host: localhost:5000
+            User-Agent: curl/8.6.0
+        body: '{"title": "1984 - Updated", "author": "George Orwell"}'
+        timestamp: 2024-08-02T22:15:39.802018618Z
+    resp:
+        status_code: 200
+        header:
+            Content-Length: "123"
+            Content-Type: application/json
+            Date: Fri, 02 Aug 2024 22:15:39 GMT
+            Server: Werkzeug/3.0.3 Python/3.10.14
+        body: |
+            {
+              "book": {
+                "author": "George Orwell",
+                "title": "1984 - Updated"
+              },
+              "message": "Book updated successfully"
+            }
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-08-02T22:15:41.813988842Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1722636941
+curl: |-
+    curl --request PUT \
+      --url http://localhost:5000/books/1 \
+      --header 'Host: localhost:5000' \
+      --header 'User-Agent: curl/8.6.0' \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --data '{"title": "1984 - Updated", "author": "George Orwell"}'
