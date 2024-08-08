@@ -1,0 +1,3 @@
+pymongo==4.6.3
+sanic==23.12.1
+sanic_motor==0.7.0
