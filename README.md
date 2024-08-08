@@ -25,6 +25,8 @@ This repo contains the samples for [Keploy's](https://keploy.io) integration wit
 
 4. [FastAPI-Twilio](https://github.com/keploy/samples-python/tree/main/fastapi-twilio) - This application is a SMS sending API built using Python's FastAPI and Twilio for their SMS sharing service.
 
+5. [Flask-Redis](https://github.com/keploy/samples-python/tree/main/flask-redis) - This Flask-based application provides a book management system utilizing Redis for caching and storage. It supports adding, retrieving, updating, and deleting book records, with optimized search functionality and cache management for improved performance. The API endpoints ensure efficient data handling and quick access to book information.
+
 ## Community Support ❤️
 
 ### 🤔 Questions?
