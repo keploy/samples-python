@@ -20,7 +20,7 @@ git clone https://github.com/keploy/samples-python.git && cd samples-python/djan
 Keploy can be installed on Linux directly and on Windows with the help of WSL. Based on your system architecture, install the keploy latest binary release
 
 ```bash
- curl -O https://raw.githubusercontent.com/keploy/keploy/main/keploy.sh && source keploy.sh
+ curl -O https://keploy.io/install.sh && source install.sh
  keploy
 ```
 
@@ -92,13 +92,13 @@ This will return all the data saved in the database.
 ### Make a GET request to get a specific data
 
 ```bash
-curl --location 'http://127.0.0.1:8000/user/c793c752-ad95-4cff-8cbe-5715a1e8a76e/'
+curl --location 'http://127.0.0.1:8000/user/<USER_ID>'
 ```
 
 ### Make a PUT request to update a specific data
 
 ```bash
-curl --location --request PUT 'http://127.0.0.1:8000/user/efbe12df-3cae-4cbc-b045-dc74840aa82b/' \
+curl --location --request PUT 'http://127.0.0.1:8000/user/<USER_ID>' \
 --header 'Content-Type: application/json' \
 --data-raw '    {
         "name": "Jane Smith",
@@ -111,7 +111,7 @@ curl --location --request PUT 'http://127.0.0.1:8000/user/efbe12df-3cae-4cbc-b04
 ### Make a DELETE request to delete a specific data
 
 ```bash
-curl --location --request DELETE 'http://127.0.0.1:8000/user/ee2af3fc-0503-4a6a-a452-b7d8c87a085b/'
+curl --location --request DELETE 'http://127.0.0.1:8000/user/<USER_ID>'
 ```
 
 Now both these API calls were captured as **editable** testcases and written to `keploy/tests` folder. The keploy directory would also have `mocks` file that contains all the outputs of postgres operations.
