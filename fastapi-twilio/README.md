@@ -6,6 +6,7 @@ A sample FastAPI-Twilio app to test Keploy integration capabilities using [FastA
 
 ```bash
 git clone https://github.com/keploy/samples-python.git && cd samples-python/fastapi-twilio
+pip3 install coverage
 pip3 install -r requirements.txt
 ```
 
@@ -14,8 +15,7 @@ pip3 install -r requirements.txt
 Keploy can be installed on Linux directly and on Windows with the help of WSL. Based on your system architecture, install the keploy latest binary release
 
 ```bash
- curl -O https://raw.githubusercontent.com/keploy/keploy/main/keploy.sh && source keploy.sh
- keploy
+curl -O https://keploy.io/install.sh && source install.sh
 ```
 
 ### Get your Twilio Credentials
@@ -28,7 +28,7 @@ Once you get the Twilio Account SID, Auth Token, and Phone Number, modify the `.
 This command will start the recording of API calls:-
 
 ```shell
-keploy record -c "uvicorn main:app --reload"
+keploy record -c "uvicorn main:app"
 ```
 
 Make API Calls using Hoppscotch, Postman or cURL command. Keploy with capture those calls to generate the test-suites containing testcases and data mocks.
@@ -37,25 +37,25 @@ Make API Calls using Hoppscotch, Postman or cURL command. Keploy with capture th
 
 1. Replace the place holder below i.e. `YOUR_REGISTERED_PERSONAL_PHONE_NUMBER` with your registered personal phone number that you linked with Twilio.
 
-    ```bash
-    curl --location 'http://127.0.0.1:8000/send-sms/' \
-    --header 'Content-Type: application/json' \
-    --data '{
-        "Body": "Test, testtt, testttttttssss :)",
-        "To": "YOUR_REGISTERED_PERSONAL_PHONE_NUMBER",
-    }'
-    ```
+```bash
+curl --location 'http://127.0.0.1:8000/send-sms/' \
+     --header 'Content-Type: application/json' \
+     --data-raw '{
+         "Body": "Test",
+         "To": "<OUR_REGISTERED_PERSONAL_PHONE_NUMBER>"
+     }'
+```
 
 2. Replace the place holder below i.e. `SOME_WRONG_PHONE_NUMBER` with any wrong phone number and make the request.
 
-    ```bash
-    curl --location 'http://127.0.0.1:8000/send-sms/' \
+```bash
+curl --location 'http://127.0.0.1:8000/send-sms/' \
     --header 'Content-Type: application/json' \
-    --data '{
+    --data-raw '{
         "Body": "Test, testtt, testttttttssss :)",
-        "To": "SOME_WRONG_PHONE_NUMBER",
+        "To": "<SOME_WRONG_PHONE_NUMBER>",
     }'
-    ```
+```
 
 Now all these API calls were captured as **editable** testcases and written to `keploy/tests` folder. The keploy directory would also have `mocks` file that contains all the outputs of Twilio operations.
 
@@ -64,7 +64,9 @@ Now all these API calls were captured as **editable** testcases and written to `
 Now let's run the application in test mode.
 
 ```shell
-keploy test -c "uvicorn main:app --reload" --delay 10
+keploy test -c "python3 -m uvicorn main:app" --delay 10
 ```
 
-So, no need to setup fake apis like Twilio or write mocks for them. Keploy automatically mocks them and, **The application thinks it's talking to Twilio 😄**
+So, no need to setup fake apis like Twilio or write mocks for them. Keploy automatically mocks them and, **The application thinks it's talking to Twilio 😄** .  We can notice that for a single API without using Twilio, we got around 89% of coverage :
+
+![testRun](./img/testrun.png)

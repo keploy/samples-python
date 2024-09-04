@@ -3,17 +3,16 @@ import requests
 from dotenv import load_dotenv
 from pydantic import BaseModel
 import os
+import asyncio
 
-
+# Load environment variables from a .env file
 load_dotenv()
-
 
 class Message(BaseModel):
     Body: str
     To: str
 
 app = FastAPI()
-
 
 @app.post('/send-sms/')
 def send_sms(data: Message):
@@ -37,3 +36,10 @@ def send_sms(data: Message):
             return {"message": "Failed to send SMS. Please check the provided phone number."}
     except Exception as e:
         return {"message": str(e)}
+
+# Graceful shutdown
+@app.on_event("shutdown")
+async def shutdown_event():
+    print("Shutting down gracefully...")
+    # Perform any additional cleanup here if needed
+    # For example, closing database connections or other resources

@@ -1,0 +1,42 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-3
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://127.0.0.1:8000/add_movie
+        header:
+            Accept: application/json
+            Content-Length: "19"
+            Content-Type: application/json; charset=utf-8
+            Host: 127.0.0.1:8000
+            User-Agent: curl/7.81.0
+        body: '{"name": "Titanic"}'
+        timestamp: 2024-06-26T01:16:35.890538161+05:30
+    resp:
+        status_code: 200
+        header:
+            Alt-Svc: ""
+            Connection: keep-alive
+            Content-Length: "51"
+            Content-Type: application/json
+        body: '{"_id":"667b1e9bd71cb97567de07c7","name":"Titanic"}'
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-06-26T01:16:37.940966466+05:30
+    objects: []
+    assertions:
+        noise: {}
+    created: 1719344797
+curl: |-
+    curl --request POST \
+      --url http://127.0.0.1:8000/add_movie \
+      --header 'Accept: application/json' \
+      --header 'Content-Type: application/json; charset=utf-8' \
+      --header 'Host: 127.0.0.1:8000' \
+      --header 'User-Agent: curl/7.81.0' \
+      --data '{"name": "Titanic"}'
