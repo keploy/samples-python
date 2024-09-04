@@ -1,36 +1,4 @@
-🐰 Keploy: 2024-09-04T19:57:40+05:30 	[34mINFO[0m	Generating tests for file: /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/app.py
-🐰 Keploy: 2024-09-04T19:57:40+05:30 	[34mINFO[0m	Running test command to generate coverage report: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
-🐰 Keploy: 2024-09-04T19:58:25+05:30 	[34mINFO[0m	Generating tests for file: /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/app.py
-🐰 Keploy: 2024-09-04T19:58:25+05:30 	[34mINFO[0m	Running test command to generate coverage report: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
-🐰 Keploy: 2024-09-04T19:58:49+05:30 	[34mINFO[0m	Generating tests for file: /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/app.py
-🐰 Keploy: 2024-09-04T19:58:49+05:30 	[34mINFO[0m	Running test command to generate coverage report: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
-🐰 Keploy: 2024-09-04T19:59:10+05:30 	[34mINFO[0m	Generating tests for file: /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/app.py
-🐰 Keploy: 2024-09-04T19:59:10+05:30 	[34mINFO[0m	Running test command to generate coverage report: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
-🐰 Keploy: 2024-09-04T19:59:32+05:30 	[34mINFO[0m	Total token used count for LLM model gpt-4o: 1271
-🐰 Keploy: 2024-09-04T19:59:32+05:30 	[34mINFO[0m	Validating new generated tests one by one
-🐰 Keploy: 2024-09-04T19:59:32+05:30 	[34mINFO[0m	Running test 5 times for proper validation with the following command: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
-🐰 Keploy: 2024-09-04T19:59:32+05:30 	[34mINFO[0m	Iteration no: 1
-🐰 Keploy: 2024-09-04T19:59:34+05:30 	[34mINFO[0m	Test failed in 1 iteration
-🐰 Keploy: 2024-09-04T19:59:34+05:30 	[34mINFO[0m	Skipping a generated test that failed
-🐰 Keploy: 2024-09-04T19:59:34+05:30 	[34mINFO[0m	Running test 5 times for proper validation with the following command: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
-🐰 Keploy: 2024-09-04T19:59:34+05:30 	[34mINFO[0m	Iteration no: 1
-🐰 Keploy: 2024-09-04T19:59:35+05:30 	[34mINFO[0m	Iteration no: 2
-🐰 Keploy: 2024-09-04T19:59:36+05:30 	[34mINFO[0m	Iteration no: 3
-🐰 Keploy: 2024-09-04T19:59:37+05:30 	[34mINFO[0m	Iteration no: 4
-🐰 Keploy: 2024-09-04T19:59:39+05:30 	[34mINFO[0m	Iteration no: 5
-🐰 Keploy: 2024-09-04T19:59:40+05:30 	[34mINFO[0m	Generated test passed and increased coverage
-🐰 Keploy: 2024-09-04T19:59:40+05:30 	[34mINFO[0m	Running test 5 times for proper validation with the following command: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
-🐰 Keploy: 2024-09-04T19:59:40+05:30 	[34mINFO[0m	Iteration no: 1
-🐰 Keploy: 2024-09-04T19:59:41+05:30 	[34mINFO[0m	Iteration no: 2
-🐰 Keploy: 2024-09-04T19:59:43+05:30 	[34mINFO[0m	Iteration no: 3
-🐰 Keploy: 2024-09-04T19:59:44+05:30 	[34mINFO[0m	Iteration no: 4
-🐰 Keploy: 2024-09-04T19:59:45+05:30 	[34mINFO[0m	Iteration no: 5
-🐰 Keploy: 2024-09-04T19:59:46+05:30 	[34mINFO[0m	Generated test passed and increased coverage
-🐰 Keploy: 2024-09-04T19:59:46+05:30 	[34mINFO[0m	Running test 5 times for proper validation with the following command: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
-🐰 Keploy: 2024-09-04T19:59:46+05:30 	[34mINFO[0m	Iteration no: 1
-🐰 Keploy: 2024-09-04T19:59:48+05:30 	[34mINFO[0m	Iteration no: 2
-🐰 Keploy: 2024-09-04T19:59:49+05:30 	[34mINFO[0m	Iteration no: 3
-🐰 Keploy: 2024-09-04T19:59:50+05:30 	[34mINFO[0m	Iteration no: 4
-🐰 Keploy: 2024-09-04T19:59:52+05:30 	[34mINFO[0m	Iteration no: 5
-🐰 Keploy: 2024-09-04T19:59:53+05:30 	[34mINFO[0m	Skipping a generated test that failed to increase coverage
-🐰 Keploy: 2024-09-04T19:59:53+05:30 	[34mINFO[0m	Running test command to generate coverage report: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
+🐰 Keploy: 2024-09-04T20:05:35+05:30 	[34mINFO[0m	Generating tests for file: /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/app.py
+🐰 Keploy: 2024-09-04T20:05:35+05:30 	[34mINFO[0m	Running test command to generate coverage report: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
+🐰 Keploy: 2024-09-04T20:06:08+05:30 	[34mINFO[0m	Generating tests for file: /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/app.py
+🐰 Keploy: 2024-09-04T20:06:08+05:30 	[34mINFO[0m	Running test command to generate coverage report: 'pytest --cov=app --cov-report=xml:coverage.xml /Users/yashkhare/Documents/keploy/samples-python/flask-mongo/test_app.py'
