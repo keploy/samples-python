@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Widget A",
+        "quantity": 100,
+        "description": "A high-quality widget that serves many purposes."
+    },
+    {
+        "name": "Widget B",
+        "quantity": 150,
+        "description": "An essential widget for every toolkit."
+    },
+    {
+        "name": "Gadget C",
+        "quantity": 200,
+        "description": "A versatile gadget with numerous features."
+    },
+    {
+        "name": "Gadget D",
+        "quantity": 50,
+        "description": "A compact gadget perfect for small spaces."
+    },
+    {
+        "name": "Tool E",
+        "quantity": 75,
+        "description": "A durable tool designed for heavy use."
+    },
+    {
+        "name": "Tool F",
+        "quantity": 120,
+        "description": "An ergonomic tool for comfortable handling."
+    }
+]
