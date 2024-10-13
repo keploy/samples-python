@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: flask_web_app
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://flaskuser:password@db:5432/flaskdb
+      - FLASK_APP=app.py            # Ensure Flask app is specified
+      - FLASK_ENV=development        
+    command: flask run --host=0.0.0.0  # Ensure Flask runs with the correct host
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    container_name: flask_db
+    environment:
+      POSTGRES_DB: flaskdb
+      POSTGRES_USER: flaskuser
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
