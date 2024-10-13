@@ -1,6 +1,5 @@
 # User Management API
 
-
 ## Overview
 
 This is a Flask-based web application that uses PostgreSQL as its database.
@@ -39,7 +38,7 @@ The endpoints available will be:
    ```
 5. Capture the testcases.
    ```bash
-   keploy record -c "docker compose up" --container-name "flask_web_app" 
+   keploy record -c "docker compose up --build" --container-name "flask_web_app" 
    ```
 6. Generate testcases by making API calls.
    ## Home Route
