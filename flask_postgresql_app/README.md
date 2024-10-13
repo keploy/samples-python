@@ -60,7 +60,7 @@ The endpoints available will be:
    ### Retrieve a user by their ID.
    ## GET /users/id
    ```bash
-   curl -X GET http://localhost:5000/users/<id>
+   curl -X GET http://localhost:8000/users/<id>
    ```
    ## Update the name of a user by their ID.
    ### PUT /users/id
