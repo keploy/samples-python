@@ -1,0 +1,44 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:8000/api/items/
+        header:
+            Accept: '*/*'
+            Host: localhost:8000
+            User-Agent: curl/7.68.0
+        body: ""
+        timestamp: 2024-10-19T19:04:26.158535156Z
+    resp:
+        status_code: 200
+        header:
+            Allow: GET, POST, HEAD, OPTIONS
+            Content-Length: "127"
+            Content-Type: application/json
+            Date: Sat, 19 Oct 2024 19:04:26 GMT
+            Referrer-Policy: same-origin
+            Server: WSGIServer/0.2 CPython/3.12.1
+            Vary: Accept, Cookie
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+        body: '[{"id":"6713ff286b75650a56907678","name":"Gadget C","quantity":200,"description":"A versatile gadget with numerous features."}]'
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-10-19T19:04:28.257078042Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1729364668
+curl: |
+    curl --request GET \
+      --url http://localhost:8000/api/items/ \
+      --header 'Accept: */*' \
+      --header 'Host: localhost:8000' \
+      --header 'User-Agent: curl/7.68.0' \
