@@ -1,0 +1,43 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-5
+spec:
+    metadata: {}
+    req:
+        method: DELETE
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:8000/api/items/6713ff286b75650a56907678/
+        header:
+            Accept: '*/*'
+            Host: localhost:8000
+            User-Agent: curl/7.68.0
+        body: ""
+        timestamp: 2024-10-19T19:08:19.983000488Z
+    resp:
+        status_code: 204
+        header:
+            Allow: GET, PUT, DELETE, HEAD, OPTIONS
+            Content-Length: "0"
+            Date: Sat, 19 Oct 2024 19:08:19 GMT
+            Referrer-Policy: same-origin
+            Server: WSGIServer/0.2 CPython/3.12.1
+            Vary: Accept, Cookie
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+        body: ""
+        status_message: No Content
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-10-19T19:08:22.044354383Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1729364902
+curl: |
+    curl --request DELETE \
+      --url http://localhost:8000/api/items/6713ff286b75650a56907678/ \
+      --header 'User-Agent: curl/7.68.0' \
+      --header 'Accept: */*' \
+      --header 'Host: localhost:8000' \

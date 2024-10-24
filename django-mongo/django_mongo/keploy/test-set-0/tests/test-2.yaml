@@ -1,0 +1,53 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-2
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:8000/api/items/
+        header:
+            Accept: '*/*'
+            Content-Length: "113"
+            Content-Type: application/json
+            Host: localhost:8000
+            User-Agent: curl/7.68.0
+        body: |-
+            {
+                "name": "Gadget C",
+                "quantity": 200,
+                "description": "A versatile gadget with numerous features."
+             }
+        timestamp: 2024-10-19T19:05:11.862316346Z
+    resp:
+        status_code: 201
+        header:
+            Allow: GET, POST, HEAD, OPTIONS
+            Content-Length: "93"
+            Content-Type: application/json
+            Date: Sat, 19 Oct 2024 19:05:11 GMT
+            Referrer-Policy: same-origin
+            Server: WSGIServer/0.2 CPython/3.12.1
+            Vary: Accept, Cookie
+            X-Content-Type-Options: nosniff
+            X-Frame-Options: DENY
+        body: '{"name":"Gadget C","quantity":200,"description":"A versatile gadget with numerous features."}'
+        status_message: Created
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-10-19T19:05:13.966578004Z
+    objects: []
+    assertions:
+        noise:
+            header.Date: []
+    created: 1729364713
+curl: |-
+    curl --request POST \
+      --url http://localhost:8000/api/items/ \
+      --header 'Content-Type: application/json' \
+      --header 'Host: localhost:8000' \
+      --header 'User-Agent: curl/7.68.0' \
+      --header 'Accept: */*' \
+      --data "{\n    \"name\": \"Gadget C\",\n    \"quantity\": 200,\n    \"description\": \"A versatile gadget with numerous features.\"\n }"
