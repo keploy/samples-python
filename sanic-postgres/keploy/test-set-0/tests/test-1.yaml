@@ -1,0 +1,48 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-1
+spec:
+    metadata: {}
+    req:
+        method: POST
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:8000/employees
+        header:
+            Accept: '*/*'
+            Content-Length: "151"
+            Content-Type: application/json
+            Host: localhost:8000
+            User-Agent: curl/8.10.1
+        body: |-
+            {
+                "first_name": "Bob",
+                "last_name": "Johnson",
+                "email": "bob.johnson@example.com",
+                "position": "Project Manager",
+                "salary": 75000
+            }
+        timestamp: 2024-11-02T00:24:11.530933247+05:30
+    resp:
+        status_code: 201
+        header:
+            Connection: keep-alive
+            Content-Length: "27"
+            Content-Type: application/json
+        body: '{"status":"Employee added"}'
+        status_message: Created
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-11-02T00:24:13.635103945+05:30
+    objects: []
+    assertions:
+        noise: {}
+    created: 1730487253
+curl: |-
+    curl --request POST \
+      --url http://localhost:8000/employees \
+      --header 'Host: localhost:8000' \
+      --header 'User-Agent: curl/8.10.1' \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --data "{\n    \"first_name\": \"Bob\",\n    \"last_name\": \"Johnson\",\n    \"email\": \"bob.johnson@example.com\",\n    \"position\": \"Project Manager\",\n    \"salary\": 75000\n}"

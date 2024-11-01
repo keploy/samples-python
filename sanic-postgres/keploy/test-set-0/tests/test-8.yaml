@@ -1,0 +1,38 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-8
+spec:
+    metadata: {}
+    req:
+        method: GET
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:8000/employees/2
+        header:
+            Accept: '*/*'
+            Host: localhost:8000
+            User-Agent: curl/8.10.1
+        body: ""
+        timestamp: 2024-11-02T00:26:04.960388094+05:30
+    resp:
+        status_code: 200
+        header:
+            Connection: keep-alive
+            Content-Length: "162"
+            Content-Type: application/json
+        body: '{"employee":{"id":2,"first_name":"Dhruv","last_name":"slashexx","email":"slashexx@example.com","position":"Developer","salary":60000.0,"date_hired":"2024-11-01"}}'
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-11-02T00:26:07.014944126+05:30
+    objects: []
+    assertions:
+        noise:
+            body.employee.date_hired: []
+    created: 1730487367
+curl: |
+    curl --request GET \
+      --url http://localhost:8000/employees/2 \
+      --header 'Host: localhost:8000' \
+      --header 'User-Agent: curl/8.10.1' \
+      --header 'Accept: */*' \
