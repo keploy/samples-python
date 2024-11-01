@@ -5,16 +5,13 @@ from dotenv import load_dotenv
 
 app = Sanic("EmployeeManagementApp")
 
-# Load environment variables
 load_dotenv()
 DB_URL = os.getenv("DATABASE_URL")
 
-# Database configuration
 DB_CONFIG = {
     "dsn": DB_URL,
 }
 
-# Initialize database connection pool
 @app.listener("before_server_start")
 async def setup_db(app, loop):
     app.ctx.db_pool = await create_pool(**DB_CONFIG, loop=loop)
@@ -23,7 +20,6 @@ async def setup_db(app, loop):
 async def close_db(app, loop):
     await app.ctx.db_pool.close()
 
-# Function to add an employee
 @app.route("/employees", methods=["POST"])
 async def add_employee(request):
     data = request.json
@@ -34,7 +30,6 @@ async def add_employee(request):
         )
     return response.json({"status": "Employee added"}, status=201)
 
-# Function to get all employees
 @app.route("/employees", methods=["GET"])
 async def get_employees(request):
     async with app.ctx.db_pool.acquire() as connection:
@@ -44,7 +39,6 @@ async def get_employees(request):
                       "date_hired": row["date_hired"].isoformat()} for row in rows]
     return response.json({"employees": employees})
 
-# Function to get a specific employee
 @app.route("/employees/<employee_id>", methods=["GET"])
 async def get_employee(request, employee_id):
     try:
@@ -70,7 +64,6 @@ async def get_employee(request, employee_id):
 
     return response.json({"employee": employee})
 
-# Function to update an employee
 @app.route("/employees/<employee_id>", methods=["PUT"])
 async def update_employee(request, employee_id):
     try:
