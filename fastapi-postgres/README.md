@@ -32,6 +32,9 @@ curl -O -L https:///keploy.io/install.sh && source install.sh
 docker-compose up -d
 ```
 
+> **Since we have setup our sample-app natively, we need to update the container name to postgres on line 6, in `application/database.py`, from `postgresql://postgres:postgres@localhost:5432/studentdb` to `postgresql://postgres:postgres@postgres:5432/studentdb`.**
+> **Also, we need to update the container name to postgres on line 11, of `application/main.py`, from `postgresql://postgres:postgres@localhost:5432/studentdb` to `postgresql://postgres:postgres@postgres:5432/studentdb`.**
+
 ### Capture the Testcases
 
 This command will start the recording of API calls :
