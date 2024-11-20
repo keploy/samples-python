@@ -1,0 +1,48 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-5
+spec:
+    metadata: {}
+    req:
+        method: PUT
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:8000/employees/1
+        header:
+            Accept: '*/*'
+            Content-Length: "157"
+            Content-Type: application/json
+            Host: localhost:8000
+            User-Agent: curl/8.10.1
+        body: |-
+            {
+                "first_name": "Frank",
+                "last_name": "Castle",
+                "email": "frank.castle@example.com",
+                "position": "Security Specialist",
+                "salary": 80000
+            }
+        timestamp: 2024-11-02T00:25:47.343116345+05:30
+    resp:
+        status_code: 404
+        header:
+            Connection: keep-alive
+            Content-Length: "31"
+            Content-Type: application/json
+        body: '{"status":"Employee not found"}'
+        status_message: Not Found
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-11-02T00:25:49.52236244+05:30
+    objects: []
+    assertions:
+        noise: {}
+    created: 1730487349
+curl: |-
+    curl --request PUT \
+      --url http://localhost:8000/employees/1 \
+      --header 'User-Agent: curl/8.10.1' \
+      --header 'Accept: */*' \
+      --header 'Content-Type: application/json' \
+      --header 'Host: localhost:8000' \
+      --data "{\n    \"first_name\": \"Frank\",\n    \"last_name\": \"Castle\",\n    \"email\": \"frank.castle@example.com\",\n    \"position\": \"Security Specialist\",\n    \"salary\": 80000\n}"

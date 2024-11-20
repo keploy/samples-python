@@ -1,0 +1,37 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-11
+spec:
+    metadata: {}
+    req:
+        method: DELETE
+        proto_major: 1
+        proto_minor: 1
+        url: http://localhost:8000/employees/2
+        header:
+            Accept: '*/*'
+            Host: localhost:8000
+            User-Agent: curl/8.10.1
+        body: ""
+        timestamp: 2024-11-02T00:26:45.433382637+05:30
+    resp:
+        status_code: 200
+        header:
+            Connection: keep-alive
+            Content-Length: "29"
+            Content-Type: application/json
+        body: '{"status":"Employee deleted"}'
+        status_message: OK
+        proto_major: 0
+        proto_minor: 0
+        timestamp: 2024-11-02T00:26:47.530880511+05:30
+    objects: []
+    assertions:
+        noise: {}
+    created: 1730487407
+curl: |
+    curl --request DELETE \
+      --url http://localhost:8000/employees/2 \
+      --header 'User-Agent: curl/8.10.1' \
+      --header 'Accept: */*' \
+      --header 'Host: localhost:8000' \
