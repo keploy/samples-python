@@ -5,7 +5,9 @@ from rest_framework import status
 from .models import Item
 from .serializers import ItemSerializer
 
-class ItemViewSet(viewsets.ViewSet):
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
     
     def list(self, request):
         items = Item.objects.all()
