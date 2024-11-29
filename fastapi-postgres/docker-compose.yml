@@ -3,6 +3,7 @@ services:
 
   postgres:
     image: postgres:latest
+    container_name: postgres
     environment:
       POSTGRES_DB: studentdb
       POSTGRES_USER: postgres
