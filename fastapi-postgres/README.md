@@ -29,10 +29,10 @@ curl -O -L https:///keploy.io/install.sh && source install.sh
 
 ```bash
 # Start the application
-docker-compose up -d
+docker-compose up -d postgres
 ```
 
-> **Since we have setup our sample-app natively, we need to update the container name to postgres on line 6, in `application/database.py`, from `postgresql://postgres:postgres@localhost:5432/studentdb` to `postgresql://postgres:postgres@postgres:5432/studentdb`.**
+> **If we have setup our sample-app with docker, we need to update the container name to postgres on line 6, in `application/database.py`, from `postgresql://postgres:postgres@localhost:5432/studentdb` to `postgresql://postgres:postgres@postgres:5432/studentdb`.**
 
 > **Also, we need to update the container name to postgres on line 11, of `application/main.py`, from `postgresql://postgres:postgres@localhost:5432/studentdb` to `postgresql://postgres:postgres@postgres:5432/studentdb`.**
 
@@ -119,4 +119,3 @@ We will get output something like below -
 By making just 2 api call, we have generated a complete test suite for our application and acheived 72% coverage.
 
 So, no need to setup fake database/apis like Postgres or write mocks for them. Keploy automatically mocks them and, **The application thinks it's talking to Postgres 😄** 
-
