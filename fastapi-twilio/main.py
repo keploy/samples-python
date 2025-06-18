@@ -32,25 +32,25 @@ def send_sms(data: Message):
 
 @app.post("/make-call/")
 def make_call(data: Message):
-    # Get Twilio credentials and your Twilio number from environment variables
+    # Getting Twilio credentials and Twilio number from environment variables
     account_sid = os.getenv('TWILIO_ACCOUNT_SID')
     auth_token = os.getenv('TWILIO_AUTH_TOKEN')
     twilio_number = os.getenv('TWILIO_NUMBER')
 
-    # Get your public ngrok URL from environment variables (should be set manually)
+    # Get public ngrok URL from environment variables
     ngrok_url = os.getenv('NGROK_URL')
 
-    # Create a voice URL with the message as a query param (Twilio will fetch this)
+    # Creating a voice URL with the message as a query param (Twilio will fetch this)
     voice_url = f"{ngrok_url}/voice?message={quote(data.Body)}"
 
     # Twilio's API endpoint to initiate a voice call
     url = f"https://api.twilio.com/2010-04-01/Accounts/{account_sid}/Calls.json"
 
-    # Set up the details of the call: who to call, from which number, and what to say
+    # Setting up the details of the call: whom to call, from which number, and what to say
     payload = {
-        'To': data.To,             # The number to call
-        'From': twilio_number,     # Your Twilio number
-        'Url': voice_url           # Twilio fetches this to know what to speak
+        'To': data.To,            
+        'From': twilio_number,     
+        'Url': voice_url           
     }
 
     # Make a POST request to Twilio to start the call
@@ -64,10 +64,10 @@ def make_call(data: Message):
 
 @app.api_route("/voice", methods=["GET", "POST"])
 async def voice(request: Request):
-    # Extract the 'message' query parameter from the URL, or use a default
+    # Extracting the 'message' query parameter from the URL, or use a default
     message = request.query_params.get("message", "Hello from Twilio!")
 
-    # Print the message to the console for debugging/logging
+    
     print(f"📞 Twilio is trying to say: {message}")
 
     # Respond with TwiML (Twilio Markup Language) to tell Twilio what to speak
