@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from models import db, Student
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -22,7 +21,16 @@ def get_students():
 @app.route('/students', methods=['POST'])
 def add_student():
     data = request.get_json()
-    student = Student(name=data['name'], age=data['age'])
+    
+    # Validation
+    if not data:
+        return jsonify({"error": "Missing JSON body"}), 400
+    if 'name' not in data or not isinstance(data['name'], str) or not data['name'].strip():
+        return jsonify({"error": "Invalid or missing 'name'"}), 400
+    if 'age' not in data or not isinstance(data['age'], int):
+        return jsonify({"error": "Invalid or missing 'age'"}), 400
+
+    student = Student(name=data['name'].strip(), age=data['age'])
     db.session.add(student)
     db.session.commit()
     return jsonify({"id": student.id}), 201
@@ -31,8 +39,19 @@ def add_student():
 def update_student(id):
     student = Student.query.get_or_404(id)
     data = request.get_json()
-    student.name = data['name']
-    student.age = data['age']
+
+    # Validation
+    if not data:
+        return jsonify({"error": "Missing JSON body"}), 400
+    if 'name' in data:
+        if not isinstance(data['name'], str) or not data['name'].strip():
+            return jsonify({"error": "Invalid 'name'"}), 400
+        student.name = data['name'].strip()
+    if 'age' in data:
+        if not isinstance(data['age'], int):
+            return jsonify({"error": "Invalid 'age'"}), 400
+        student.age = data['age']
+
     db.session.commit()
     return jsonify({"message": "Updated"}), 200
 
@@ -47,4 +66,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
