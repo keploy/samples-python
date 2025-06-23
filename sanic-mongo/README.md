@@ -34,9 +34,40 @@ alias keploy='sudo docker run --pull always --name keploy-v2 -p 16789:16789 --pr
 
 Now head to the folder of the application and run
 
-```
-pip3 install -r requirements.txt
-```
+1. Navigate your project directory:
+
+    ```bash
+    cd sample-python/sanic-mongo
+    ```
+
+2. Create a Virtual Environment:
+
+    ```bash
+    python -m venv venv
+    ```
+3. Activating the Virtual Environment
+
+    On Windows:
+
+    ```bash
+    venv\Scripts\activate
+    ```
+
+    On macOS and Linux:
+
+    ```bash
+    source venv/bin/activate
+    ```
+4. Install the required Python packages:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+5. To exit your Virtual Environment:
+
+    ```bash
+    deactivate
+    ```
 
 ### Lights, Camera, Record! 🎥
 
