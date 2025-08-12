@@ -74,7 +74,15 @@ This will return a token. Copy the `access_token` value and export it as an envi
 export JWT_TOKEN=<your_access_token_here>
 ```
 
-**2. Create a new data payload**
+**2. Check application health**
+
+This endpoint doesn't require authentication.
+
+```bash
+curl -X GET http://localhost:5000/health
+```
+
+**3. Create a new data payload**
 
 ```bash
 curl -X POST \
@@ -84,7 +92,7 @@ curl -X POST \
   -d '{"message": "First data log"}'
 ```
 
-**3. Get all data payloads**
+**4. Get all data payloads**
 
 ```bash
 curl -X GET \
@@ -92,7 +100,59 @@ curl -X GET \
   -H "Authorization: Bearer $JWT_TOKEN"
 ```
 
-**4. Get a financial summary report**
+**5. Generate complex queries**
+
+```bash
+curl -X GET \
+  http://localhost:5000/generate-complex-queries \
+  -H "Authorization: Bearer $JWT_TOKEN"
+```
+
+**6. Get system status**
+
+```bash
+curl -X GET \
+  http://localhost:5000/system/status \
+  -H "Authorization: Bearer $JWT_TOKEN"
+```
+
+**7. Get database migrations**
+
+```bash
+curl -X GET \
+  http://localhost:5000/system/migrations \
+  -H "Authorization: Bearer $JWT_TOKEN"
+```
+
+**8. Check a blacklisted token**
+
+This uses a sample JTI (`9522d59c56404995af98d4c30bde72b3`) that is seeded into the database by the startup script.
+
+```bash
+curl -X GET \
+  http://localhost:5000/auth/check-token/9522d59c56404995af98d4c30bde72b3 \
+  -H "Authorization: Bearer $JWT_TOKEN"
+```
+
+**9. Create an API log entry**
+
+```bash
+curl -X POST \
+  http://localhost:5000/logs \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $JWT_TOKEN" \
+  -d '{"event": "user_action", "details": "testing log endpoint"}'
+```
+
+**10. Generate a client summary report**
+
+```bash
+curl -X GET \
+  http://localhost:5000/reports/client-summary \
+  -H "Authorization: Bearer $JWT_TOKEN"
+```
+
+**11. Get a full financial summary report**
 
 ```bash
 curl -X GET \
@@ -100,7 +160,33 @@ curl -X GET \
   -H "Authorization: Bearer $JWT_TOKEN"
 ```
 
-Give yourself a pat on the back! With that simple spell, you've conjured up a test case with a mock! Explore the **Keploy directory** and you'll discover your handiwork in `test-1.yml` and `mocks.yml`.
+**12. Search for a client**
+
+Search by client name:
+```bash
+curl -X GET \
+  "http://localhost:5000/search/clients?q=Global" \
+  -H "Authorization: Bearer $JWT_TOKEN"
+```
+Search by account number:
+```bash
+curl -X GET \
+  "http://localhost:5000/search/clients?q=F12345" \
+  -H "Authorization: Bearer $JWT_TOKEN"
+```
+
+**13. Perform a fund transfer**
+
+This transfers `100.00` from account `1` to account `2`, which are created by the startup script.
+```bash
+curl -X POST \
+  http://localhost:5000/transactions/transfer \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $JWT_TOKEN" \
+  -d '{"from_account_id": 1, "to_account_id": 2, "amount": "100.00"}'
+```
+
+Give yourself a pat on the back! With those simple spells, you've conjured up a test case with a mock for each endpoint! Explore the **Keploy directory** and you'll discover your handiwork in your `test-*.yml` and `mocks.yml` files.
 
 A generated test case for the POST request will look like this:
 
@@ -237,23 +323,9 @@ curl -X POST -H "Content-Type: application/json" -d '{"username": "admin", "pass
 export JWT_TOKEN=<your_access_token_here>
 ```
 
-**2. Create a new data payload**
+**2. Make API calls**
 
-```bash
-curl -X POST \
-  http://localhost:5000/data \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $JWT_TOKEN" \
-  -d '{"message": "First data log"}'
-```
-
-**3. Get all data payloads**
-
-```bash
-curl -X GET \
-  http://localhost:5000/data \
-  -H "Authorization: Bearer $JWT_TOKEN"
-```
+Use the `curl` commands from the "With Docker" section above to generate tests for all the other endpoints.
 
 After making a few calls, you will see test cases and mocks being generated in your project directory.
 
@@ -272,3 +344,4 @@ Final thoughts? Dive deeper! Try different API calls, tweak the DB response in t
 Congrats on the journey so far! You've seen Keploy's power, flexed your coding muscles, and had a bit of fun too! Now, go out there and keep exploring, innovating, and creating! Remember, with the right tools and a sprinkle of fun, anything's possible. 😊🚀
 
 Happy coding! ✨👩‍💻👨‍💻✨
+```
