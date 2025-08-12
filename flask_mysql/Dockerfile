@@ -36,4 +36,4 @@ HEALTHCHECK --interval=5s --timeout=3s --start-period=10s --retries=3 \
   CMD curl -f http://localhost:5000/ || exit 1
 # ---- END NEW HEALTHCHECK ----
 
-CMD ["python", "demo.py"]
+CMD ["python", "main.py"]
