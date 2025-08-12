@@ -149,12 +149,6 @@ def setup_database():
     conn.close()
     print("Database setup complete.")
 
-
-
-
-
-
-
 # --- Health Check ---
 @app.route("/health", methods=["GET"])
 def health_check():
