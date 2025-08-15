@@ -51,3 +51,5 @@ PyYAML==6.0
 rich==13.3.1
 six==1.16.0
 ssh-import-id==5.10
+httpx
+pydantic
