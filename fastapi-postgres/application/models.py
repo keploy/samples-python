@@ -11,3 +11,6 @@ class Student(Base):
     email = Column(String, name="Email", index=True)
     password = Column(String, name="Hashed Password")
     stream = Column(String, name="Subject Stream", default="Mathematics")
+
+    def __repr__(self):
+        return f"<Student(name='{self.name}', email='{self.email}')>"
