@@ -161,12 +161,6 @@ _Voila!! Our testcases has passed 🌟_
 
 ---
 
-## 💡 Beginner Tips
 
-- 🧪 It's highly recommended to use a **virtual environment** to manage Python dependencies without conflicts.
-- 🐳 Make sure Docker is installed and running before using the Docker-based setup.
-- ⚠️ If you're on **Windows**, use **WSL** for native mode (not traditional CMD or PowerShell).
-- 🧾 Don’t forget to create the `.env` file before running the app — it's required for Redis.
-- 🧰 Not familiar with tools like Postman or curl? Try [Hoppscotch](https://hoppscotch.io) — it's beginner friendly.
 
 ---
