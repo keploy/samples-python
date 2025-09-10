@@ -1,0 +1,54 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env/
+
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Node.js
+node_modules/
+
+# Coverage reports
+.coverage
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Test output
+nosetests.xml
+pytest_cache/
+junit.xml
+
+# Environment variables
+.env
+.env.*
+
+# Other
+*.bak
+*.tmp
