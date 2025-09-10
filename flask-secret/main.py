@@ -1,0 +1,354 @@
+# main.py
+from flask import Flask, Response
+import json
+import random
+import string
+
+app = Flask(__name__)
+
+# ---------- Deterministic helpers ----------
+
+ALNUM = string.ascii_letters + string.digits
+HEX = ''.join(sorted(set(string.hexdigits.lower()) - set('x')))
+B64 = string.ascii_letters + string.digits + '+/'
+
+def rand(rng, charset, n):
+    return ''.join(rng.choice(charset) for _ in range(n))
+
+def aws_access_key_id(rng):
+    return "AKIA" + ''.join(rng.choice(string.ascii_uppercase + string.digits) for _ in range(16))
+
+def aws_secret_access_key(rng):
+    return rand(rng, B64, 40)
+
+def github_pat(rng):
+    return "ghp_" + rand(rng, ALNUM, 36)
+
+def slack_webhook(rng):
+    return f"https://hooks.slack.com/services/{rand(rng, string.ascii_uppercase+string.digits,9)}/{rand(rng, string.ascii_uppercase+string.digits,9)}/{rand(rng, ALNUM,24)}"
+
+def stripe_live_key(rng):
+    return "sk_live_" + rand(rng, ALNUM, 28)
+
+def google_api_key(rng):
+    return "AIza" + rand(rng, ALNUM + "_-", 35)
+
+def twilio_auth_token(rng):
+    return rand(rng, HEX, 32)
+
+def sendgrid_api_key(rng):
+    return "SG." + rand(rng, B64, 22) + "." + rand(rng, B64, 43)
+
+def datadog_api_key(rng):
+    return rand(rng, HEX, 32)
+
+def aws_s3_presigned_url(rng):
+    bucket = f"bucket-{rand(rng, string.ascii_lowercase+string.digits,8)}"
+    key = f"{rand(rng, string.ascii_lowercase,6)}/{rand(rng, ALNUM,16)}.bin"
+    x_amz_cred = f"{rand(rng, string.digits,8)}/{rand(rng, string.digits,8)}/us-east-1/s3/aws4_request"
+    return (
+        f"https://{bucket}.s3.amazonaws.com/{key}"
+        f"?X-Amz-Algorithm=AWS4-HMAC-SHA256"
+        f"&X-Amz-Credential={x_amz_cred}"
+        f"&X-Amz-Date=20250101T000000Z"
+        f"&X-Amz-Expires=900"
+        f"&X-Amz-Signature={rand(rng, HEX, 64)}"
+        f"&X-Amz-SignedHeaders=host"
+    )
+
+def azure_storage_conn_string(rng):
+    return (
+        "DefaultEndpointsProtocol=https;"
+        f"AccountName={rand(rng, string.ascii_lowercase,12)};"
+        f"AccountKey={rand(rng, B64, 88)};"
+        "EndpointSuffix=core.windows.net"
+    )
+
+def mongo_uri(rng):
+    return (
+        f"mongodb+srv://{rand(rng, string.ascii_lowercase,6)}:"
+        f"{rand(rng, ALNUM,16)}@cluster{rand(rng, string.ascii_lowercase+string.digits,5)}."
+        f"{rand(rng, string.ascii_lowercase,6)}.mongodb.net/"
+        f"{rand(rng, string.ascii_lowercase,6)}?retryWrites=true&w=majority&appName="
+        f"{rand(rng, ALNUM,10)}"
+    )
+
+def postgres_url(rng):
+    return (
+        f"postgres://{rand(rng, string.ascii_lowercase,6)}:{rand(rng, ALNUM,14)}@"
+        f"{rand(rng, string.ascii_lowercase,6)}.{rand(rng, string.ascii_lowercase,3)}.internal:5432/"
+        f"{rand(rng, string.ascii_lowercase,6)}"
+    )
+
+def github_webhook_secret(rng):
+    return rand(rng, ALNUM, 40)
+
+def npm_token(rng):
+    return "npm_" + rand(rng, ALNUM, 36)
+
+def gcp_service_account_key_id(rng):
+    return rand(rng, HEX, 8)
+
+def gcp_service_account_email(rng):
+    return f"{rand(rng, string.ascii_lowercase,10)}@{rand(rng, string.ascii_lowercase,8)}.iam.gserviceaccount.com"
+
+def openai_api_key(rng):
+    return "sk-" + rand(rng, ALNUM+"_", 48)
+
+def cloudflare_api_token(rng):
+    return rand(rng, HEX, 40)
+
+def github_app_private_key_id(rng):
+    return rand(rng, string.digits, 6)
+
+# Catalog of secret generators
+GENS = [
+    ("aws_access_key_id", aws_access_key_id),
+    ("aws_secret_access_key", aws_secret_access_key),
+    ("aws_s3_presigned_url", aws_s3_presigned_url),
+    ("github_pat", github_pat),
+    ("github_webhook_secret", github_webhook_secret),
+    ("slack_webhook_url", slack_webhook),
+    ("stripe_live_key", stripe_live_key),
+    ("google_api_key", google_api_key),
+    ("twilio_auth_token", twilio_auth_token),
+    ("sendgrid_api_key", sendgrid_api_key),
+    ("datadog_api_key", datadog_api_key),
+    ("azure_storage_connection_string", azure_storage_conn_string),
+    ("mongodb_uri", mongo_uri),
+    ("postgres_url", postgres_url),
+    ("npm_token", npm_token),
+    ("gcp_service_account_key_id", gcp_service_account_key_id),
+    ("gcp_service_account_email", gcp_service_account_email),
+    ("openai_api_key", openai_api_key),
+    ("cloudflare_api_token", cloudflare_api_token),
+    ("github_app_private_key_id", github_app_private_key_id),
+]
+
+# Fixed seeds and fixed timestamp string for full determinism
+FIXED_TIMESTAMP = "2025-01-01T00:00:00Z"
+COMMON_SEED = 20250909
+UNIQUE_BASE_SEED = 777000
+
+def generate_common_secrets():
+    # Generate *all* common secrets deterministically so any referenced key exists.
+    rng = random.Random(COMMON_SEED)
+    commons = {}
+    for name, gen in GENS:
+        commons[name] = gen(rng)
+    return commons
+
+
+def generate_unique_secrets(endpoint_idx, count=40):
+    rng = random.Random(UNIQUE_BASE_SEED + endpoint_idx * 111)
+    out = {}
+    i = 0
+    while len(out) < count:
+        name, gen = GENS[i % len(GENS)]
+        key = f"{name}_{len(out)+1}"
+        out[key] = gen(rng)
+        i += 1
+    return out
+
+def stable_id(prefix, seed, n=24):
+    rng = random.Random(seed)
+    return prefix + '_' + rand(rng, ALNUM, n)
+
+def deeply_nested_payload(endpoint_name, endpoint_idx):
+    commons = generate_common_secrets()
+    uniques = generate_unique_secrets(endpoint_idx)
+
+    payload = {
+        "status": 200,
+        "reason": "OK",
+        "meta": {
+            "endpoint": endpoint_name,
+            "timestamp": FIXED_TIMESTAMP,
+            "version": "v1",
+            "trace": {
+                "session": {
+                    "id": stable_id("sess", 1000 + endpoint_idx, 24),
+                    "labels": ["sensitive", "test-fixture", "synthetic"],
+                    "routing": {
+                        "region": "us-east-1",
+                        "fallback": False,
+                        "partitions": [
+                            {"name": "p0", "weight": 60},
+                            {"name": "p1", "weight": 40},
+                        ],
+                    },
+                }
+            },
+        },
+        "data": {
+            "page_info": {
+                "id": stable_id("pg", 2000 + endpoint_idx, 8),
+                "page_meta": {
+                    "type": "LIST",
+                    "floating_meta": {"stack": "HORIZONTAL", "arrangement": "SPACE_BETWEEN"},
+                },
+                "name": f"Deep Secret Dump {endpoint_name.upper()}",
+                "layout_params": {
+                    "background_color": "#0B1221",
+                    "page_layout": [{"type": "widget", "id": "w-1"}, {"type": "widget", "id": "w-2"}],
+                    "usePageLayout": True,
+                },
+                "seo_data": {"seo_desc": "Synthetic secrets for scanner testing", "tags": ["gitleaks", "testing"]},
+            },
+            "page_content": {
+                "header_widgets": [
+                    {
+                        "id": 101,
+                        "type": "BREADCRUMBS",
+                        "data": {"breadcrumbs": [{"label": "Root"}, {"label": endpoint_name}]},
+                    }
+                ],
+                "widgets": [
+                    {
+                        "id": "cfg-001",
+                        "type": "CONFIG",
+                        "data": {
+                            "providers": {
+                                "aws": {
+                                    "iam": {
+                                        "access_key_id": commons["aws_access_key_id"],
+                                        "secret_access_key": commons["aws_secret_access_key"],
+                                    },
+                                    "s3": {"presigned_example": commons["aws_s3_presigned_url"]},
+                                },
+                                "github": {
+                                    "pat": commons["github_pat"],
+                                    "webhook_secret": commons["github_webhook_secret"],
+                                },
+                                "slack": {"webhook_url": commons["slack_webhook_url"]},
+                                "stripe": {"live_key": commons["stripe_live_key"]},
+                                "google": {"api_key": commons["google_api_key"]},
+                            },
+                            "databases": {
+                                "mongo": {"uri": commons["mongodb_uri"]},
+                                "postgres": {"url": commons["postgres_url"]},
+                            },
+                            "cloud": {
+                                "azure": {"storage_connection_string": commons["azure_storage_connection_string"]},
+                                "gcp": {
+                                    "service_account": {
+                                        "key_id": commons["gcp_service_account_key_id"],
+                                        "email": commons["gcp_service_account_email"],
+                                    }
+                                },
+                            },
+                            "ml": {"openai": {"api_key": commons["openai_api_key"]}},
+                            "observability": {"datadog": {"api_key": commons["datadog_api_key"]}},
+                            "package": {"npm": {"token": commons["npm_token"]}},
+                        },
+                    },
+                    {
+                        "id": "cfg-002",
+                        "type": "SECRETS_UNIQUE",
+                        "data": {
+                            "layers": [
+                                {
+                                    "name": "layer-1",
+                                    "children": [
+                                        {
+                                            "name": "layer-2",
+                                            "children": [
+                                                {
+                                                    "name": "layer-3",
+                                                    "buckets": [
+                                                        {
+                                                            "name": "bucket-a",
+                                                            "entries": [
+                                                                {"k": k, "v": v}
+                                                                for k, v in list(uniques.items())[:15]
+                                                            ],
+                                                        },
+                                                        {
+                                                            "name": "bucket-b",
+                                                            "entries": [
+                                                                {"k": k, "v": v}
+                                                                for k, v in list(uniques.items())[15:30]
+                                                            ],
+                                                        },
+                                                    ],
+                                                }
+                                            ],
+                                        }
+                                    ],
+                                },
+                                {
+                                    "name": "layer-1b",
+                                    "matrix": {
+                                        "row0": {k: v for k, v in list(uniques.items())[30:40]},
+                                        "row1": {k: v for k, v in list(uniques.items())[10:20]},
+                                    },
+                                },
+                            ]
+                        },
+                    },
+                ],
+                "footer_widgets": [],
+                "floating_widgets": [
+                    {
+                        "id": "flt-1",
+                        "type": "SECRETS_DUPLICATED_VIEW",
+                        "data": {
+                            "shadow": {
+                                "layer": {
+                                    "mirror": {
+                                        "commons": {
+                                            "aws": {
+                                                "access_key_id": commons["aws_access_key_id"],
+                                                "secret_access_key": commons["aws_secret_access_key"],
+                                            },
+                                            "github": {"pat": commons["github_pat"]},
+                                            "stripe": {"live_key": commons["stripe_live_key"]},
+                                            "google": {"api_key": commons["google_api_key"]},
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                    }
+                ],
+            },
+            "has_nudge": False,
+            "ttl": 10,
+        },
+    }
+    return payload
+
+def make_response(payload_dict):
+    # Canonical, stable JSON string: keys sorted, compact separators
+    body = json.dumps(payload_dict, sort_keys=True, separators=(",", ":"))
+    return Response(body, mimetype="application/json")
+
+# ---------- Endpoints (stable across runs) ----------
+
+def make_endpoint(idx):
+    def handler():
+        payload = deeply_nested_payload(f"secret{idx}", idx)
+        return make_response(payload)
+    handler.__name__ = f"secret_{idx}_handler"
+    return handler
+
+@app.route("/secret1", methods=["GET"])
+def secret1():
+    return make_endpoint(1)()
+
+@app.route("/secret2", methods=["GET"])
+def secret2():
+    return make_endpoint(2)()
+
+@app.route("/secret3", methods=["GET"])
+def secret3():
+    return make_endpoint(3)()
+
+@app.route("/health", methods=["GET"])
+def health():
+    return make_response({"status": "ok", "ts": FIXED_TIMESTAMP})
+
+if __name__ == "__main__":
+    # pip install flask
+    # python main.py
+    app.run(host="0.0.0.0", port=8000, debug=False)
