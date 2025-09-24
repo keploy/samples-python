@@ -3,7 +3,6 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
 SHELL ["cmd", "/S", "/C"]
 
-REM --- Install Python 3.9 system-wide and add to PATH ---
 RUN curl -L -o C:\python39.exe https://www.python.org/ftp/python/3.9.13/python-3.9.13-amd64.exe ^
  && C:\python39.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 ^
  && del C:\python39.exe
@@ -11,7 +10,6 @@ RUN curl -L -o C:\python39.exe https://www.python.org/ftp/python/3.9.13/python-3
 WORKDIR C:\app
 COPY . .
 
-REM Optional: speed up / be resilient
 ENV PIP_DEFAULT_TIMEOUT=100
 RUN pip install --no-cache-dir -r requirements.txt
 
