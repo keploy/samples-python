@@ -131,13 +131,11 @@ COMMON_SEED = 20250909
 UNIQUE_BASE_SEED = 777000
 
 def generate_common_secrets():
-    # Generate *all* common secrets deterministically so any referenced key exists.
     rng = random.Random(COMMON_SEED)
     commons = {}
     for name, gen in GENS:
         commons[name] = gen(rng)
     return commons
-
 
 def generate_unique_secrets(endpoint_idx, count=40):
     rng = random.Random(UNIQUE_BASE_SEED + endpoint_idx * 111)
@@ -319,9 +317,58 @@ def deeply_nested_payload(endpoint_name, endpoint_idx):
     return payload
 
 def make_response(payload_dict):
-    # Canonical, stable JSON string: keys sorted, compact separators
     body = json.dumps(payload_dict, sort_keys=True, separators=(",", ":"))
     return Response(body, mimetype="application/json")
+
+# ---------- NEW: astronomy payload (pre-escaped JSON string) ----------
+# raw string keeps \u003c, \\ and {{...}} exactly as-is
+ASTRO_JSON = r'''
+{
+  "status":200,
+  "reason":"OK",
+  "data":{
+    "catalog":{
+      "catalog_id":"NGC-ORION",
+      "name":"Deep Sky Catalog – Orion Region",
+      "entries":[
+        {
+          "object":{
+            "id":"M42",
+            "type":"Nebula",
+            "content":[
+              {
+                "language":1,
+                "desc":{
+                  "text":"\"\u003cdiv style=\\\"text-align:justify\\\" \u003eThe Orion Nebula (M42) is a diffuse nebula visible to the naked eye; it is one of the most studied regions of star formation.\u003c\\/div\u003e\\n\""
+                },
+                "images":[
+                  {"alt":"\\\\frac{{L}}{{4\\pi d^{2}}}","src":"luminosity_distance.png"},
+                  {"alt":"v_{esc}=\\\\sqrt{\\\\frac{2GM}{{R}}}","src":"escape_velocity.png"}
+                ],
+                "object_language":"ENGLISH",
+                "nature":"CATALOG_ENTRY"
+              },
+              {
+                "language":2,
+                "desc":{
+                  "text":"\"\u003cdiv style=\\\"text-align:justify\\\" \u003e\u0913\u0930\u093e\u092f\u0928 \u0928\u0947\u092c\u094d\u092f\u0942\u0932\u093e (M42) \u090f\u0915 \u0935\u093f\u0938\u094d\u0924\u0943\u0924 \u0928\u0947\u092c\u094d\u092f\u0942\u0932\u093e \u0939\u0948 \u091c\u094b \u0928\u0902\u0917\u0940 \u0906\u0902\u0916\u094b\u0902 \u0938\u0947 \u0926\u093f\u0916\u093e\u0908 \u0926\u0947\u0924\u0940 \u0939\u0948।\u003c\\/div\u003e\\n\""
+                },
+                "images":[
+                  {"alt":"\\\\int_0^{R} 4\\pi r^2 \\rho(r)\\,dr = {{M_{\\odot}}}","src":"mass_integral.png"}
+                ],
+                "object_language":"HINDI",
+                "nature":"CATALOG_ENTRY"
+              }
+            ],
+            "spectrum":{"wavelength_nm":[486.1,656.3],"lines":["H\\\\beta","H\\\\alpha"]}
+          },
+          "metadata":{"ra":"05h35m17.3s","dec":"-05\u00B023'28\"","distance_ly":1344}
+        }
+      ]
+    }
+  }
+}
+'''
 
 # ---------- Endpoints (stable across runs) ----------
 
@@ -343,6 +390,11 @@ def secret2():
 @app.route("/secret3", methods=["GET"])
 def secret3():
     return make_endpoint(3)()
+
+# NEW: astronomy-themed endpoint with tricky characters/encodings
+@app.route("/astro", methods=["GET"])
+def astro():
+    return Response(ASTRO_JSON, mimetype="application/json")
 
 @app.route("/health", methods=["GET"])
 def health():
