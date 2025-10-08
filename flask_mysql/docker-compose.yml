@@ -2,6 +2,7 @@ services:
   db:
     image: mysql:8.4
     container_name: simple-demo-db
+    command: ["--default-authentication-plugin=mysql_native_password"]
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: demo
@@ -15,9 +16,5 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-uroot", "-prootpass", "--silent"]
       interval: 5s
-      retries: 10
-
-networks:
-  keploy-network:
-    external: true 
-    driver: bridge
+      timeout: 5s
+      retries: 20
