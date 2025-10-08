@@ -52,8 +52,15 @@ DB_CFG = dict(
 )
 
 def get_db_connection():
+    extra = {}
+    if os.getenv("DB_SSL_DISABLED", "1") == "1":
+        extra["ssl_disabled"] = True
+        extra["allow_public_key_retrieval"] = True
+    elif os.getenv("DB_FORCE_TLS12", "0") == "1":
+        extra["tls_versions"] = ["TLSv1.2"]
+
     try:
-        return mysql.connector.connect(**DB_CFG)
+        return mysql.connector.connect(**DB_CFG, **extra, connection_timeout=5)
     except mysql.connector.Error as err:
         print(f"FATAL: Could not connect to database: {err}", file=sys.stderr)
         return None
