@@ -30,10 +30,16 @@ ENV FLASK_ENV=production
 # Expose port 5000 for Flask
 EXPOSE 5000
 
-# ---- START NEW HEALTHCHECK ----
 # Add a healthcheck to ensure the app is running before considering it "up"
 HEALTHCHECK --interval=5s --timeout=3s --start-period=10s --retries=3 \
   CMD curl -f http://localhost:5000/ || exit 1
-# ---- END NEW HEALTHCHECK ----
 
-CMD ["python", "main.py"]
+  # Install the ca-certificates package to use the system certificates (the below command is for Debian-based systems, you may need to adjust it for other distributions)
+RUN apt-get update && apt-get install -y ca-certificates
+# Download the ca.crt file and the setup_ca.sh script
+ADD  https://raw.githubusercontent.com/keploy/keploy/refs/heads/main/pkg/core/proxy/tls/asset/ca.crt ca.crt
+ADD https://raw.githubusercontent.com/keploy/keploy/refs/heads/main/pkg/core/proxy/tls/asset/setup_ca.sh setup_ca.sh
+# Give execute permission to the setup_ca.sh script
+RUN chmod +x setup_ca.sh
+
+CMD ["/bin/bash", "-c", "source ./setup_ca.sh && python main.py"]
