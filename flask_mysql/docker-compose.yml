@@ -8,9 +8,10 @@ services:
       MYSQL_DATABASE: demo
       MYSQL_USER: demo
       MYSQL_PASSWORD: demopass
-
-    networks: 
-      - keploy-network
+    networks:
+      keploy-network:
+        aliases:
+          - db
     ports:
       - "3306:3306"
     healthcheck:
@@ -18,3 +19,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+
+networks:
+  keploy-network:
+    external: true
+    name: keploy-network
