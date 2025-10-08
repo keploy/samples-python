@@ -2,6 +2,7 @@ services:
   db:
     image: mysql:8.4
     container_name: simple-demo-db
+    command: --ssl=0
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: demo
@@ -10,7 +11,7 @@ services:
 
     networks: 
       - keploy-network
-    ports:               # expose to host → 127.0.0.1:3306
+    ports:
       - "3306:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-pdemopass"]
