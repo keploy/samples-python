@@ -35,7 +35,7 @@ HEALTHCHECK --interval=5s --timeout=3s --start-period=10s --retries=3 \
   CMD curl -f http://localhost:5000/ || exit 1
 
   # Install the ca-certificates package to use the system certificates (the below command is for Debian-based systems, you may need to adjust it for other distributions)
-RUN apt-get update && apt-get install -y ca-certificates
+RUN apt-get update && apt-get install -y curl ca-certificates && rm -rf /var/lib/apt/lists/*
 # Download the ca.crt file and the setup_ca.sh script
 ADD  https://raw.githubusercontent.com/keploy/keploy/refs/heads/main/pkg/core/proxy/tls/asset/ca.crt ca.crt
 ADD https://raw.githubusercontent.com/keploy/keploy/refs/heads/main/pkg/core/proxy/tls/asset/setup_ca.sh setup_ca.sh

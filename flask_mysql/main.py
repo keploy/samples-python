@@ -51,40 +51,131 @@ DB_CFG = dict(
     database=os.getenv("DB_NAME", "demo"),
 )
 
-def get_db_connection():
+def get_db_connection(max_wait_s=90):
     extra = {}
-    # For CI: keep TLS off unless explicitly enabled
     if os.getenv("DB_SSL_DISABLED", "1") == "1":
         extra["ssl_disabled"] = True
     elif os.getenv("DB_FORCE_TLS12", "0") == "1":
         extra["tls_versions"] = ["TLSv1.2"]
 
-    try:
-        # optional: use_pure=True to avoid C-ext edge cases
-        return mysql.connector.connect(**DB_CFG, **extra, connection_timeout=5, use_pure=True)
-    except mysql.connector.Error as err:
-        print(f"FATAL: Could not connect to database: {err}", file=sys.stderr)
-        return None
+    start = time.time()
+    last_err = None
+    while time.time() - start < max_wait_s:
+        try:
+            return mysql.connector.connect(
+                **DB_CFG, **extra, connection_timeout=5, use_pure=True
+            )
+        except mysql.connector.Error as err:
+            last_err = err
+            time.sleep(2)
+    print(f"FATAL: Could not connect to database after {max_wait_s}s: {last_err}", file=sys.stderr)
+    return None
 
 
 def setup_database():
     """Creates/resets and populates the database tables on startup."""
     print("Connecting to database to run setup...")
     conn = get_db_connection()
-    if not conn: sys.exit(1)
-    
+    if not conn:
+        sys.exit(1)
+
     try:
         print("Setting up tables...")
         cur = conn.cursor()
-        
-        # Disable FK checks and drop tables
         cur.execute("SET foreign_key_checks = 0;")
-        cur.execute("DROP TABLE IF EXISTS transactions, api_logs, accounts, token_blacklist_blacklistedtoken, token_blacklist_outstandingtoken, django_migrations, permissions, clients, payloads, programs;")
+        cur.execute("""
+            DROP TABLE IF EXISTS transactions, api_logs, accounts,
+            token_blacklist_blacklistedtoken, token_blacklist_outstandingtoken,
+            django_migrations, permissions, clients, payloads, programs;
+        """)
         cur.execute("SET foreign_key_checks = 1;")
-        
-        # Rest of your setup code...
+
+        # Create tables
+        cur.execute("CREATE TABLE programs (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100));")
+        cur.execute("""
+            CREATE TABLE clients (
+              id BIGINT PRIMARY KEY AUTO_INCREMENT,
+              display_name VARCHAR(255) NOT NULL,
+              client_status VARCHAR(50),
+              program_id INT NULL,
+              FOREIGN KEY (program_id) REFERENCES programs(id)
+            );
+        """)
+        cur.execute("""
+            CREATE TABLE accounts (
+              id BIGINT PRIMARY KEY AUTO_INCREMENT,
+              client_id BIGINT,
+              account_no_dataphile VARCHAR(100) NULL,
+              market_value DECIMAL(20, 2),
+              FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+            );
+        """)
+        cur.execute("""
+            CREATE TABLE transactions (
+              id BIGINT PRIMARY KEY AUTO_INCREMENT,
+              from_account_id BIGINT,
+              to_account_id BIGINT,
+              amount DECIMAL(20, 2),
+              transaction_time TIMESTAMP,
+              FOREIGN KEY (from_account_id) REFERENCES accounts(id),
+              FOREIGN KEY (to_account_id) REFERENCES accounts(id)
+            );
+        """)
+        cur.execute("CREATE TABLE permissions (id BIGINT PRIMARY KEY AUTO_INCREMENT, role_name VARCHAR(100), resource_name VARCHAR(100), can_read BOOLEAN);")
+        cur.execute("CREATE TABLE payloads (id BIGINT PRIMARY KEY AUTO_INCREMENT, data LONGTEXT);")
+        cur.execute("CREATE TABLE django_migrations (id INT AUTO_INCREMENT PRIMARY KEY, app VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, applied DATETIME NOT NULL);")
+        cur.execute("CREATE TABLE token_blacklist_outstandingtoken (id INT AUTO_INCREMENT PRIMARY KEY, jti VARCHAR(255) UNIQUE NOT NULL, token TEXT NOT NULL, created_at DATETIME, expires_at DATETIME NOT NULL);")
+        cur.execute("""
+            CREATE TABLE token_blacklist_blacklistedtoken (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              token_id INT NOT NULL,
+              blacklisted_at DATETIME NOT NULL,
+              FOREIGN KEY (token_id) REFERENCES token_blacklist_outstandingtoken(id)
+            );
+        """)
+        cur.execute("""
+            CREATE TABLE api_logs (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              timestamp DATETIME, endpoint VARCHAR(255), method VARCHAR(10),
+              request_headers TEXT, request_body TEXT,
+              response_code INT, response_body TEXT,
+              user_agent VARCHAR(255), ip_address VARCHAR(45),
+              duration_ms INT, status VARCHAR(20),
+              correlation_id VARCHAR(100), service_name VARCHAR(100),
+              log_level VARCHAR(20), error_message TEXT
+            );
+        """)
+
+        # Seed data
+        cur.execute("INSERT INTO programs (name) VALUES ('Premium'), ('Standard'), ('Legacy');")
+        cur.execute("""
+            INSERT INTO clients (display_name, client_status, program_id) VALUES
+              ('Global Corp Inc.', 'Active', 1),
+              ('Tech Innovators LLC', 'Active', 1),
+              ('Legacy Systems', 'Inactive', 3),
+              ('Solo Trader', 'Active', 2);
+        """)
+        cur.execute("""
+            INSERT INTO accounts (client_id, account_no_dataphile, market_value) VALUES
+              (1, 'F12345', 150000.75),
+              (1, 'F12346', 25000.50),
+              (2, 'F54321', 75000.00),
+              (4, 'F98765', 12000.00);
+        """)
+        cur.execute("""
+            INSERT INTO django_migrations (app, name, applied) VALUES
+              ('contenttypes', '0001_initial', NOW()),
+              ('auth', '0001_initial', NOW());
+        """)
+        cur.execute("""
+            INSERT INTO token_blacklist_outstandingtoken (jti, token, expires_at)
+            VALUES ('9522d59c56404995af98d4c30bde72b3', 'dummy-token', NOW() + INTERVAL 1 DAY);
+        """)
+        cur.execute("INSERT INTO token_blacklist_blacklistedtoken (token_id, blacklisted_at) VALUES (1, NOW());")
+        cur.execute("INSERT INTO permissions (role_name, resource_name, can_read) VALUES ('admin', 'ClientsViewSet', true);")
+
         conn.commit()
-        
+        print("Database setup complete.")
     except mysql.connector.Error as err:
         print(f"Database setup failed: {err}")
         conn.rollback()
@@ -93,70 +184,7 @@ def setup_database():
         if conn.is_connected():
             cur.close()
             conn.close()
-    print("Database setup complete.")
-    """Creates/resets and populates the database tables on startup."""
-    print("Connecting to database to run setup...")
-    conn = get_db_connection()
-    if not conn: sys.exit(1)
-    
-    try:
-        print("Setting up tables...")
-        cur = conn.cursor()
-        
-        # Disable FK checks and drop tables
-        cur.execute("SET foreign_key_checks = 0;")
-        cur.execute("DROP TABLE IF EXISTS transactions, api_logs, accounts, token_blacklist_blacklistedtoken, token_blacklist_outstandingtoken, django_migrations, permissions, clients, payloads, programs;")
-        cur.execute("SET foreign_key_checks = 1;")
-        
-        # Rest of your setup code...
-        conn.commit()
-        
-    except mysql.connector.Error as err:
-        print(f"Database setup failed: {err}")
-        conn.rollback()
-        sys.exit(1)
-    finally:
-        if conn.is_connected():
-            cur.close()
-            conn.close()
-    print("Database setup complete.")
-    """Creates/resets and populates the database tables on startup."""
-    print("Connecting to database to run setup...")
-    conn = get_db_connection()
-    if not conn: sys.exit(1)
-    
-    print("Setting up tables...")
-    cur = conn.cursor()
-    
-    cur.execute("SET foreign_key_checks = 0;")
-    cur.execute("DROP TABLE IF EXISTS transactions, api_logs, accounts, token_blacklist_blacklistedtoken, token_blacklist_outstandingtoken, django_migrations, permissions, clients, payloads, programs;")
-    cur.execute("SET foreign_key_checks = 1;")
-    
-    # Create tables
-    cur.execute("CREATE TABLE programs (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100));")
-    cur.execute("CREATE TABLE clients (id BIGINT PRIMARY KEY AUTO_INCREMENT, display_name VARCHAR(255) NOT NULL, client_status VARCHAR(50), program_id INT NULL, FOREIGN KEY (program_id) REFERENCES programs(id));")
-    cur.execute("CREATE TABLE accounts (id BIGINT PRIMARY KEY AUTO_INCREMENT, client_id BIGINT, account_no_dataphile VARCHAR(100) NULL, market_value DECIMAL(20, 2), FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE);")
-    cur.execute("CREATE TABLE transactions (id BIGINT PRIMARY KEY AUTO_INCREMENT, from_account_id BIGINT, to_account_id BIGINT, amount DECIMAL(20, 2), transaction_time TIMESTAMP, FOREIGN KEY (from_account_id) REFERENCES accounts(id), FOREIGN KEY (to_account_id) REFERENCES accounts(id));")
-    cur.execute("CREATE TABLE permissions (id BIGINT PRIMARY KEY AUTO_INCREMENT, role_name VARCHAR(100), resource_name VARCHAR(100), can_read BOOLEAN);")
-    cur.execute("CREATE TABLE payloads (id BIGINT PRIMARY KEY AUTO_INCREMENT, data LONGTEXT);")
-    cur.execute("CREATE TABLE django_migrations (id INT AUTO_INCREMENT PRIMARY KEY, app VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, applied DATETIME NOT NULL);")
-    cur.execute("CREATE TABLE token_blacklist_outstandingtoken (id INT AUTO_INCREMENT PRIMARY KEY, jti VARCHAR(255) UNIQUE NOT NULL, token TEXT NOT NULL, created_at DATETIME, expires_at DATETIME NOT NULL);")
-    cur.execute("CREATE TABLE token_blacklist_blacklistedtoken (id INT AUTO_INCREMENT PRIMARY KEY, token_id INT NOT NULL, blacklisted_at DATETIME NOT NULL, FOREIGN KEY (token_id) REFERENCES token_blacklist_outstandingtoken(id));")
-    cur.execute("CREATE TABLE api_logs (id INT AUTO_INCREMENT PRIMARY KEY, timestamp DATETIME, endpoint VARCHAR(255), method VARCHAR(10), request_headers TEXT, request_body TEXT, response_code INT, response_body TEXT, user_agent VARCHAR(255), ip_address VARCHAR(45), duration_ms INT, status VARCHAR(20), correlation_id VARCHAR(100), service_name VARCHAR(100), log_level VARCHAR(20), error_message TEXT);")
 
-    # Insert sample data
-    cur.execute("INSERT INTO programs (name) VALUES ('Premium'), ('Standard'), ('Legacy');")
-    cur.execute("INSERT INTO clients (display_name, client_status, program_id) VALUES ('Global Corp Inc.', 'Active', 1), ('Tech Innovators LLC', 'Active', 1), ('Legacy Systems', 'Inactive', 3), ('Solo Trader', 'Active', 2);")
-    cur.execute("INSERT INTO accounts (client_id, account_no_dataphile, market_value) VALUES (1, 'F12345', 150000.75), (1, 'F12346', 25000.50), (2, 'F54321', 75000.00), (4, 'F98765', 12000.00);")
-    cur.execute("INSERT INTO django_migrations (app, name, applied) VALUES ('contenttypes', '0001_initial', NOW()), ('auth', '0001_initial', NOW());")
-    cur.execute("INSERT INTO token_blacklist_outstandingtoken (jti, token, expires_at) VALUES ('9522d59c56404995af98d4c30bde72b3', 'dummy-token', NOW() + INTERVAL 1 DAY);")
-    cur.execute("INSERT INTO token_blacklist_blacklistedtoken (token_id, blacklisted_at) VALUES (1, NOW());")
-    cur.execute("INSERT INTO permissions (role_name, resource_name, can_read) VALUES ('admin', 'ClientsViewSet', true);")
-
-    conn.commit()
-    cur.close()
-    conn.close()
-    print("Database setup complete.")
 
 # --- Health Check ---
 @app.route("/health", methods=["GET"])
