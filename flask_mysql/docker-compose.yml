@@ -2,7 +2,6 @@ services:
   db:
     image: mysql:8.4
     container_name: simple-demo-db
-    command: --ssl=0
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: demo
@@ -14,7 +13,7 @@ services:
     ports:
       - "3306:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-pdemopass"]
+      test: ["CMD", "mysqladmin", "ping", "-uroot", "-prootpass", "--silent"]
       interval: 5s
       retries: 10
 
