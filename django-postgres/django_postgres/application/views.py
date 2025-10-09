@@ -1,64 +1,43 @@
-from django.shortcuts import render
-from .models import User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
+from .models import User
 from .serializers import UserSerializer
-from uuid import uuid4
-from django.http import JsonResponse
-import json
-
 
 @api_view(["GET", "PUT", "DELETE"])
-def get_update_deleteUser(request, uuid: uuid4):
+def get_update_deleteUser(request, uuid):
+    try:
+        user = User.objects.get(id=uuid)
+    except User.DoesNotExist:
+        return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == "GET":
-        try:
-            data = UserSerializer(User.objects.get(id=uuid)).data
-            return Response(data)
-        except Exception as e:
-            return Response({"message": str(e)})
-        
+        data = UserSerializer(user).data
+        return Response(data)
+
     if request.method == "PUT":
-        try:
-            user = User.objects.get(id=uuid)
-        
-            user.name=request.data['name']
-            user.email=request.data['email']
-            user.password=request.data['password']
-            user.website=request.data['website']
-            user.save()
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "User Updated!!"})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            return JsonResponse({"message": "User Updated!!"})
-        except Exception as e:
-            return JsonResponse({"message": str(e)[2:-2]})
-    
     if request.method == "DELETE":
-        try:
-            User.objects.get(id=uuid).delete()
-            return JsonResponse({"message": "User Deleted!!"})
-        except Exception as e:
-            return JsonResponse({"message": str(e)[2:-2]})
-
+        user.delete()
+        return Response({"message": "User Deleted!!"}, status=status.HTTP_204_NO_CONTENT)
 
 @api_view(["GET", "POST"])
 def getAll_createUser(request):
-
     if request.method == "GET":
-        try:
-            data = UserSerializer(User.objects.all(), many=True)
-            if data.data == []:
-                return JsonResponse({"message": "No Users Found!!"})
-            return Response(data.data)
-        except Exception as e:  
-            return JsonResponse({"message": str(e)})
-        
+        users = User.objects.all()
+        data = UserSerializer(users, many=True).data
+        if not data:
+            return Response({"message": "No Users Found!!"})
+        return Response(data)
+
     if request.method == "POST":
-        try:
-            new_user = User.objects.create(name=request.data['name'], 
-                                        email=request.data['email'], 
-                                        password=request.data['password'],
-                                        website=request.data['website'])
-            data = UserSerializer(new_user)
-            return JsonResponse({"message": "User Created!!"})
-        except Exception as e:  
-            return JsonResponse({"message": str(e)})
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "User Created!!"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
