@@ -27,6 +27,9 @@ This repo contains the samples for [Keploy's](https://keploy.io) integration wit
 
 5. [Flask-Redis](https://github.com/keploy/samples-python/tree/main/flask-redis) - This Flask-based application provides a book management system utilizing Redis for caching and storage. It supports adding, retrieving, updating, and deleting book records, with optimized search functionality and cache management for improved performance. The API endpoints ensure efficient data handling and quick access to book information.
 
+6. [Django-Mysql] (https://github.com/keploy/samples-python/tree/main/django-mysql)-  This application is a simple Employee Management System built with Django and MySQL. It allows you to create, retrieve, update, and delete employee records via RESTful API endpoints. The application is containerized using Docker, making it easy to deploy and run in different environments. The backend is powered by Django, and the MySQL database is used to store employee information.
+
+
 ## Community Support ❤️
 
 ### 🤔 Questions?
