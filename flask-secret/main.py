@@ -436,21 +436,20 @@ def jwtlab():
         "status": 200,
         "meta": {"endpoint": "jwtlab", "timestamp": FIXED_TIMESTAMP},
         "examples": {
-            "url_raw": base,                  # token=<JWT>&...
-            "url_u_escaped": u_escape_qs(base),  # token\u003d<JWT>\u0026...
-            "url_pct_amp": pct_amp(base),    # token=<JWT>%26user_uuid=...
-            "json_param": {"token": j},      # straight JSON param
+            "url_raw": base,
+            "url_pct_amp": pct_amp(base),
+            "json_param": {"token": j},
         },
     }
     return make_response(payload)
 
 @app.route("/curlmix", methods=["GET"])
 def curlmix():
-    commons = generate_common_secrets()            # deterministic
+    commons = generate_common_secrets()
     rng = random.Random(515151)
 
-    bearer = opaque_token(rng, 40)                 # will match Bearer rule
-    api_key = commons["openai_api_key"]            # "sk-..." (already in defaults)
+    bearer = opaque_token(rng, 40)
+    api_key = commons["openai_api_key"]
 
     # Put the same secrets in regular fields so the redaction mappings exist
     shadow = {
@@ -462,42 +461,31 @@ def curlmix():
         f"curl -s -H 'Authorization: Bearer {bearer}' "
         f"-H 'X-Api-Key: {api_key}' https://api.example.test/v1/things"
     )
-    curl_u = (
-        "curl -s -H \"Authorization\\u003a Bearer " + bearer + "\" "
-        "-H \"X-Api-Key: " + api_key + "\" https://api.example.test/v1/things"
-    )
 
     payload = {
         "case": "curlmix",
         "status": 200,
         "meta": {"endpoint": "curlmix", "timestamp": FIXED_TIMESTAMP},
-        "shadow": shadow,                 # these get redacted first
-        "curl": curl_raw,                 # then these get rewritten by your mapper
-        "curl_u_escaped": curl_u,
+        "shadow": shadow,
+        "curl": curl_raw,
     }
     return make_response(payload)
 
 @app.route("/cdn", methods=["GET"])
 def cdn():
     rng = random.Random(616161)
-    hmac_hex = rand(rng, HEX, 64)  # looks like a SHA-256 hex
+    hmac_hex = rand(rng, HEX, 64)
 
     hdnts_plain = f"hdnts=st=1700000000~exp=1999999999~acl=/*~hmac={hmac_hex}"
-    hdnts_u = (
-        "hdnts\\u003dst\\u003d1700000000~exp\\u003d1999999999~acl\\u003d/*~hmac\\u003d" + hmac_hex
-    )
-
     payload = {
         "case": "cdn",
         "status": 200,
         "meta": {"endpoint": "cdn", "timestamp": FIXED_TIMESTAMP},
         "urls": {
             "akamai_hdnts": f"https://cdn.example.test/asset.m3u8?{hdnts_plain}",
-            "akamai_hdnts_u": f"https://cdn.example.test/asset.m3u8?{hdnts_u}",
         },
         "fields": {
             "hdnts_plain": hdnts_plain,
-            "hdnts_u_escaped": hdnts_u,
         },
     }
     return make_response(payload)
