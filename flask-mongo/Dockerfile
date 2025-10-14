@@ -5,6 +5,17 @@ ARG DEBIAN_VERSION=bookworm
 # Use the argument in the FROM instruction
 FROM python:3.9-slim-${DEBIAN_VERSION}
 
+# --- DNS/NSS fix (bullseye-slim often lacks these) ---
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        libnss-dns libnss-files netbase ca-certificates && \
+    rm -rf /var/lib/apt/lists/*; \
+    # Ensure glibc actually consults DNS
+    if ! grep -q '^hosts:.*\bdns\b' /etc/nsswitch.conf 2>/dev/null; then \
+        echo 'hosts: files dns' > /etc/nsswitch.conf; \
+    fi
+
 # Set the working directory
 WORKDIR /app
 
