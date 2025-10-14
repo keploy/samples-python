@@ -1,7 +1,8 @@
-# main.py
+# temp_main.py
 import json
 import random
 import string
+import base64 
 
 from flask import Flask, Response
 
@@ -12,6 +13,32 @@ app = Flask(__name__)
 ALNUM = string.ascii_letters + string.digits
 HEX = ''.join(sorted(set(string.hexdigits.lower()) - set('x')))
 B64 = string.ascii_letters + string.digits + '+/'
+
+
+def b64url_nopad(b: bytes) -> str:
+    return base64.urlsafe_b64encode(b).rstrip(b"=").decode("ascii")
+
+def fake_jwt(rng: random.Random) -> str:
+    # Deterministic header/payload, random-looking signature from rng
+    header = {"alg": "HS256", "typ": "JWT"}
+    payload = {"sub": stable_id("user", 3100, 8), "ts": FIXED_TIMESTAMP, "aud": "keploy-tests"}
+    seg1 = b64url_nopad(json.dumps(header, sort_keys=True).encode())
+    seg2 = b64url_nopad(json.dumps(payload, sort_keys=True).encode())
+    sig  = b64url_nopad(bytes(rng.randrange(0, 256) for _ in range(32)))
+    return f"{seg1}.{seg2}.{sig}"
+
+def opaque_token(rng: random.Random, n: int = 40) -> str:
+    # Matches your Bearer rule class: [A-Za-z0-9._~-]{20,}
+    return rand(rng, string.ascii_letters + string.digits + "._~-", n)
+
+def u_escape_qs(s: str) -> str:
+    # JSON-style unicode escaping for '=' and '&'
+    return s.replace("=", r"\u003d").replace("&", r"\u0026")
+
+def pct_amp(s: str) -> str:
+    # Percent-encode just ampersands after the token (your rule handles %26)
+    return s.replace("&", "%26")
+
 
 def rand(rng, charset, n):
     return ''.join(rng.choice(charset) for _ in range(n))
@@ -404,6 +431,73 @@ def secret3():
 @app.route("/astro", methods=["GET"])
 def astro():
     return Response(ASTRO_JSON, mimetype="application/json")
+
+@app.route("/jwtlab", methods=["GET"])
+def jwtlab():
+    rng = random.Random(424242)  # fixed seed => stable output
+    j = fake_jwt(rng)
+    uid = stable_id("user", 9090, 12)
+
+    base = f"https://example.test/api/callback?token={j}&user_uuid={uid}&mode=demo"
+    payload = {
+        "case": "jwtlab",
+        "status": 200,
+        "meta": {"endpoint": "jwtlab", "timestamp": FIXED_TIMESTAMP},
+        "examples": {
+            "url_raw": base,
+            "url_pct_amp": pct_amp(base),
+            "json_param": {"token": j},
+        },
+    }
+    return make_response(payload)
+
+@app.route("/curlmix", methods=["GET"])
+def curlmix():
+    commons = generate_common_secrets()
+    rng = random.Random(515151)
+
+    bearer = opaque_token(rng, 40)
+    api_key = commons["openai_api_key"]
+
+    # Put the same secrets in regular fields so the redaction mappings exist
+    shadow = {
+        "bearer_token_shadow": bearer,
+        "api_key_shadow": api_key,
+    }
+
+    curl_raw = (
+        f"curl -s -H 'Authorization: Bearer {bearer}' "
+        f"-H 'X-Api-Key: {api_key}' https://api.example.test/v1/things"
+    )
+
+    payload = {
+        "case": "curlmix",
+        "status": 200,
+        "meta": {"endpoint": "curlmix", "timestamp": FIXED_TIMESTAMP},
+        "shadow": shadow,
+        "curl": curl_raw,
+    }
+    return make_response(payload)
+
+@app.route("/cdn", methods=["GET"])
+def cdn():
+    rng = random.Random(616161)
+    hmac_hex = rand(rng, HEX, 64)
+
+    hdnts_plain = f"hdnts=st=1700000000~exp=1999999999~acl=/*~hmac={hmac_hex}"
+    payload = {
+        "case": "cdn",
+        "status": 200,
+        "meta": {"endpoint": "cdn", "timestamp": FIXED_TIMESTAMP},
+        "urls": {
+            "akamai_hdnts": f"https://cdn.example.test/asset.m3u8?{hdnts_plain}",
+        },
+        "fields": {
+            "hdnts_plain": hdnts_plain,
+        },
+    }
+    return make_response(payload)
+
 
 @app.route("/health", methods=["GET"])
 def health():
