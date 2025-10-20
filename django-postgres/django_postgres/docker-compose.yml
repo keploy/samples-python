@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "6000:5432"  # Map the PostgreSQL port to the host machine
+      - "5432:5432"  # Map the PostgreSQL port to the host machine
     volumes: 
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
@@ -19,9 +19,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "6000:5432"
+      - "5432:5432"
     volumes:
-      - pgdata_ssl:/var/lib/postgresql/data
+      - pgdata_ssl:/var/lib/postgresql
       - ./sql/enable-ssl.sh:/docker-entrypoint-initdb.d/enable-ssl.sh:ro
 
 volumes:
