@@ -28,8 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-SSL_ENABLED = os.getenv('POSTGRES_SSL_ENABLED', 'false').lower() == 'true'
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -108,7 +106,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': '0.0.0.0',
-        'PORT': '5432',
+        'PORT': '6000',
         'OPTIONS':  _db_options_from_env(),
     }
 }
