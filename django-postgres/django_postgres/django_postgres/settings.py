@@ -77,6 +77,7 @@ def _db_options_from_env():
     """
     opts = {}
     sslmode = os.getenv("DB_SSLMODE", "disable").strip()
+    print("DB_SSLMODE is:", sslmode)
     if sslmode and sslmode.lower() != "disable":
         # Common values: require | verify-ca | verify-full
         opts["sslmode"] = sslmode
