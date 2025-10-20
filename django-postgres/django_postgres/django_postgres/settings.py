@@ -107,7 +107,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': '0.0.0.0',
-        'PORT': '6000',
+        'PORT': '5432',
         'OPTIONS':  _db_options_from_env(),
     }
 }
