@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,6 @@ SECRET_KEY = 'django-insecure-(6*tz%$!6el3&x*p1yebyp9xi1&lp!vi-fv4rw*t_w7rldnnva
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -71,6 +71,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_postgres.wsgi.application'
 
+def _db_options_from_env():
+    """
+    Build psycopg2 OPTIONS dict, adding SSL keys only if requested.
+    """
+    opts = {}
+    sslmode = os.getenv("DB_SSLMODE", "disable").strip()
+    print("DB_SSLMODE is:", sslmode)
+    if sslmode and sslmode.lower() != "disable":
+        # Common values: require | verify-ca | verify-full
+        opts["sslmode"] = sslmode
+        # Optional files if you want verification / mTLS
+        rootcert = os.getenv("DB_SSLROOTCERT", "").strip()
+        sslcert  = os.getenv("DB_SSLCERT", "").strip()
+        sslkey   = os.getenv("DB_SSLKEY", "").strip()
+        sslcrl   = os.getenv("DB_SSLCRL", "").strip()
+        if rootcert:
+            opts["sslrootcert"] = rootcert
+        if sslcert:
+            opts["sslcert"] = sslcert
+        if sslkey:
+            opts["sslkey"] = sslkey
+        if sslcrl:
+            opts["sslcrl"] = sslcrl
+    return opts
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -83,9 +108,9 @@ DATABASES = {
         'PASSWORD': 'postgres',
         'HOST': '0.0.0.0',
         'PORT': '5432',
+        'OPTIONS':  _db_options_from_env(),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
