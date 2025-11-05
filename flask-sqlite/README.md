@@ -65,15 +65,25 @@ python app.py
 
 ## Sample Curl Commands
 
+http://localhost:5000/
+```json
+{
+    "message": "Flask Student API"
+}
+```
+
+
 ### Add a student
 
 ```bash
 curl -X POST http://localhost:5000/students \
      -H "Content-Type: application/json" \
      -d '{"name": "Alice", "age": 21}'
-
+```
 # Get all students
 curl http://localhost:5000/students
+
+
 
 # Update student
 curl -X PUT http://localhost:5000/students/1 \
@@ -124,3 +134,25 @@ flask-sqlite/
 Keploy is a developer-friendly open-source testing toolkit that auto-generates test cases from API calls in real-time and replays them to catch regressions — without writing any test code.
 
 > Built with ❤️ for the Open Source Community.
+
+| Stage   | Improvement Type             | Description                                 |
+| ------- | ---------------------------- | ------------------------------------------- |
+| Stage 1 | Validation & Pagination      | Add search, filter, pagination for students |
+| Stage 2 | Security                     | Add authentication, role-based access       |
+| Stage 3 | Code Quality                 | Integrate Marshmallow/Pydantic, add tests   |
+| Stage 4 | Documentation & Deployment   | Add Swagger, Dockerize, CI/CD pipeline      |
+| Stage 5 | Frontend & Realtime Features | Build React UI, add WebSocket updates       |
+
+---
+
+#### Stage 1
+
+Get End points
+
+/students?page=1&per_page=5 — Gets first 5 students.
+
+/students?name=John — Filters students whose names contain "John".
+
+/students?age=20 — Filters students aged 20.
+
+/students?page=2&per_page=3&name=ann — Combination.
