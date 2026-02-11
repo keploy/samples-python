@@ -65,6 +65,28 @@ RESPONSES = {
     # Added 10th endpoint for clean 7/3 split
     '/edge/nested_null': {
         "data": {"value": None}
+    },
+    '/complex/user': {
+        "id": 500,
+        "name": "Jane Doe",
+        "contact": {
+            "email": "jane@example.com",
+            "phone": {"home": "555-0123", "mobile": "555-0987"}
+        },
+        "tags": ["vip", "early-adopter"],
+        "metadata": {
+            "created_at": "2023-01-01T00:00:00Z",
+            "login_count": 42
+        }
+    },
+    '/complex/product': {
+        "sku": "XYZ-999",
+        "specs": [
+            {"key": "weight", "value": 1.5, "unit": "kg"},
+            {"key": "warranty", "value": 2, "unit": "years"}
+        ],
+        "in_stock": True,
+        "dimensions": [10, 20, 5.5]
     }
 }
 

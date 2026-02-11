@@ -13,7 +13,9 @@ ENDPOINTS = [
     '/edge/empty_response',
     '/edge/null_root',
     '/edge/special_chars',
-    '/edge/nested_null'
+    '/edge/nested_null',
+    '/complex/user',
+    '/complex/product'
 ]
 
 def check_endpoints():
