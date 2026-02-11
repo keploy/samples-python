@@ -1,0 +1,22 @@
+0. Register
+-> curl -X POST -H "Content-Type: application/json" -d '{"username": "gouravkrosx", "password": "gkrosx"}' http://localhost:5000/register
+
+1. Login (obtain JWT token):
+-> curl -X POST -H "Content-Type: application/json" -d '{"username": "gouravkrosx", "password": "gkrosx"}' http://localhost:5000/login
+
+2. Add Item
+-> curl -X POST -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjVjMGE0NTM1NmQ3Y2MxNmFkY2UzMDQ3IiwiZXhwIjoxNzA3MTI1NzA4fQ.ikQh8y1398w1UJ9Sb3IlJnMog9lEfm3kTFiK1_orVgU" -H "Content-Type: application/json" -d '{"name": "Item Name", "description": "Description"}' http://localhost:5000/item
+
+3. Get Item
+-> curl -X GET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjVjMGE0NTM1NmQ3Y2MxNmFkY2UzMDQ3IiwiZXhwIjoxNzA3MTI1NzA4fQ.ikQh8y1398w1UJ9Sb3IlJnMog9lEfm3kTFiK1_orVgU" http://localhost:5000/item/65c0a56056d7cc16adce3049
+
+4. Update Item
+-> curl -X PUT -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjVjMGE0NTM1NmQ3Y2MxNmFkY2UzMDQ3IiwiZXhwIjoxNzA3MTI1NzA4fQ.ikQh8y1398w1UJ9Sb3IlJnMog9lEfm3kTFiK1_orVgU" -H "Content-Type: application/json" -d '{"name": "Updated Name", "description": "Updated Description"}' http://localhost:5000/item/65c0a56056d7cc16adce3049
+
+5. Delete Item
+-> curl -X DELETE -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjVjMGE0NTM1NmQ3Y2MxNmFkY2UzMDQ3IiwiZXhwIjoxNzA3MTI1NzA4fQ.ikQh8y1398w1UJ9Sb3IlJnMog9lEfm3kTFiK1_orVgU" http://localhost:5000/item/<id>
+
+6. Delete User
+-> curl -X DELETE \
+  http://localhost:5000/user/delete/Sarthak16 \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjVjMWE1MGFlZDRkYTJhYmZlYTQ1N2JjIiwiZXhwIjoxNzA3MTkwNTQ5fQ.f_3lBu5gOGSd1S7x5Gcg9LGTO8rMoMpjUeeN0kvMu4w'
