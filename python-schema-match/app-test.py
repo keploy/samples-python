@@ -127,7 +127,7 @@ def handle_request(client_socket):
         else:
             body = json.dumps(body_data)
         
-        response = f"HTTP/1.0 200 OK\r\nContent-Type: application/json\r\nContent-Length: {len(body)}\r\n\r\n{body}"
+        response = f"HTTP/1.0 200 OK\r\nContent-Type: application/json\r\nContent-Length: {len(body)}\r\nConnection: close\r\n\r\n{body}"
         client_socket.sendall(response.encode('utf-8'))
         
     except Exception as e:
