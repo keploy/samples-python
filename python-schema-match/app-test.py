@@ -89,6 +89,32 @@ RESPONSES = {
     # 10. PASS: Exact match
     '/edge/nested_null': {
         "data": {"value": None}
+    },
+
+    # 11. FAIL: Complex User (Type mismatch + Missing nested key)
+    '/complex/user': {
+        "id": "500",  # FAIL: Expected int, got string
+        "name": "Jane Doe",
+        "contact": {
+            "email": "jane@example.com"
+            # FAIL: Missing "phone" key
+        },
+        "tags": ["vip", "early-adopter"],
+        "metadata": {
+            "created_at": "2023-01-01T00:00:00Z",
+            "login_count": 42
+        }
+    },
+
+    # 12. FAIL: Complex Product (Array item mismatch)
+    '/complex/product': {
+        "sku": "XYZ-999",
+        "specs": [
+            {"key": "weight", "value": "1.5kg", "unit": "kg"}, # FAIL: value expected float, got string
+            {"key": "warranty", "value": 2, "unit": "years"}
+        ],
+        "in_stock": True,
+        "dimensions": [10, "20", 5.5] # FAIL: 2nd element expected int/float, got string
     }
 }
 
