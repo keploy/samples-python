@@ -24,6 +24,13 @@ INSTALLED_APPS = [
     # AND model=$2, the exact query the lifetime-gate bug surfaces on.
     "django.contrib.contenttypes",
     "django.contrib.auth",
+    # myproj.apps.MyProjConfig spawns a background ContentType-lookup
+    # thread when BACKGROUND_LOOKUPS=1 — the keploy/integrations e2e
+    # lane uses this to drive DB activity *outside* the HTTP request
+    # path, so the recording captures session-pool-bound invocations
+    # the lifetime-gate fix unblocks. Off by default; ad-hoc local
+    # use of this sample doesn't need it.
+    "myproj.apps.MyProjConfig",
 ]
 
 MIDDLEWARE = []
