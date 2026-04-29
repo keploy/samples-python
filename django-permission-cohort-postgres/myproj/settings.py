@@ -46,6 +46,23 @@ DATABASES = {
         # which makes Django redo any first-connect work each time. We
         # keep that default so the per-request DB call sequence is
         # deterministic across record/replay.
+        "OPTIONS": {
+            # Skip libpq's SSLRequest preamble. The compose stack runs
+            # cleartext postgres; without sslmode=disable, psycopg2
+            # sends the SSLRequest byte sequence and waits for an 'S'
+            # or 'N' response. Postgres replies with 'R' (auth
+            # request, skipping SSL negotiation entirely), keploy's
+            # v3 recorder/proxy logs this as "unexpected SSL
+            # response", and on the *first* fresh connection at
+            # replay time the proxy stalls waiting for an SSL
+            # handshake the server isn't going to complete — every
+            # first request to a new endpoint then hangs until the
+            # client-side timeout fires. Setting sslmode=disable
+            # makes psycopg2 skip the preamble entirely so every
+            # request flows on the clean cleartext path the proxy
+            # already handles.
+            "sslmode": "disable",
+        },
     }
 }
 
