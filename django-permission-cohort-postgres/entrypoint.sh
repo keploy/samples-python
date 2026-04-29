@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
-# entrypoint.sh — run Django migrations once, then start gunicorn.
+# entrypoint.sh — start gunicorn.
 #
-# The migrations populate django_content_type and the auth_*
-# permission tables; without this the /lookup/ endpoint would have
-# nothing to find. We migrate inline at container start (rather than
-# in a separate init container) so the recorder captures both the
-# migration sequence and the runtime queries on the same connection
-# pool — keeps the record/replay traffic shape minimal.
+# Migrations are applied by a sibling `migrator` service in
+# docker-compose.yml that runs to completion before this container
+# starts. Keeping the migration step out of the api container is what
+# lets the keploy/integrations record-replay lane stay deterministic:
+# Django's `post_migrate` signal bulk-inserts ContentType rows in a
+# single simple-query INSERT whose row ordering depends on model-
+# registration timing, and capturing that under the keploy proxy
+# would make recordings non-replayable across runs.
 set -Eeuo pipefail
-
-echo "[entrypoint] running migrations..."
-python /app/manage.py migrate --noinput
 
 echo "[entrypoint] starting gunicorn on :8080..."
 # --timeout 300: matcher round-trips through the keploy proxy can spike
