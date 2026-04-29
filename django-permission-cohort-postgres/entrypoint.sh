@@ -13,11 +13,18 @@ echo "[entrypoint] running migrations..."
 python /app/manage.py migrate --noinput
 
 echo "[entrypoint] starting gunicorn on :8080..."
+# --timeout 300: matcher round-trips through the keploy proxy can spike
+#   under CI load; gunicorn's default 30s SIGKILLs the worker mid-request
+#   and the test that landed on that worker times out client-side. 300s
+#   gives the proxy comfortable headroom.
+# --workers 4 / --threads 2: enough concurrency that a single slow
+#   matcher response doesn't queue subsequent requests behind it.
 exec gunicorn \
   --bind 0.0.0.0:8080 \
-  --workers 2 \
-  --threads 1 \
-  --timeout 60 \
+  --workers 4 \
+  --threads 2 \
+  --timeout 300 \
+  --graceful-timeout 30 \
   --access-logfile - \
   --error-logfile - \
   --capture-output \
