@@ -14,6 +14,17 @@ services:
       DB_USER: djpcohort
       DB_PASSWORD: djpcohort
       DB_NAME: djpcohort
+      # Pin Python's per-process hash seed so set/dict iteration order
+      # is identical across record and replay runs. Django's
+      # `post_migrate` ContentType bulk_create populates VALUES rows
+      # from a model collection that, in some Django versions, is
+      # iterated in a hash-seed-dependent order; without a fixed seed
+      # the recorder captures one row order at record time and the
+      # live driver fires a different row order at replay time. The
+      # SQL hashes match (same skeleton) but the inline value tuples
+      # diverge — exactly the `bind values diverged from every
+      # recorded invocation` failure shape the build-build cell hit.
+      PYTHONHASHSEED: "0"
       # Spawn the background ContentType-lookup thread (see
       # myproj/apps.py). The keploy/integrations e2e lane needs this
       # to record `SELECT django_content_type` invocations *between*
