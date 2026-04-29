@@ -20,7 +20,16 @@ services:
       # HTTP test windows — the precondition for the session-fallback
       # path the lifetime-gate fix unblocks.
       BACKGROUND_LOOKUPS: "1"
-      BACKGROUND_LOOKUPS_INTERVAL_S: "3"
+      # Fire the background thread every 0.3s. The keploy `test` driver
+      # replays all captured HTTP cases in ~1 second, so a 3s cadence
+      # means at most one thread-fire lands during the replay-window
+      # phase — and the dispatcher routes most of them to
+      # SessionTransactional directly (bypassing the PerTest →
+      # SessionFallback path the lifetime-gate fix actually unblocks).
+      # 0.3s gives ~3-5 thread-fires per replay run that fall *inside*
+      # an HTTP test window, which is the precondition for hitting
+      # the SessionFallback gate.
+      BACKGROUND_LOOKUPS_INTERVAL_S: "0.3"
     depends_on:
       db:
         condition: service_healthy
