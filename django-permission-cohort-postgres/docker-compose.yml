@@ -1,38 +1,4 @@
 services:
-  # One-shot migrator. Runs Django's `migrate` (which fires the
-  # `post_migrate` signal that bulk-inserts ContentType rows) against
-  # the db and exits. The api service waits for it to complete cleanly
-  # before starting gunicorn.
-  #
-  # Why this is a separate container rather than inline in the api
-  # entrypoint: when this stack runs under keploy record/replay, keploy
-  # only intercepts traffic for the named application container (api).
-  # Migrations fired from a sibling container bypass the keploy proxy
-  # entirely, so the migration SQL never lands in mocks.yaml. That
-  # matters because Django's `post_migrate` ContentType bulk_create
-  # batches all installed-apps' ContentType rows into a single simple-
-  # query INSERT whose row-tuple ordering is sensitive to model-
-  # registration timing — capturing it makes recordings non-replayable
-  # if any boot-time ordering shifts between record and replay.
-  migrator:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: djpcohort_migrator
-    networks:
-      - djnet
-    environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: djpcohort
-      DB_PASSWORD: djpcohort
-      DB_NAME: djpcohort
-    command: ["python", "/app/manage.py", "migrate", "--noinput"]
-    depends_on:
-      db:
-        condition: service_healthy
-    restart: "no"
-
   api:
     build:
       context: .
@@ -67,8 +33,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      migrator:
-        condition: service_completed_successfully
     restart: on-failure
 
   db:
