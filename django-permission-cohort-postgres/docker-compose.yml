@@ -14,33 +14,10 @@ services:
       DB_USER: djpcohort
       DB_PASSWORD: djpcohort
       DB_NAME: djpcohort
-      # Pin Python's per-process hash seed so set/dict iteration order
-      # is identical across record and replay runs. Django's
-      # `post_migrate` ContentType bulk_create populates VALUES rows
-      # from a model collection that, in some Django versions, is
-      # iterated in a hash-seed-dependent order; without a fixed seed
-      # the recorder captures one row order at record time and the
-      # live driver fires a different row order at replay time. The
-      # SQL hashes match (same skeleton) but the inline value tuples
-      # diverge — exactly the `bind values diverged from every
-      # recorded invocation` failure shape the build-build cell hit.
+      # Defence-in-depth: pin Python's per-process hash seed so any
+      # set/dict iteration anywhere in the Django stack is stable
+      # across record and replay runs.
       PYTHONHASHSEED: "0"
-      # Spawn the background ContentType-lookup thread (see
-      # myproj/apps.py). The keploy/integrations e2e lane needs this
-      # to record `SELECT django_content_type` invocations *between*
-      # HTTP test windows — the precondition for the session-fallback
-      # path the lifetime-gate fix unblocks.
-      BACKGROUND_LOOKUPS: "1"
-      # Fire the background thread every 0.3s. The keploy `test` driver
-      # replays all captured HTTP cases in ~1 second, so a 3s cadence
-      # means at most one thread-fire lands during the replay-window
-      # phase — and the dispatcher routes most of them to
-      # SessionTransactional directly (bypassing the PerTest →
-      # SessionFallback path the lifetime-gate fix actually unblocks).
-      # 0.3s gives ~3-5 thread-fires per replay run that fall *inside*
-      # an HTTP test window, which is the precondition for hitting
-      # the SessionFallback gate.
-      BACKGROUND_LOOKUPS_INTERVAL_S: "0.3"
     depends_on:
       db:
         condition: service_healthy
