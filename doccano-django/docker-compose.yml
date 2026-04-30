@@ -1,0 +1,75 @@
+# doccano-django sample compose. Postgres + doccano backend on a
+# fixed subnet so the lane scripts in keploy/integrations and
+# keploy/enterprise can pin the DB IP without runtime discovery.
+#
+# Two-phase boot pattern (used by the lane scripts but valid for
+# local runs too):
+#
+#   1. DOCCANO_SKIP_BOOTSTRAP=0 → backend runs migrations, creates
+#      the admin user, sets the auth token; once that returns we
+#      `compose down` the stack but keep the named volume so the
+#      DB state persists.
+#   2. DOCCANO_SKIP_BOOTSTRAP=1 → backend re-launches in
+#      gunicorn-only mode against the populated volume; recording /
+#      replay run against this incarnation.
+#
+# The split is what gives the lane a deterministic DB starting state
+# without paying the migration cost on every record/replay invocation.
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Every name is env-driven so multiple matrix cells can run in
+    # parallel on the same docker daemon without colliding. Lane
+    # scripts that spin up doccano per-cell pass cell-scoped values
+    # (e.g. DOCCANO_BACKEND_CONTAINER=doccano_backend_<cell-slug>).
+    # Local single-runs use the shorter defaults.
+    container_name: ${DOCCANO_BACKEND_CONTAINER:-doccano_backend}
+    init: true
+    stop_grace_period: 5s
+    ports:
+      - "${DOCCANO_APP_PORT:-18080}:8000"
+    environment:
+      ADMIN_USERNAME: ${DOCCANO_ADMIN_USER:-admin}
+      ADMIN_PASSWORD: ${DOCCANO_ADMIN_PASSWORD:-password}
+      ADMIN_EMAIL: ${DOCCANO_ADMIN_EMAIL:-admin@example.com}
+      DATABASE_URL: postgres://doccano:doccano@${DOCCANO_DB_IP:-172.34.0.10}:5432/doccano?sslmode=disable
+      ALLOW_SIGNUP: "False"
+      DEBUG: "False"
+      DJANGO_SETTINGS_MODULE: config.settings.production
+      DOCCANO_SKIP_BOOTSTRAP: "${DOCCANO_SKIP_BOOTSTRAP:-0}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - doccano-net
+
+  postgres:
+    image: postgres:13.3-alpine
+    container_name: ${DOCCANO_DB_CONTAINER:-doccano_db}
+    stop_grace_period: 5s
+    environment:
+      POSTGRES_USER: doccano
+      POSTGRES_PASSWORD: doccano
+      POSTGRES_DB: doccano
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U doccano -d doccano"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - doccano-db-data:/var/lib/postgresql/data
+    networks:
+      doccano-net:
+        ipv4_address: ${DOCCANO_DB_IP:-172.34.0.10}
+
+networks:
+  doccano-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${DOCCANO_NETWORK_SUBNET:-172.34.0.0/24}
+
+volumes:
+  doccano-db-data:
