@@ -195,5 +195,3 @@ jobs:
             | this PR | **${{ needs.build-coverage.outputs.coverage }}%** |
 
             Threshold: PR may not drop coverage by more than **${{ env.COVERAGE_THRESHOLD }}pp**. Override per-repo via the `DOCCANO_COVERAGE_THRESHOLD` actions variable.
-
-            Coverage is **Python line coverage** (coverage.py 7.6.1) of the doccano backend code — the bytes that `flow.sh::doccano_record_traffic` actually executes. Instrumentation lives in a separate `Dockerfile.coverage` + `docker-compose.coverage.yml` overlay; the base `docker-compose.yml` consumed by keploy/integrations and keploy/enterprise CI lanes runs uninstrumented and pays zero coverage cost. Per-file reports are attached as artifacts on each job (`coverage-build` / `coverage-release`).
