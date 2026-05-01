@@ -102,21 +102,48 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     outputs:
-      coverage: ${{ steps.measure.outputs.coverage }}
+      coverage: ${{ steps.measure.outputs.coverage || steps.empty-baseline.outputs.coverage }}
+      sample-existed: ${{ steps.detect.outputs.sample-existed }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.ref }}
+
+      # First-PR bootstrap escape hatch: the very PR that
+      # introduces the doccano-django/ sample has no baseline
+      # (doccano-django/ doesn't exist on the base ref). Detect
+      # that and short-circuit to coverage=0; the gate then
+      # treats build's coverage as the new baseline and trivially
+      # passes for any percentage > 0. After the introducing PR
+      # merges, every subsequent PR has a real baseline to diff
+      # against.
+      - id: detect
+        name: Detect baseline presence
+        run: |
+          if [ -d doccano-django ] && [ -x doccano-django/flow.sh ]; then
+            echo "sample-existed=true" >>"$GITHUB_OUTPUT"
+            echo "Sample exists on base ref — running full measurement."
+          else
+            echo "sample-existed=false" >>"$GITHUB_OUTPUT"
+            echo "No doccano-django/ on base ref — first-PR bootstrap; baseline coverage treated as 0%."
+          fi
+
       - id: measure
         name: Run sample end-to-end + measure coverage
+        if: steps.detect.outputs.sample-existed == 'true'
         working-directory: doccano-django
         env:
           DOCCANO_FIRED_ROUTES_FILE: ${{ runner.temp }}/fired-routes-release.log
           DOCCANO_PHASE: ci-release
         run: ../.github/workflows/scripts/run-and-measure.sh
 
+      - id: empty-baseline
+        name: Emit zero baseline (first-PR bootstrap)
+        if: steps.detect.outputs.sample-existed != 'true'
+        run: echo "coverage=0.0" >>"$GITHUB_OUTPUT"
+
       - name: Upload coverage report
-        if: always()
+        if: always() && steps.detect.outputs.sample-existed == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: coverage-release
