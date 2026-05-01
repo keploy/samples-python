@@ -12,3 +12,10 @@
 # (PR #1889) and pipeline 3572 (PR #1964 minimal repro) where the
 # bug originally manifested.
 FROM doccano/doccano:backend
+
+USER root
+COPY doccano-entrypoint.sh /opt/bin/doccano-keploy-entrypoint.sh
+RUN chmod +x /opt/bin/doccano-keploy-entrypoint.sh
+USER doccano
+
+ENTRYPOINT ["/opt/bin/doccano-keploy-entrypoint.sh"]

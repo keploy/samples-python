@@ -144,21 +144,21 @@ doccano_record_traffic() {
     # the recording captures nothing.
     doccano_wait_for_fixed_token 240 >/dev/null
 
-    # Worker-cache warmup. doccano runs 4 gunicorn workers; each
-    # worker keeps its own per-process Django ContentType cache and
-    # populates it lazily on the first polymorphic-resolver query
-    # that worker handles. Recording lanes that terminate with
-    # SIGINT (rather than waiting on a long --record-timer) need
-    # every worker's cache warmed before the explicit test traffic
-    # fires — otherwise cold workers fire their own
-    # django_content_type lookups at replay-time, find empty perTest
-    # cohorts, and the dependent endpoints return HTTP 500.
+    # Worker-cache warmup. The sample defaults to one gunicorn worker
+    # for deterministic keploy replay, but DOCCANO_WORKERS can raise
+    # that count for local experiments. Each worker keeps its own
+    # per-process Django ContentType cache and populates it lazily on
+    # the first polymorphic-resolver query that worker handles.
+    # Recording lanes that terminate with SIGINT (rather than waiting
+    # on a long --record-timer) need every worker's cache warmed before
+    # the explicit test traffic fires — otherwise cold workers fire
+    # their own django_content_type lookups at replay-time, find empty
+    # perTest cohorts, and the dependent endpoints return HTTP 500.
     #
-    # 4 workers × 4 requests = 16 calls is gunicorn-dispatch-jitter
-    # safe; /v1/me is the cheapest authenticated endpoint and
-    # exercises the same auth-token + ContentType chain as real
-    # test calls, so each iteration cleanly warms one worker's
-    # cache.
+    # The fixed 16 calls are gunicorn-dispatch-jitter safe for the
+    # previous 4-worker default; /v1/me is the cheapest authenticated
+    # endpoint and exercises the same auth-token + ContentType chain
+    # as real test calls.
     local warm_idx
     for warm_idx in $(seq 1 16); do
         curl -sS -H "$h_token" "$base/v1/me" >/dev/null 2>&1 || true

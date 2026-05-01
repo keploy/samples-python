@@ -30,10 +30,11 @@ that:
 ## What's in here
 
 * `Dockerfile` — thin wrapper around `doccano/doccano:backend` pinning
-  the upstream version this sample tracks. Future doccano releases
-  that change the bug-triggering shape are addressed by retagging
-  here, not by scattering version pins across the lane scripts in
-  `keploy/integrations` / `keploy/enterprise`.
+  the upstream version this sample tracks and installing the
+  sample entrypoint that honors `DOCCANO_SKIP_BOOTSTRAP=1`. Future
+  doccano releases that change the bug-triggering shape are addressed
+  by retagging here, not by scattering version pins across the lane
+  scripts in `keploy/integrations` / `keploy/enterprise`.
 * `docker-compose.yml` — the orchestration: postgres-13 alongside
   the doccano backend, on a fixed subnet so the lane scripts can
   rely on stable IPs across record/replay phases.
@@ -55,13 +56,20 @@ that:
 ```sh
 docker compose up -d
 ./flow.sh bootstrap
+
+docker compose down
+DOCCANO_SKIP_BOOTSTRAP=1 docker compose up -d
 ./flow.sh record-traffic
+
 docker compose down -v
 ```
 
 This is what the keploy/integrations and keploy/enterprise CI
 lanes wrap in `keploy record` / `keploy test` — the base compose
-is uninstrumented and runs unchanged inside those lanes.
+is uninstrumented and runs unchanged inside those lanes. The first
+launch runs doccano's migrations and creates the admin user; the
+second launch skips bootstrap and starts gunicorn directly against
+the populated database volume.
 
 ### Without keploy — measuring real Python line coverage
 
@@ -72,10 +80,14 @@ add `coverage.py` per-worker tracking:
 mkdir -p coverage
 docker compose -f docker-compose.yml -f docker-compose.coverage.yml up -d --build
 ./flow.sh bootstrap
+
+docker compose -f docker-compose.yml -f docker-compose.coverage.yml down
+DOCCANO_SKIP_BOOTSTRAP=1 docker compose -f docker-compose.yml -f docker-compose.coverage.yml up -d --build
 ./flow.sh record-traffic
+
 docker compose -f docker-compose.yml -f docker-compose.coverage.yml kill -s SIGTERM backend
 sleep 3
-docker compose -f docker-compose.yml -f docker-compose.coverage.yml up -d backend
+DOCCANO_SKIP_BOOTSTRAP=1 docker compose -f docker-compose.yml -f docker-compose.coverage.yml up -d backend
 ./flow.sh coverage
 docker compose -f docker-compose.yml -f docker-compose.coverage.yml down -v
 ```
@@ -91,17 +103,19 @@ ignore it and run the base compose, paying zero coverage cost.
 ```sh
 docker compose up -d
 ./flow.sh bootstrap
+docker compose down
 
 # In one shell:
-keploy record -c "docker compose up" --container-name doccano_backend \
+keploy record -c "DOCCANO_SKIP_BOOTSTRAP=1 docker compose up" --container-name doccano_backend \
   --proxy-port 18081 --dns-port 18082
 
 # In another shell:
 ./flow.sh record-traffic
 # SIGINT keploy when traffic returns
 
-keploy test -c "docker compose up" --containerName doccano_backend \
-  --apiTimeout 60 --delay 20 --proxy-port 18081 --dns-port 18082
+keploy test -c "DOCCANO_SKIP_BOOTSTRAP=1 docker compose up" --containerName doccano_backend \
+  --apiTimeout 60 --delay 20 --host 127.0.0.1 --port 18080 \
+  --proxy-port 18081 --dns-port 18082
 ```
 
 Expected outcome with the integrations fix in place: 0 failures,

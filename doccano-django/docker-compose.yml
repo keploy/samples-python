@@ -11,7 +11,9 @@
 #      DB state persists.
 #   2. DOCCANO_SKIP_BOOTSTRAP=1 → backend re-launches in
 #      gunicorn-only mode against the populated volume; recording /
-#      replay run against this incarnation.
+#      replay run against this incarnation. The sample defaults to one
+#      worker to keep Django's per-process ContentType cache
+#      deterministic across keploy replay.
 #
 # The split is what gives the lane a deterministic DB starting state
 # without paying the migration cost on every record/replay invocation.
@@ -39,6 +41,7 @@ services:
       DEBUG: "False"
       DJANGO_SETTINGS_MODULE: config.settings.production
       DOCCANO_SKIP_BOOTSTRAP: "${DOCCANO_SKIP_BOOTSTRAP:-0}"
+      WORKERS: "${DOCCANO_WORKERS:-1}"
     depends_on:
       postgres:
         condition: service_healthy
