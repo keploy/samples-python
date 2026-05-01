@@ -175,8 +175,8 @@ jobs:
           if python3 -c "import sys; sys.exit(0 if (${RELEASE} - ${BUILD}) > ${THRESHOLD} else 1)"; then
             echo "::error::doccano-django coverage dropped from ${RELEASE}% → ${BUILD}% (-${drop}pp), exceeding the ${THRESHOLD}pp threshold."
             echo "Suggested actions:"
-            echo "  * Add curl(s) to flow.sh::doccano_record_traffic that exercise the routes you changed/touched."
-            echo "  * If the route(s) was intentionally retired, drop it from doccano-django/flow.sh::doccano_list_routes' SCOPE_PREFIXES too so it's removed from the denominator."
+            echo "  * Add curl(s) to flow.sh::doccano_record_traffic that exercise the new code paths."
+            echo "  * Or extend the .coveragerc 'omit' list if the new module is not part of the runtime backend (migrations, management commands, tests)."
             exit 1
           fi
           echo "OK — coverage delta within ${THRESHOLD}pp threshold."
@@ -196,4 +196,4 @@ jobs:
 
             Threshold: PR may not drop coverage by more than **${{ env.COVERAGE_THRESHOLD }}pp**. Override per-repo via the `DOCCANO_COVERAGE_THRESHOLD` actions variable.
 
-            Coverage measures the API surface (`/v1/projects/*` + `/v1/me` + `/v1/users` + `/v1/health` + `/v1/auth`) that `flow.sh::doccano_record_traffic` actually exercises against the running backend's URL resolver. Reports are attached as artifacts on each job ("coverage-build" / "coverage-release").
+            Coverage is **Python line coverage** (coverage.py 7.6.1) of the doccano backend code — the bytes that `flow.sh::doccano_record_traffic` actually executes. Instrumentation lives in a separate `Dockerfile.coverage` + `docker-compose.coverage.yml` overlay; the base `docker-compose.yml` consumed by keploy/integrations and keploy/enterprise CI lanes runs uninstrumented and pays zero coverage cost. Per-file reports are attached as artifacts on each job (`coverage-build` / `coverage-release`).

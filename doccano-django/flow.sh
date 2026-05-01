@@ -235,242 +235,69 @@ doccano_record_traffic() {
     curl -sS -H "$h_token" "$p/metrics/member-progress" >/dev/null || true
 }
 
-# doccano_list_routes — print every (METHOD, PATH) pair the running
-# doccano backend ACTUALLY serves, one per line, sorted. Walks
-# Django's URL resolver inside the container (so the result tracks
-# whatever doccano version this sample is pinned to, no static
-# urls.py guess), and reports only methods the view's view class
-# actually overrides (not Django's default `http_method_names`,
-# which lists every HTTP verb regardless of whether a handler
-# exists).
+# doccano_report_coverage (real Python line coverage via coverage.py).
 #
-# Filtering: scoped to the API surface the sample's flow.sh aims at
-# — /v1/projects/* (the polymorphic-resourcetype shape under test),
-# /v1/me, /v1/users, /v1/health, /v1/fp/* (filepond uploads, pulled
-# in via the auto-labeling flow). Auth admin, static / media, and
-# anything outside /v1/ are excluded so the coverage denominator
-# stays focused on the contract this lane is actually testing.
-# Future lane that exercises a different surface (label-import,
-# auto-labeling configs, etc.) should add itself to the SCOPE_PREFIXES
-# list rather than redefining doccano_list_routes.
-doccano_list_routes() {
-    local backend="${DOCCANO_BACKEND_CONTAINER:-doccano_backend}"
-    docker exec -i "$backend" python -c '
-import os, re, sys
-import django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
-django.setup()
-from django.urls import URLPattern, URLResolver, get_resolver
-
-SCOPE_PREFIXES = (
-    "v1/projects",
-    "v1/me",
-    "v1/users",
-    "v1/health",
-    "v1/auth",
-)
-
-# DRF maps action names to HTTP methods deterministically. Used as
-# the introspection source for ViewSet subclasses where method-on-
-# class is hidden behind the action mapping.
-ACTION_METHOD_MAP = {
-    "list": "GET",
-    "retrieve": "GET",
-    "create": "POST",
-    "update": "PUT",
-    "partial_update": "PATCH",
-    "destroy": "DELETE",
-}
-
-def normalise(pattern):
-    s = str(pattern)
-    s = re.sub(r"\(\?P<([^>]+)>[^)]+\)", r"{\1}", s)
-    s = re.sub(r"<\w+:(\w+)>", r"{\1}", s)
-    s = s.replace("^", "").replace("$", "").replace("\\Z", "")
-    return s
-
-def actual_methods(view, callback):
-    methods = set()
-    # Generic / mixin DRF views: handler methods named after HTTP
-    # verbs (get / post / put / patch / delete / head / options).
-    # Filter to ones the class itself defines (or any non-base
-    # ancestor — `not in object`s vars is too narrow because a
-    # mixin like ListModelMixin defines `list`, not `get`).
-    for m in ("get", "post", "put", "patch", "delete"):
-        if hasattr(view, m):
-            methods.add(m.upper())
-    # ViewSet action mapping. Each ViewSet subclass exposes
-    # `actions` on its as_view() callback; e.g. /v1/projects has
-    # actions={"get": "list", "post": "create"}.
-    actions = getattr(callback, "actions", None)
-    if actions:
-        for http_method in actions:
-            methods.add(http_method.upper())
-    # @action-decorated methods (e.g. ProjectViewSet has a
-    # `members` action mapped to GET / POST / DELETE on
-    # /v1/projects/{id}/members). Reflected as additional entries
-    # on the view class with `mapping` attributes after DRF binds
-    # them.
-    for attr in dir(view):
-        bound = getattr(view, attr, None)
-        mapping = getattr(bound, "mapping", None)
-        if mapping:
-            for http_method in mapping:
-                methods.add(http_method.upper())
-    return methods - {"OPTIONS", "HEAD", "TRACE"}
-
-def walk(patterns, prefix=""):
-    for entry in patterns:
-        if isinstance(entry, URLResolver):
-            yield from walk(entry.url_patterns, prefix + normalise(entry.pattern))
-        elif isinstance(entry, URLPattern):
-            full = prefix + normalise(entry.pattern)
-            if not any(full.startswith(p) for p in SCOPE_PREFIXES):
-                continue
-            cb = entry.callback
-            view = getattr(cb, "view_class", None) or getattr(cb, "cls", None)
-            methods = actual_methods(view, cb) if view is not None else {"GET"}
-            if not methods:
-                continue
-            for method in sorted(methods):
-                yield method, "/" + full
-
-for method, path in sorted(set(walk(get_resolver().url_patterns))):
-    print(method, path)
-' 2>/dev/null
-}
-
-# doccano_list_recorded_routes — print every (METHOD, PATH) pair
-# that ended up "covered" by the just-finished traffic loop, one
-# per line, sorted unique. Two source modes:
+# Requires the docker-compose.coverage.yml overlay — the base compose
+# is uninstrumented so keploy CI lanes (enterprise, integrations) pay
+# zero overhead. When called from a base-compose run the function
+# detects the missing data and exits 0 cleanly so `flow.sh coverage
+# || true` informational hooks don't break.
 #
-#   keploy mode (lane scripts): walks
-#     keploy/test-set-*/tests/*.yaml in the working dir, reads
-#     each test's req.method + req.url, strips host/scheme. This
-#     is the authoritative numerator when keploy is in the picture
-#     — only calls keploy actually CAPTURED count, which filters
-#     out 5xxs the recorder rejected.
-#
-#   standalone mode (samples-python CI workflow): falls back to
-#     $DOCCANO_FIRED_ROUTES_FILE (written by record-traffic via
-#     log_fired). Useful for measuring the sample's own coverage
-#     without spinning up keploy. The numerator here is "calls
-#     flow.sh fired" rather than "calls keploy captured" — they
-#     should match in steady state, but the standalone mode gives
-#     up the keploy 5xx-filtering. Acceptable for the
-#     samples-python coverage gate, which is intentionally a
-#     looser check than the keploy lane's full record/replay
-#     assertion.
-doccano_list_recorded_routes() {
-    local f method route
-    local found_keploy=0
-    while IFS= read -r f; do
-        found_keploy=1
-        method=$(awk '/^    method:/{print $2; exit}' "$f")
-        route=$(awk '/^    url:/{print $2; exit}' "$f")
-        route="${route%%\?*}"
-        case "$route" in
-            http://*|https://*)
-                route="/${route#*://*/}"
-                ;;
-        esac
-        if [ -n "$method" ] && [ -n "$route" ]; then
-            echo "$method $route"
-        fi
-    done < <(find keploy -type f -path '*/tests/*.yaml' 2>/dev/null) | sort -u
-
-    if [ "$found_keploy" = "1" ]; then return 0; fi
-
-    # No keploy recordings on disk — fall back to the per-call
-    # audit log written by record-traffic.
-    if [ -n "$DOCCANO_FIRED_ROUTES_FILE" ] && [ -f "$DOCCANO_FIRED_ROUTES_FILE" ]; then
-        while IFS= read -r line; do
-            method="${line%% *}"
-            route="${line#* }"
-            route="${route%%\?*}"
-            case "$route" in
-                http://*|https://*)
-                    route="/${route#*://*/}"
-                    ;;
-            esac
-            [ -n "$method" ] && [ -n "$route" ] && echo "$method $route"
-        done <"$DOCCANO_FIRED_ROUTES_FILE" | sort -u
-    fi
-}
-
-# doccano_report_coverage — compute (method, path) coverage of the
-# recorded test set against the running doccano backend's URL
-# resolver. Pure reporting: prints the percentage to stdout, never
-# returns non-zero. The lane decides whether to gate.
-#
-# Matching: each recorded path is normalised by collapsing the
-# numeric ID segments (e.g. /v1/projects/1) into the parameter
-# placeholder Django uses (`{project_id}`), then compared against
-# the route table's normalised entries. A recorded route matches
-# any entry with the same method and a path whose static segments
-# line up; this tolerates differences like /v1/projects/{id}/members
-# vs /v1/projects/1/members (recorded form has a literal `1`).
-#
-# Only counted as "covered" if the recorded test passed at record
-# time — a 5xx that landed in the test set still adds to the
-# denominator, but its method-path pair counts as covered only if
-# the response status was 2xx/3xx. Filter implemented inline below.
+# Mechanics:
+#   - The coverage overlay's Dockerfile.coverage installs coverage.py
+#     and a `coverage_subprocess.pth` so each gunicorn worker auto-
+#     starts coverage.process_startup().
+#   - .coveragerc has parallel = true → per-worker .coverage.<pid>
+#     files in /coverage (volume-mounted from ./coverage on host).
+#   - This function shells into the running backend container,
+#     combines the per-worker files in place, and emits the line %
+#     in the same `Covered N/M (XX.X%)` shape the helper script's
+#     regex expects.
 doccano_report_coverage() {
-    local routes_file recorded_file
-    routes_file="$(mktemp)"
-    recorded_file="$(mktemp)"
+    local backend="${DOCCANO_BACKEND_CONTAINER:-doccano_backend}"
+    local data_dir="${DOCCANO_COVERAGE_DATA_DIR:-/coverage}"
+    local report_file="${COVERAGE_REPORT_FILE:-coverage_report.txt}"
 
-    if ! doccano_list_routes >"$routes_file"; then
-        echo "WARNING: could not enumerate doccano routes (is the backend container '${DOCCANO_BACKEND_CONTAINER:-doccano_backend}' running?)" >&2
-        rm -f "$routes_file" "$recorded_file"
-        return 0
-    fi
-    if [ ! -s "$routes_file" ]; then
-        echo "WARNING: route enumeration produced no rows; skipping coverage report" >&2
-        rm -f "$routes_file" "$recorded_file"
+    if ! docker ps --format '{{.Names}}' 2>/dev/null | grep -q "^${backend}$"; then
+        echo "INFO: ${backend} not running — coverage report skipped"
+        : >"$report_file"
         return 0
     fi
 
-    doccano_list_recorded_routes >"$recorded_file"
-
-    local total covered missing pct
-    total=$(wc -l <"$routes_file" | tr -d ' ')
-    covered=0
-    missing=""
-
-    local line method route pattern recorded_method recorded_path
-    while IFS= read -r line; do
-        method="${line%% *}"
-        route="${line#* }"
-        # Build a regex pattern from the route table entry: replace
-        # any `{name}` placeholder with a "match one path segment"
-        # group. Anchored with ^ / $ to reject partial matches.
-        pattern="^${method} $(printf '%s' "$route" | sed -E 's/\{[^}]+\}/[^\/]+/g')$"
-        if grep -qE "$pattern" "$recorded_file"; then
-            covered=$((covered + 1))
-        else
-            missing+="  ${method} ${route}"$'\n'
-        fi
-    done <"$routes_file"
-
-    if [ "$total" -gt 0 ]; then
-        pct=$(awk -v c="$covered" -v t="$total" 'BEGIN{printf "%.1f", c*100/t}')
-    else
-        pct="0.0"
+    local data_count
+    data_count=$(docker exec "$backend" sh -c "ls -1 ${data_dir}/.coverage.* 2>/dev/null | wc -l" 2>/dev/null | tr -d ' \r\n')
+    if [ "${data_count:-0}" -eq 0 ]; then
+        echo "INFO: no coverage data at ${data_dir}/.coverage.* in ${backend} — base image is uninstrumented (apply docker-compose.coverage.yml overlay to enable)"
+        : >"$report_file"
+        return 0
     fi
+
+    # Combine in-place; -a appends repeated runs (re-trigger safe).
+    docker exec "$backend" sh -c "cd /backend && coverage combine -a ${data_dir}/.coverage.* >/dev/null 2>&1" || true
+
+    # Pull the integer % via --format=total (newer coverage.py emits
+    # just the number) plus the textual TOTAL line for the artefact.
+    local pct lines covered missed
+    pct=$(docker exec "$backend" sh -c "cd /backend && coverage report --rcfile=/backend/.coveragerc --format=total 2>/dev/null" | tr -d ' \r\n')
+    if [ -z "$pct" ]; then
+        echo "ERROR: coverage report --format=total returned empty"
+        docker exec "$backend" sh -c "cd /backend && coverage report --rcfile=/backend/.coveragerc 2>&1 | tail -10" >&2 || true
+        return 1
+    fi
+
+    # Pull statements/missed off the TOTAL row of the textual report.
+    read -r lines missed < <(docker exec "$backend" sh -c "cd /backend && coverage report --rcfile=/backend/.coveragerc 2>/dev/null | awk '/^TOTAL/{print \$2, \$3}'" | tr -d '\r')
+    covered=$(( ${lines:-0} - ${missed:-0} ))
 
     {
-        echo "================ doccano API coverage ================"
-        echo "Covered ${covered}/${total} (${method:+}${pct}%)"
-        if [ -n "$missing" ]; then
-            echo "Uncovered:"
-            printf '%s' "$missing"
-        fi
-        echo "======================================================"
-    } | tee "${COVERAGE_REPORT_FILE:-coverage_report.txt}"
-
-    rm -f "$routes_file" "$recorded_file"
+        echo "================ doccano line coverage (Python coverage.py) ================"
+        docker exec "$backend" sh -c "cd /backend && coverage report --rcfile=/backend/.coveragerc 2>/dev/null | tail -15"
+        echo ""
+        printf 'Covered %s/%s (%s.0%%)\n' "${covered}" "${lines:-0}" "${pct}"
+        echo "============================================================================"
+    } | tee "$report_file"
 }
+
 
 case "${1:-}" in
     bootstrap)
@@ -480,31 +307,24 @@ case "${1:-}" in
         doccano_record_traffic
         ;;
     coverage)
-        # Lane scripts call this after `keploy record` finishes (when
-        # the backend container is still running and `keploy/test-
-        # set-*/tests/*.yaml` is on disk).
+        # Reads coverage.py data from the running backend container
+        # (requires the docker-compose.coverage.yml overlay; exits 0
+        # cleanly if the base image is uninstrumented).
         doccano_report_coverage
-        ;;
-    list-routes)
-        # Diagnostic — print the route table the coverage report
-        # uses as its denominator. Useful for verifying a doccano
-        # version bump didn't shift the surface unexpectedly.
-        doccano_list_routes
         ;;
     *)
         cat >&2 <<EOF
-usage: $0 {bootstrap|record-traffic|coverage|list-routes}
+usage: $0 {bootstrap|record-traffic|coverage}
 
   bootstrap      log in as admin and install the deterministic auth
                  token (idempotent; safe to re-run against a populated DB)
   record-traffic drive the API: warmup hammer + project create + reads
                  + label + example + categories + metrics. Fire-and-forget;
                  keploy is the assertion layer at replay
-  coverage       walk the running backend's URL resolver and the
-                 just-recorded keploy/test-set-* tests; emit a (method,
-                 path) coverage percentage
-  list-routes    print the URL resolver's (method, path) pairs (the
-                 coverage denominator)
+  coverage       compute Python line coverage (coverage.py) of the
+                 backend code that the just-finished traffic loop
+                 exercised; requires docker-compose.coverage.yml
+                 overlay. No-op when run against the base image.
 EOF
         exit 2
         ;;

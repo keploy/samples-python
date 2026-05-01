@@ -1,0 +1,21 @@
+[run]
+# Per-process line coverage of the backend Django code.
+#
+# parallel + sigterm: gunicorn forks WORKERS subprocesses; each
+# writes its own .coverage.<host>.<pid> file under /coverage.
+# `combine` merges them at report time. `sigterm = true` flushes
+# the in-flight data on SIGTERM so the reaper from the workflow
+# captures it.
+parallel = true
+sigterm = true
+branch = false
+data_file = /coverage/.coverage
+source = /backend
+
+omit =
+    */tests/*
+    */migrations/*
+    */__pycache__/*
+    /backend/manage.py
+    /backend/config/wsgi.py
+    /backend/config/asgi.py
