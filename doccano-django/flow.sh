@@ -99,6 +99,21 @@ doccano_record_traffic() {
     local example_resp example_id
     local p
 
+    # Wait for the backend to actually be SERVING (not just
+    # port-open). Lanes typically wait_for_port before invoking
+    # this function, but a TCP-open backend could still be
+    # gunicorn-booting and 5xx every API call. doccano_wait_for_fixed_token
+    # polls /v1/me with the deterministic auth header until it
+    # returns 200, which is the strongest single-call readiness
+    # signal: it proves gunicorn is past boot, the auth backend
+    # is wired, the named-volume token is loaded, and the DB is
+    # responsive. Without this gate, the very first POST below
+    # (curl -fsS, no `|| true`) fails with a 5xx, set -e kills
+    # the script, the lane's compat_run_record_phase sees a
+    # zero-second "traffic done", SIGINTs keploy ~3s after, and
+    # the recording captures nothing.
+    doccano_wait_for_fixed_token 240 >/dev/null
+
     # Worker-cache warmup. doccano runs 4 gunicorn workers; each
     # worker keeps its own per-process Django ContentType cache and
     # populates it lazily on the first polymorphic-resolver query
