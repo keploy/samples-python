@@ -50,28 +50,58 @@ that:
 
 ## Running locally
 
+### Without keploy — smoke check
+
 ```sh
-# Bring doccano up + bootstrap the admin token (one-shot; the volume
-# is reused for the actual record run).
+docker compose up -d
+./flow.sh bootstrap
+./flow.sh record-traffic
+docker compose down -v
+```
+
+This is what the keploy/integrations and keploy/enterprise CI
+lanes wrap in `keploy record` / `keploy test` — the base compose
+is uninstrumented and runs unchanged inside those lanes.
+
+### Without keploy — measuring real Python line coverage
+
+The base image is uninstrumented. Apply the coverage overlay to
+add `coverage.py` per-worker tracking:
+
+```sh
+mkdir -p coverage
+docker compose -f docker-compose.yml -f docker-compose.coverage.yml up -d --build
+./flow.sh bootstrap
+./flow.sh record-traffic
+docker compose -f docker-compose.yml -f docker-compose.coverage.yml kill -s SIGTERM backend
+sleep 3
+docker compose -f docker-compose.yml -f docker-compose.coverage.yml up -d backend
+./flow.sh coverage
+docker compose -f docker-compose.yml -f docker-compose.coverage.yml down -v
+```
+
+The overlay (`Dockerfile.coverage` + `docker-compose.coverage.yml`)
+adds `coverage[toml]` and a `coverage_subprocess.pth` so each
+gunicorn worker auto-starts coverage tracking. It is consumed
+ONLY by the standalone GH Actions workflow — keploy CI lanes
+ignore it and run the base compose, paying zero coverage cost.
+
+### With keploy — record + replay
+
+```sh
 docker compose up -d
 ./flow.sh bootstrap
 
-# Record
-keploy record \
-  -c "docker compose up" \
-  --container-name doccano_backend \
+# In one shell:
+keploy record -c "docker compose up" --container-name doccano_backend \
   --proxy-port 18081 --dns-port 18082
 
-# (in another shell, while keploy record is up)
+# In another shell:
 ./flow.sh record-traffic
-# → SIGINT keploy when traffic returns
+# SIGINT keploy when traffic returns
 
-# Replay
-keploy test \
-  -c "docker compose up" \
-  --containerName doccano_backend \
-  --apiTimeout 60 --delay 20 \
-  --proxy-port 18081 --dns-port 18082
+keploy test -c "docker compose up" --containerName doccano_backend \
+  --apiTimeout 60 --delay 20 --proxy-port 18081 --dns-port 18082
 ```
 
 Expected outcome with the integrations fix in place: 0 failures,
