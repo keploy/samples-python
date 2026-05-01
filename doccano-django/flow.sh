@@ -35,6 +35,22 @@ DOCCANO_DB_CONTAINER="${DOCCANO_DB_CONTAINER:-doccano_db}"
 DOCCANO_BACKEND_CONTAINER="${DOCCANO_BACKEND_CONTAINER:-doccano_backend}"
 DOCCANO_PHASE="${DOCCANO_PHASE:-local}"
 
+# Optional per-call audit log written by record-traffic. When set,
+# each curl below appends "<METHOD> <URL>" so a downstream caller
+# can compute coverage WITHOUT a keploy recording in the picture.
+# This is what the standalone GitHub Actions workflow consumes
+# (lane scripts use the keploy/test-set-*/tests/*.yaml tree
+# instead). When unset / empty: silent no-op, no extra disk writes.
+DOCCANO_FIRED_ROUTES_FILE="${DOCCANO_FIRED_ROUTES_FILE:-}"
+
+# log_fired — append "<METHOD> <URL>" to the audit log if enabled.
+# Cheap (one printf, no fork) so we can inline it before each curl
+# in doccano_record_traffic without bloating the function.
+log_fired() {
+    [ -z "$DOCCANO_FIRED_ROUTES_FILE" ] && return 0
+    printf '%s %s\n' "$1" "$2" >>"$DOCCANO_FIRED_ROUTES_FILE"
+}
+
 base="http://127.0.0.1:${DOCCANO_APP_PORT}"
 h_token="Authorization: Token ${DOCCANO_FIXED_TOKEN}"
 h_json='Content-Type: application/json'
@@ -43,6 +59,34 @@ h_json='Content-Type: application/json'
 # the recorded HTTP test cases match at replay — without it, every
 # replay run would carry a fresh random token in the headers and the
 # matcher would diff on the Authorization line.
+# doccano_wait_for_fixed_token — poll /v1/me with the deterministic
+# Authorization header until the backend returns 200 with the
+# admin user's username. Used as a backend-readiness gate, both at
+# the end of bootstrap (proves the token install took effect) and
+# at the start of record-traffic (proves the second-stage
+# skip-bootstrap compose has finished gunicorn boot before we
+# fire any test traffic). Distinct from a plain port-open check —
+# this gate doesn't return until the auth+DB+Django stack is
+# actually serving.
+doccano_wait_for_fixed_token() {
+    local timeout=${1:-180}
+    local start_ts code
+    start_ts=$(date +%s)
+    while true; do
+        code=$(curl -sS -o /tmp/doccano-me.json -w '%{http_code}' \
+            -H "$h_token" "${base}/v1/me" 2>/dev/null || echo "")
+        if [ "$code" = "200" ] && jq -e ".username == \"${DOCCANO_ADMIN_USER}\"" /tmp/doccano-me.json >/dev/null 2>&1; then
+            return 0
+        fi
+        if [ $(( $(date +%s) - start_ts )) -ge "$timeout" ]; then
+            echo "doccano_wait_for_fixed_token: timed out waiting for /v1/me to return 200 (last code: ${code:-<empty>})" >&2
+            cat /tmp/doccano-me.json >&2 || true
+            return 1
+        fi
+        sleep 2
+    done
+}
+
 doccano_bootstrap_token() {
     local timeout=${1:-180}
     local start_ts
@@ -72,21 +116,7 @@ WHERE user_id=(SELECT id FROM auth_user WHERE username='${DOCCANO_ADMIN_USER}');
 SQL
 
     # Confirm the fixed token is live before returning.
-    start_ts=$(date +%s)
-    while true; do
-        local code
-        code=$(curl -sS -o /tmp/doccano-me.json -w '%{http_code}' \
-            -H "$h_token" "${base}/v1/me" || true)
-        if [ "$code" = "200" ] && jq -e ".username == \"${DOCCANO_ADMIN_USER}\"" /tmp/doccano-me.json >/dev/null 2>&1; then
-            return 0
-        fi
-        if [ $(( $(date +%s) - start_ts )) -ge "$timeout" ]; then
-            echo "Timed out waiting for fixed token (last code: ${code})" >&2
-            cat /tmp/doccano-me.json >&2 || true
-            return 1
-        fi
-        sleep 2
-    done
+    doccano_wait_for_fixed_token "$timeout"
 }
 
 # Record traffic: hits exactly the endpoints whose responses
@@ -133,8 +163,11 @@ doccano_record_traffic() {
     for warm_idx in $(seq 1 16); do
         curl -sS -H "$h_token" "$base/v1/me" >/dev/null 2>&1 || true
     done
+    log_fired GET "$base/v1/me"
 
+    log_fired GET "$base/v1/users"
     curl -sS -H "$h_token" "$base/v1/users" >/dev/null || true
+    log_fired GET "$base/v1/health/"
     curl -sS "$base/v1/health/" >/dev/null || true
 
     # POST a polymorphic project. resourcetype="TextClassificationProject"
@@ -142,6 +175,7 @@ doccano_record_traffic() {
     # uses to instantiate the right subclass; the bug shows up at
     # the GET / PATCH side, not on this POST (the in-memory subclass
     # instance shapes the response without consulting the DB).
+    log_fired POST "$base/v1/projects"
     project_resp=$(curl -fsS -H "$h_token" -H "$h_json" -X POST "$base/v1/projects" \
         -d "{\"name\":\"keploy-${DOCCANO_PHASE}-project\",\"project_type\":\"DocumentClassification\",\"description\":\"sample project\",\"guideline\":\"label the text\",\"resourcetype\":\"TextClassificationProject\"}")
     project_id=$(printf '%s' "$project_resp" | jq -r '.id')
@@ -154,8 +188,11 @@ doccano_record_traffic() {
     # "TextClassificationProject" because the polymorphic queryset
     # can't resolve the subclass without working bind-discrimination
     # on django_content_type).
+    log_fired GET "$base/v1/projects"
     curl -sS -H "$h_token" "$base/v1/projects" >/dev/null || true
+    log_fired GET "$p"
     curl -sS -H "$h_token" "$p" >/dev/null || true
+    log_fired PATCH "$p"
     curl -sS -H "$h_token" -H "$h_json" -X PATCH "$p" \
         -d '{"description":"updated by sample"}' >/dev/null || true
 
@@ -165,27 +202,36 @@ doccano_record_traffic() {
     # the recording wouldn't capture the multi-bind shape and the
     # falsifying half of the matrix wouldn't have anything to fail
     # on.
+    log_fired GET "$p/my-role"
     curl -sS -H "$h_token" "$p/my-role" >/dev/null || true
+    log_fired GET "$p/members"
     curl -sS -H "$h_token" "$p/members" >/dev/null || true
 
+    log_fired POST "$p/category-types"
     label_resp=$(curl -sS -H "$h_token" -H "$h_json" -X POST "$p/category-types" \
         -d '{"text":"positive","background_color":"#00ff00","text_color":"#ffffff"}' 2>/dev/null || true)
     label_id=$(jq -r '.id // empty' <<<"$label_resp" 2>/dev/null || true)
+    log_fired GET "$p/category-types"
     curl -sS -H "$h_token" "$p/category-types" >/dev/null || true
 
+    log_fired POST "$p/examples"
     example_resp=$(curl -fsS -H "$h_token" -H "$h_json" -X POST "$p/examples" \
         -d '{"text":"Keploy CI sample text","meta":{"source":"sample"}}')
     example_id=$(jq -r '.id' <<<"$example_resp")
     if [ -n "$example_id" ] && [ "$example_id" != "null" ]; then
+        log_fired GET "$p/examples/${example_id}"
         curl -sS -H "$h_token" "$p/examples/${example_id}" >/dev/null || true
         if [ -n "$label_id" ]; then
+            log_fired POST "$p/examples/${example_id}/categories"
             curl -sS -H "$h_token" -H "$h_json" -X POST "$p/examples/${example_id}/categories" \
                 -d "{\"label\":${label_id}}" >/dev/null || true
         fi
     fi
 
     # Metrics endpoints — additional polymorphic queries.
+    log_fired GET "$p/metrics/progress"
     curl -sS -H "$h_token" "$p/metrics/progress" >/dev/null || true
+    log_fired GET "$p/metrics/member-progress"
     curl -sS -H "$h_token" "$p/metrics/member-progress" >/dev/null || true
 }
 
@@ -294,12 +340,32 @@ for method, path in sorted(set(walk(get_resolver().url_patterns))):
 ' 2>/dev/null
 }
 
-# doccano_list_recorded_routes — print every (METHOD, PATH) pair the
-# recorder captured during the just-finished record phase. Reads the
-# keploy/test-set-*/tests/*.yaml tree rooted at the working dir.
+# doccano_list_recorded_routes — print every (METHOD, PATH) pair
+# that ended up "covered" by the just-finished traffic loop, one
+# per line, sorted unique. Two source modes:
+#
+#   keploy mode (lane scripts): walks
+#     keploy/test-set-*/tests/*.yaml in the working dir, reads
+#     each test's req.method + req.url, strips host/scheme. This
+#     is the authoritative numerator when keploy is in the picture
+#     — only calls keploy actually CAPTURED count, which filters
+#     out 5xxs the recorder rejected.
+#
+#   standalone mode (samples-python CI workflow): falls back to
+#     $DOCCANO_FIRED_ROUTES_FILE (written by record-traffic via
+#     log_fired). Useful for measuring the sample's own coverage
+#     without spinning up keploy. The numerator here is "calls
+#     flow.sh fired" rather than "calls keploy captured" — they
+#     should match in steady state, but the standalone mode gives
+#     up the keploy 5xx-filtering. Acceptable for the
+#     samples-python coverage gate, which is intentionally a
+#     looser check than the keploy lane's full record/replay
+#     assertion.
 doccano_list_recorded_routes() {
     local f method route
+    local found_keploy=0
     while IFS= read -r f; do
+        found_keploy=1
         method=$(awk '/^    method:/{print $2; exit}' "$f")
         route=$(awk '/^    url:/{print $2; exit}' "$f")
         route="${route%%\?*}"
@@ -312,6 +378,24 @@ doccano_list_recorded_routes() {
             echo "$method $route"
         fi
     done < <(find keploy -type f -path '*/tests/*.yaml' 2>/dev/null) | sort -u
+
+    if [ "$found_keploy" = "1" ]; then return 0; fi
+
+    # No keploy recordings on disk — fall back to the per-call
+    # audit log written by record-traffic.
+    if [ -n "$DOCCANO_FIRED_ROUTES_FILE" ] && [ -f "$DOCCANO_FIRED_ROUTES_FILE" ]; then
+        while IFS= read -r line; do
+            method="${line%% *}"
+            route="${line#* }"
+            route="${route%%\?*}"
+            case "$route" in
+                http://*|https://*)
+                    route="/${route#*://*/}"
+                    ;;
+            esac
+            [ -n "$method" ] && [ -n "$route" ] && echo "$method $route"
+        done <"$DOCCANO_FIRED_ROUTES_FILE" | sort -u
+    fi
 }
 
 # doccano_report_coverage — compute (method, path) coverage of the
