@@ -29,9 +29,23 @@
 test:
   globalNoise:
     global:
-      body.created_at: []
-      body.updated_at: []
-      body.results.created_at: []
-      body.results.updated_at: []
-      header.Date: []
-      header.Expires: []
+      # keploy's GlobalNoise is map[section][field][values]
+      # (sections "header" / "body"; field one level deep). Flat
+      # dotted keys like `body.created_at: []` end up as literal
+      # outer-map keys "body.created_at" that never match any
+      # section, so the noise is silently a no-op. The only reason
+      # this didn't surface as a flake on every auto_now field is
+      # that keploy auto-stamps Date as per-test noise on every
+      # recording — everything else slipped through.
+      header:
+        Date: []
+        Expires: []
+      body:
+        # Top-level fields cover the single-object responses;
+        # keploy's matcher walks the JSON tree and applies the
+        # noise list every place these field names appear, so
+        # entries inside DRF's `results` array are also stripped
+        # without needing a separate `body.results.created_at`
+        # path (which keploy's flat-key map can't address anyway).
+        created_at: []
+        updated_at: []
