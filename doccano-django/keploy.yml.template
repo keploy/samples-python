@@ -1,0 +1,51 @@
+# keploy.yml template for the doccano-django sample.
+#
+# Lane scripts copy this into the run directory before invoking
+# `keploy record`/`keploy test`. Reason for it living here (in the
+# sample) and not in each lane: every consumer needs the same noise
+# filter — doccano stamps non-deterministic timestamps into every
+# response (Date / Expires / created_at / updated_at), and any
+# downstream lane that runs against this sample would have to
+# redefine the same set otherwise. Centralising it means a future
+# doccano version that adds another auto-timestamp field is one
+# edit here, not a fan-out across keploy/integrations and
+# keploy/enterprise.
+#
+# globalNoise.global applies to every recorded test in every test
+# set — used here for fields whose value is inherently
+# non-deterministic across record/replay (timestamps the server
+# stamps from `time.now()`):
+#
+#   header.Date / header.Expires
+#     Set by gunicorn and Django on every response.
+#   body.created_at / body.updated_at
+#     Django auto_now / auto_now_add fields on the response object.
+#   body.results.created_at / body.results.updated_at
+#     Same fields when wrapped in DRF's paginated `results` array.
+#
+# These do NOT mask any of the bugs the doccano lane was added to
+# falsify (the bind-extraction regression manifests in `is_text_project`
+# and `resourcetype` — neither field is in this list).
+test:
+  globalNoise:
+    global:
+      # keploy's GlobalNoise is map[section][field][values]
+      # (sections "header" / "body"; field one level deep). Flat
+      # dotted keys like `body.created_at: []` end up as literal
+      # outer-map keys "body.created_at" that never match any
+      # section, so the noise is silently a no-op. The only reason
+      # this didn't surface as a flake on every auto_now field is
+      # that keploy auto-stamps Date as per-test noise on every
+      # recording — everything else slipped through.
+      header:
+        Date: []
+        Expires: []
+      body:
+        # Top-level fields cover the single-object responses;
+        # keploy's matcher walks the JSON tree and applies the
+        # noise list every place these field names appear, so
+        # entries inside DRF's `results` array are also stripped
+        # without needing a separate `body.results.created_at`
+        # path (which keploy's flat-key map can't address anyway).
+        created_at: []
+        updated_at: []

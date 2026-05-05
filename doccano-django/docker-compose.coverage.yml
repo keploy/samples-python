@@ -1,0 +1,19 @@
+# Coverage overlay — applied with:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.coverage.yml up -d --build
+#
+# Used ONLY by the standalone .github/workflows/doccano-django.yml
+# CI workflow. Keploy CI lanes (enterprise, integrations) ignore
+# this file and run the base compose unchanged, so they pay zero
+# coverage-instrumentation cost.
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.coverage
+    environment:
+      # Tells the .pth-file-installed coverage.process_startup() to
+      # actually start tracking; see Dockerfile.coverage.
+      COVERAGE_PROCESS_START: /backend/.coveragerc
+    volumes:
+      - ./coverage:/coverage
