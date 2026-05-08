@@ -1,41 +1,88 @@
-<h1 align="center"> Keploy Python Sample Applications </h1>
+<h1 align="center">🚀 Keploy Python Sample Applications</h1>
+
 <p align="center">
-
-  <a href="CODE_OF_CONDUCT.md" alt="Contributions welcome">
-    <img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen?logo=github" /></a>
-
-  <a href="https://join.slack.com/t/keploy/shared_invite/zt-357qqm9b5-PbZRVu3Yt2rJIa6ofrwWNg" alt="Slack">
-    <img src=".github/slack.svg" /></a>
-
-  <a href="https://opensource.org/licenses/Apache-2.0" alt="License">
-    <img src=".github/License-Apache_2.0-blue.svg" /></a>
+  <a href="CODE_OF_CONDUCT.md" alt="Contributions Welcome">
+    <img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen?logo=github" />
+  </a>
+  <a href="https://join.slack.com/t/keploy/shared_invite/zt-357qqm9b5-PbZRVu3Yt2rJIa6ofrwWNg" alt="Slack Community">
+    <img src=".github/slack.svg" />
+  </a>
+  <a href="https://opensource.org/licenses/Apache-2.0" alt="License: Apache 2.0">
+    <img src=".github/License-Apache_2.0-blue.svg" />
+  </a>
 </p>
 
-This repo contains the samples for [Keploy's](https://keploy.io) integration with Python-based Application. Please feel free to contribute if you'd like submit a sample for another use-case or library.
+<p align="center">
+  <em>A collection of Python sample applications integrated with <a href="https://keploy.io">Keploy</a> for API testing, mocking, and observability.</em>
+</p>
 
-> **Note** :- Issue Creation is disabled on this Repository, please visit [here](https://github.com/keploy/keploy/issues/new/choose) to submit Issue.
+---
 
-## Python Sample Apps with Keploy
+## 📌 About This Repository
 
-1. [Flask-Mongo](https://github.com/keploy/samples-python/tree/main/flask-mongo) - This application is a simple task management API built using Python's Flask framework and MongoDB for data storage. It allows you to perform basic CRUD (Create, Read, Update, Delete) operations on student records. The API supports CORS (Cross-Origin Resource Sharing) to facilitate cross-domain requests.
+This repository hosts sample Python applications that demonstrate how to integrate **Keploy** into various Python frameworks and databases. These examples are designed to help developers learn how to capture API calls, auto-generate test cases, and mock dependencies for faster, more reliable testing.
 
-2. [Django-Postgres](https://github.com/keploy/samples-python/tree/main/django-postgres) - This is an application to perform basic CRUD (Create, Read, Update, Delete) operations on user records built using Python's Django framework and PostgreSQL for data storage.
+💡 **Looking to contribute?** We welcome new sample applications and improvements to existing ones!
 
-3. [FastAPI-Postgres](https://github.com/keploy/samples-python/tree/main/fastapi-postgres) - This application is a student management API built using Python's FastAPI and PostgreSQL for data storage. It allows you to perform basic CRUD (Create, Read, Update, Delete) operations on student data.
+> ⚠️ **Note:** Issue creation is disabled on this repository. Please submit issues via the main [Keploy issue tracker](https://github.com/keploy/keploy/issues/new/choose).
 
-4. [FastAPI-Twilio](https://github.com/keploy/samples-python/tree/main/fastapi-twilio) - This application is a SMS sending API built using Python's FastAPI and Twilio for their SMS sharing service.
+---
 
-5. [Flask-Redis](https://github.com/keploy/samples-python/tree/main/flask-redis) - This Flask-based application provides a book management system utilizing Redis for caching and storage. It supports adding, retrieving, updating, and deleting book records, with optimized search functionality and cache management for improved performance. The API endpoints ensure efficient data handling and quick access to book information.
+## 🐍 Python Sample Applications with Keploy
 
-## Community Support ❤️
+| Application | Tech Stack | Description |
+|-------------|------------|-------------|
+| [Flask-Mongo](https://github.com/keploy/samples-python/tree/main/flask-mongo) | Flask + MongoDB | Task management API with CRUD operations on student records. Supports CORS for cross-origin requests. |
+| [Django-Postgres](https://github.com/keploy/samples-python/tree/main/django-postgres) | Django + PostgreSQL | User management API supporting CRUD operations on user records. |
+| [FastAPI-Postgres](https://github.com/keploy/samples-python/tree/main/fastapi-postgres) | FastAPI + PostgreSQL | Student management API with CRUD operations on student data. |
+| [FastAPI-Twilio](https://github.com/keploy/samples-python/tree/main/fastapi-twilio) | FastAPI + Twilio | SMS-sending API using Twilio’s messaging service. |
+| [Flask-Redis](https://github.com/keploy/samples-python/tree/main/flask-redis) | Flask + Redis | Book management API with caching and storage using Redis. Supports CRUD and optimized search. |
 
-### 🤔 Questions?
+---
 
-Reach out to us. We're here to help!
+## 💬 Community Support
 
-[![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://join.slack.com/t/keploy/shared_invite/zt-357qqm9b5-PbZRVu3Yt2rJIa6ofrwWNg)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/keploy/)
-[![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/channel/UC6OTg7F4o0WkmNtSoob34lg)
-[![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)](https://twitter.com/Keployio)
+Need help, have questions, or want to connect with other developers?
 
-### 💖 Let's Build Together!
+👉 **Join our Slack community:** [Keploy Slack](https://join.slack.com/t/keploy/shared_invite/zt-357qqm9b5-PbZRVu3Yt2rJIa6ofrwWNg)
+
+We’re happy to help you get started or discuss your ideas!
+
+---
+
+## 🤝 Contributing
+
+We ❤️ contributions! Here’s how you can help:
+
+- ✨ Add new sample applications or integrations
+- 📝 Improve existing examples
+- 🐛 Report issues on [Keploy main repo](https://github.com/keploy/keploy/issues/new/choose)
+
+Please make sure to read and follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+---
+
+## ⚡ Getting Started
+
+Each sample application comes with its own README explaining:
+
+- 🔹 How to set it up
+- 🔹 How to run it with Keploy
+- 🔹 How to generate tests
+
+👉 Check inside each application’s folder for detailed instructions.
+
+---
+
+## 📄 License
+
+This repository is licensed under the [Apache License 2.0](https://opensource.org/licenses/Apache-2.0).
+
+---
+
+## 🌟 About Keploy
+
+[Keploy](https://keploy.io) is an open-source tool that generates test cases and data mocks by recording real API traffic — helping you test faster with high coverage and no manual effort.
+
+---
+
