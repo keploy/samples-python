@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:13.22-alpine
+    container_name: ${DB_CONTAINER:-pg-catalog-repro-db}
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: testdb
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - reprnet
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d testdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+
+  app:
+    build: ./app
+    container_name: ${APP_CONTAINER:-pg-catalog-repro-app}
+    environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:postgres@postgres:5432/testdb
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${APP_HOST_PORT:-8123}:8000"
+    networks:
+      - reprnet
+
+networks:
+  reprnet:
+    name: ${COMPOSE_NET:-reprnet}
+    driver: bridge
