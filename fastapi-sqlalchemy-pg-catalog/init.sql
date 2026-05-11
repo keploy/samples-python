@@ -12,4 +12,10 @@ CREATE TABLE IF NOT EXISTS project (
     name VARCHAR(100) NOT NULL
 );
 
-INSERT INTO project (name) VALUES ('seed') ON CONFLICT DO NOTHING;
+-- Idempotent seed. `ON CONFLICT DO NOTHING` would only help with a
+-- UNIQUE/EXCLUSION constraint on name, which the SQLAlchemy model
+-- doesn't declare; use NOT EXISTS so re-running this script against
+-- an existing volume doesn't duplicate the row.
+INSERT INTO project (name)
+SELECT 'seed'
+WHERE NOT EXISTS (SELECT 1 FROM project WHERE name = 'seed');
