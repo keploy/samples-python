@@ -16,6 +16,7 @@ branch in ``pkg/postgres/v3/replayer/dispatcher/dispatcher.go``
 (simple-query path, ``dispatchBySQLHash``).
 """
 
+import asyncio
 import logging
 import os
 import sys
@@ -32,7 +33,12 @@ logging.basicConfig(
 )
 log = logging.getLogger("repro")
 
-DATABASE_URL = os.environ["DATABASE_URL"]
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError(
+        "DATABASE_URL is required (e.g. postgresql+psycopg2://user:pass@host:5432/db). "
+        "Set it in docker-compose env or in the host shell before launching uvicorn."
+    )
 # SQL echo is INTENTIONALLY on by default — this is a sample for
 # demonstrating the dispatcher's simple-Query catalog path, and seeing
 # the actual SQLAlchemy queries (pg_catalog.version, pg_class probe,
@@ -59,7 +65,13 @@ engine = create_engine(DATABASE_URL, echo=SQL_ECHO, future=True)
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     log.info("startup: running Base.metadata.create_all (pg_class probe expected)")
-    Base.metadata.create_all(engine)
+    # create_all does synchronous psycopg2 I/O. Offload to a thread so
+    # uvicorn's event loop stays responsive (otherwise any other
+    # async work scheduled on startup would block until the pg_class
+    # probe + any CREATE TABLE round-trips complete). For this minimal
+    # repro the difference is small, but the pattern is the right
+    # FastAPI shape for any startup that touches a sync DB driver.
+    await asyncio.to_thread(Base.metadata.create_all, engine)
     log.info("startup: create_all complete")
     yield
 
