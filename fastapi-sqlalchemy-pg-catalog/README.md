@@ -8,8 +8,14 @@ asymmetry (keploy/integrations#193).
 
 At app boot, SQLAlchemy's `Base.metadata.create_all(engine)` issues a
 `pg_catalog.pg_class` probe per declared table to decide whether to
-skip `CREATE TABLE`. With psycopg2 + parameter-less SQL the probe
-goes through the **simple-query** protocol path.
+skip `CREATE TABLE`. psycopg2 sends the probe over the
+**simple-query** protocol (`Q` packet) even though the source SQL is
+parameterized — it substitutes the `%(param)s` placeholders
+client-side and emits the resulting inlined SQL as a single
+statement, with no `Bind`/`Execute` frames. So the wire shape is
+simple-Query carrying inlined bind values; the recorded mock keeps
+the parameter list for matching, but the dispatcher's classifier
+sees a simple-Query CATALOG request.
 
 In `pkg/postgres/v3/replayer/dispatcher/dispatcher.go`:
 

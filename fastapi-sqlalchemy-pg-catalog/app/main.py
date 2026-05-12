@@ -4,11 +4,17 @@ v3 dispatcher's simple-query ClassCatalog branch via SQLAlchemy's
 ``Base.metadata.create_all`` table-existence probe.
 
 Boot sequence:
-  1. SQLAlchemy creates an engine over psycopg2 (simple-query for
-     parameter-less SQL).
+  1. SQLAlchemy creates an engine over psycopg2. psycopg2 sends queries
+     via the simple-Query protocol (``Q`` packet) even when the source
+     SQL is parameterized: it does client-side ``%(param)s`` substitution
+     and emits the resulting string as a single inlined statement
+     (no ``Bind``/``Execute`` frames).
   2. ``Base.metadata.create_all(engine)`` issues one
      ``SELECT pg_catalog.pg_class.relname ...`` probe per declared table
-     to decide whether each ``CREATE TABLE`` should be skipped.
+     to decide whether each ``CREATE TABLE`` should be skipped. The
+     probe SQL has 7 parameters (table name, relkind chars, namespace);
+     psycopg2 inlines them before the wire write, so the dispatcher sees
+     a simple-Query statement that classifies as ``ClassCatalog``.
   3. FastAPI starts serving requests.
 
 The probe is what hits the dispatcher's ``case match.ClassCatalog``
