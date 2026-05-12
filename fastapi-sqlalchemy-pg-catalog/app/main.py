@@ -73,16 +73,23 @@ engine = create_engine(DATABASE_URL, echo=SQL_ECHO)
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    log.info("startup: running Base.metadata.create_all (pg_class probe expected)")
-    # create_all does synchronous psycopg2 I/O. Offload to a thread so
-    # uvicorn's event loop stays responsive (otherwise any other
-    # async work scheduled on startup would block until the pg_class
-    # probe + any CREATE TABLE round-trips complete). For this minimal
-    # repro the difference is small, but the pattern is the right
-    # FastAPI shape for any startup that touches a sync DB driver.
-    await asyncio.to_thread(Base.metadata.create_all, engine)
-    log.info("startup: create_all complete")
+    # Wrap the startup work AND the yield in try/finally so
+    # engine.dispose() runs even when create_all raises — which is
+    # the exact failure mode this repro is built around (pre-fix
+    # keploy makes create_all issue an unrecorded CREATE TABLE that
+    # raises psycopg2.DatabaseError mid-startup; without the wrap,
+    # the connection pool would leak on every replay attempt).
     try:
+        log.info("startup: running Base.metadata.create_all (pg_class probe expected)")
+        # create_all does synchronous psycopg2 I/O. Offload to a thread
+        # so uvicorn's event loop stays responsive (otherwise any other
+        # async work scheduled on startup would block until the pg_class
+        # probe + any CREATE TABLE round-trips complete). For this
+        # minimal repro the difference is small, but the pattern is the
+        # right FastAPI shape for any startup that touches a sync DB
+        # driver.
+        await asyncio.to_thread(Base.metadata.create_all, engine)
+        log.info("startup: create_all complete")
         yield
     finally:
         # Release pooled connections on shutdown so repeated
