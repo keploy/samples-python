@@ -12,10 +12,17 @@ CREATE TABLE IF NOT EXISTS project (
     name VARCHAR(100) NOT NULL
 );
 
--- Idempotent seed. `ON CONFLICT DO NOTHING` would only help with a
--- UNIQUE/EXCLUSION constraint on name, which the SQLAlchemy model
--- doesn't declare; use NOT EXISTS so re-running this script against
--- an existing volume doesn't duplicate the row.
+-- Seed the table.
+--
+-- Postgres only runs scripts under /docker-entrypoint-initdb.d on
+-- *first* database initialization (empty data dir), so on a clean
+-- container this is a single-shot insert and `ON CONFLICT` /
+-- `NOT EXISTS` wouldn't normally matter. The `NOT EXISTS` guard is
+-- defensive belt-and-suspenders for the degenerate case where the
+-- compose stack reuses a stale Postgres data volume that already
+-- carries the seed row — it keeps the script idempotent without
+-- requiring a UNIQUE constraint on project.name (which the
+-- SQLAlchemy model doesn't declare).
 INSERT INTO project (name)
 SELECT 'seed'
 WHERE NOT EXISTS (SELECT 1 FROM project WHERE name = 'seed');
