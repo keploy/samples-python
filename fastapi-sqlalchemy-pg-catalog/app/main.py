@@ -82,7 +82,14 @@ async def lifespan(_: FastAPI):
     # FastAPI shape for any startup that touches a sync DB driver.
     await asyncio.to_thread(Base.metadata.create_all, engine)
     log.info("startup: create_all complete")
-    yield
+    try:
+        yield
+    finally:
+        # Release pooled connections on shutdown so repeated
+        # start/stop cycles (local repro loops, CI lanes) don't leak
+        # half-open connections to postgres.
+        engine.dispose()
+        log.info("shutdown: engine pool disposed")
 
 
 app = FastAPI(lifespan=lifespan)
