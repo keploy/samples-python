@@ -12,17 +12,9 @@ CREATE TABLE IF NOT EXISTS project (
     name VARCHAR(100) NOT NULL
 );
 
--- Seed the table.
---
--- Postgres only runs scripts under /docker-entrypoint-initdb.d on
--- *first* database initialization (empty data dir), so on a clean
--- container this is a single-shot insert and `ON CONFLICT` /
--- `NOT EXISTS` wouldn't normally matter. The `NOT EXISTS` guard is
--- defensive belt-and-suspenders for the degenerate case where the
--- compose stack reuses a stale Postgres data volume that already
--- carries the seed row — it keeps the script idempotent without
--- requiring a UNIQUE constraint on project.name (which the
--- SQLAlchemy model doesn't declare).
-INSERT INTO project (name)
-SELECT 'seed'
-WHERE NOT EXISTS (SELECT 1 FROM project WHERE name = 'seed');
+-- Seed the table. The Postgres entrypoint runs scripts under
+-- /docker-entrypoint-initdb.d only on first init (empty data dir),
+-- so this is single-shot on a clean container. If you reuse a stale
+-- data volume, this script doesn't run at all — re-create the
+-- volume (`docker compose down -v`) for a deterministic repro.
+INSERT INTO project (name) VALUES ('seed');
