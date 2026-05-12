@@ -33,6 +33,15 @@ logging.basicConfig(
 log = logging.getLogger("repro")
 
 DATABASE_URL = os.environ["DATABASE_URL"]
+# SQL echo is INTENTIONALLY on by default — this is a sample for
+# demonstrating the dispatcher's simple-Query catalog path, and seeing
+# the actual SQLAlchemy queries (pg_catalog.version, pg_class probe,
+# CREATE TABLE on miss) in the app log is the load-bearing observation
+# that lets a reader correlate the keploy agent log with what the app
+# is doing. The trade-off: SQLAlchemy logs every statement at INFO,
+# which is verbose in normal operation. Override SQL_ECHO=0 to quiet
+# it down for unrelated investigations.
+SQL_ECHO = os.environ.get("SQL_ECHO", "1") != "0"
 
 Base = declarative_base()
 
@@ -44,7 +53,7 @@ class Project(Base):
     name = Column(String(100), nullable=False)
 
 
-engine = create_engine(DATABASE_URL, echo=True, future=True)
+engine = create_engine(DATABASE_URL, echo=SQL_ECHO, future=True)
 
 
 @asynccontextmanager

@@ -43,19 +43,23 @@ bash flow.sh
 docker compose down -v
 
 # Record
+# Both keploy invocations below pass `--container-name "${APP_CONTAINER:-pg-catalog-repro-app}"`
+# so they track whatever the compose file is rendering for the app
+# service. If you've overridden APP_CONTAINER (e.g. to isolate
+# concurrent runs), the same export reaches both keploy and compose.
 ( bash flow.sh > flow-record.log 2>&1 ) &
 sudo -E keploy record \
   -c "docker compose -f docker-compose.yml up" \
-  --container-name pg-catalog-repro-app \
+  --container-name "${APP_CONTAINER:-pg-catalog-repro-app}" \
   --cmd-type docker-compose \
   --record-timer 60s
 
 # Replay (pre-fix: FAILS with "no recorded invocation matched" on CREATE TABLE)
 sudo -E keploy test \
   -c "docker compose -f docker-compose.yml up" \
-  --container-name pg-catalog-repro-app \
+  --container-name "${APP_CONTAINER:-pg-catalog-repro-app}" \
   --cmd-type docker-compose \
-  --apiTimeout 120 --delay 15 --disableMockUpload
+  --api-timeout 120 --delay 15
 ```
 
 ## Layout
