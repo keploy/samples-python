@@ -65,7 +65,10 @@ class Project(Base):
     name = Column(String(100), nullable=False)
 
 
-engine = create_engine(DATABASE_URL, echo=SQL_ECHO, future=True)
+# SQLAlchemy 2.x defaults to the future-2.0 behaviour, so no
+# `future=True` is needed (and passing it can trip a deprecation
+# warning depending on the installed minor version).
+engine = create_engine(DATABASE_URL, echo=SQL_ECHO)
 
 
 @asynccontextmanager
