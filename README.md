@@ -4,8 +4,8 @@
   <a href="CODE_OF_CONDUCT.md" alt="Contributions welcome">
     <img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen?logo=github" /></a>
 
-  <a href="https://keploy.io/slack" alt="Slack">
-    <img src=".github/slack.svg" /></a>
+  <a href="https://keploy.io/slack" aria-label="Slack">
+    <img src=".github/slack.svg" alt="Slack" /></a>
 
   <a href="https://opensource.org/licenses/Apache-2.0" alt="License">
     <img src=".github/License-Apache_2.0-blue.svg" /></a>
