@@ -20,7 +20,7 @@ brew install redis
 If homebrew is not installed, then go to https://brew.sh/ and install it.
 
 ```bash
-git clone https://github.com/keploy/samples-typescript && cd samples-typescript/flask-redis
+git clone https://github.com/keploy/samples-python && cd samples-python/flask-redis
 
 # Install the dependencies
 pip3 install -r requirements.txt
@@ -158,3 +158,9 @@ keploy test -c 'sudo docker-compose up' --containerName "flask-web" --delay 10
 ```
 
 _Voila!! Our testcases has passed 🌟_
+
+---
+
+
+
+---
