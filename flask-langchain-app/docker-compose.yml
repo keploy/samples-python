@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./static/uploads:/app/static/uploads
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped 

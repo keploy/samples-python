@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12 animate__animated animate__fadeIn">
+            <h1 class="text-4xl font-bold text-indigo-600 mb-4">Document Chatbot</h1>
+            <p class="text-gray-600">Upload your documents and ask questions about them</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Upload Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6 animate__animated animate__fadeInLeft">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upload Document</h2>
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center" id="dropZone">
+                    <input type="file" id="fileInput" class="hidden" accept=".pdf,.docx,.txt">
+                    <div class="space-y-4">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="text-gray-600">
+                            <p>Drag and drop your file here, or</p>
+                            <button class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors" onclick="document.getElementById('fileInput').click()">
+                                Browse Files
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-500">Supported formats: PDF, DOCX, TXT</p>
+                    </div>
+                </div>
+                <div id="uploadProgress" class="mt-4 hidden">
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6 animate__animated animate__fadeInRight">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Ask Questions</h2>
+                <div id="chatContainer" class="h-96 overflow-y-auto mb-4 space-y-4">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <div class="flex space-x-4">
+                    <input type="text" id="queryInput" class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Type your question here...">
+                    <button id="sendButton" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Document List -->
+        <div class="mt-8 bg-white rounded-lg shadow-lg p-6 animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Uploaded Documents</h2>
+            <div id="documentList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Document cards will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

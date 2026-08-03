@@ -1,0 +1,13 @@
+flask==3.0.2
+langchain==0.1.12
+langchain-community
+numpy==1.26.4
+faiss-cpu
+python-dotenv==1.0.1
+python-docx==1.1.0
+pymupdf==1.23.26
+Werkzeug==3.0.1
+gunicorn==21.2.0
+python-magic==0.4.27
+flask-wtf==1.2.1
+python-magic-bin==0.4.14; sys_platform == 'win32'
