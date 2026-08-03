@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir gunicorn
 
 # Create the keploy directory and download the time freeze agent
 RUN mkdir -p /lib/keploy
-ADD https://keploy-enterprise.s3.us-west-2.amazonaws.com/releases/latest/assets/freeze_time_amd64.so /lib/keploy/freeze_time_amd64.so
+ADD https://keployenterprise.blob.core.windows.net/releases/latest/assets/freeze_time_amd64.so /lib/keploy/freeze_time_amd64.so
 RUN chmod +x /lib/keploy/freeze_time_amd64.so
 RUN ls -la /lib/keploy/freeze_time_amd64.so
 
