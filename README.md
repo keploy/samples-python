@@ -11,21 +11,115 @@
     <img src=".github/License-Apache_2.0-blue.svg" /></a>
 </p>
 
-This repo contains the samples for [Keploy's](https://keploy.io) integration with Python-based Application. Please feel free to contribute if you'd like submit a sample for another use-case or library.
+## Introduction
+
+This repository contains sample applications demonstrating [Keploy's](https://keploy.io) integration with various Python-based web frameworks and databases. Keploy is an API testing platform that automatically generates test cases and data mocks from API calls, making testing more efficient and comprehensive.
+
+These samples showcase how to integrate Keploy with different Python web frameworks and databases, providing practical examples for your own projects. Each sample includes detailed setup instructions and demonstrates key Keploy features like test generation, data mocking, and test execution.
 
 > **Note** :- Issue Creation is disabled on this Repository, please visit [here](https://github.com/keploy/keploy/issues/new/choose) to submit Issue.
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Sample Applications](#python-sample-apps-with-keploy)
+- [Getting Started](#getting-started)
+- [Running the Samples](#running-the-samples)
+- [Contributing](#contributing)
+- [Community Support](#community-support-️)
+
+## Prerequisites
+
+Before running any sample application, make sure you have the following installed:
+
+- Python 3.7+ 
+- [Keploy CLI](https://keploy.io/docs)
+- Docker and Docker Compose (for applications using containers)
+- Database systems as required by individual samples (MongoDB, PostgreSQL, Redis, etc.)
+
 ## Python Sample Apps with Keploy
 
-1. [Flask-Mongo](https://github.com/keploy/samples-python/tree/main/flask-mongo) - This application is a simple task management API built using Python's Flask framework and MongoDB for data storage. It allows you to perform basic CRUD (Create, Read, Update, Delete) operations on student records. The API supports CORS (Cross-Origin Resource Sharing) to facilitate cross-domain requests.
+1. [Flask-Mongo](https://github.com/keploy/samples-python/tree/main/flask-mongo) - A simple task management API built using Flask and MongoDB for data storage. It demonstrates CRUD operations on student records with CORS support.
 
-2. [Django-Postgres](https://github.com/keploy/samples-python/tree/main/django-postgres) - This is an application to perform basic CRUD (Create, Read, Update, Delete) operations on user records built using Python's Django framework and PostgreSQL for data storage.
+2. [Django-Postgres](https://github.com/keploy/samples-python/tree/main/django-postgres) - A user management application using Django and PostgreSQL for performing CRUD operations on user records.
 
-3. [FastAPI-Postgres](https://github.com/keploy/samples-python/tree/main/fastapi-postgres) - This application is a student management API built using Python's FastAPI and PostgreSQL for data storage. It allows you to perform basic CRUD (Create, Read, Update, Delete) operations on student data.
+3. [FastAPI-Postgres](https://github.com/keploy/samples-python/tree/main/fastapi-postgres) - A student management API built with FastAPI and PostgreSQL for CRUD operations on student data.
 
-4. [FastAPI-Twilio](https://github.com/keploy/samples-python/tree/main/fastapi-twilio) - This application is a SMS sending API built using Python's FastAPI and Twilio for their SMS sharing service.
+4. [FastAPI-Twilio](https://github.com/keploy/samples-python/tree/main/fastapi-twilio) - A SMS sending API built using FastAPI and Twilio services.
 
-5. [Flask-Redis](https://github.com/keploy/samples-python/tree/main/flask-redis) - This Flask-based application provides a book management system utilizing Redis for caching and storage. It supports adding, retrieving, updating, and deleting book records, with optimized search functionality and cache management for improved performance. The API endpoints ensure efficient data handling and quick access to book information.
+5. [Flask-Redis](https://github.com/keploy/samples-python/tree/main/flask-redis) - A book management system using Flask with Redis for caching and storage, demonstrating optimized search functionality.
+
+6. [Django-Mongo](https://github.com/keploy/samples-python/tree/main/django-mongo) - An inventory management application using Django, MongoDB, mongoengine, and Django REST Framework.
+
+7. [Flask-PostgreSQL](https://github.com/keploy/samples-python/tree/main/flask_postgresql_app) - A Flask application integrated with PostgreSQL database.
+
+8. [Sanic-Mongo](https://github.com/keploy/samples-python/tree/main/sanic-mongo) - A movie management API built using Sanic framework and MongoDB for data storage.
+
+9. [Sanic-Postgres](https://github.com/keploy/samples-python/tree/main/sanic-postgres) - An employee management API built with Sanic framework and PostgreSQL.
+
+## Getting Started
+
+To get started with any sample application:
+
+1. Install Keploy CLI:
+   ```bash
+   curl --silent -O -L https://keploy.io/install.sh && source install.sh
+   ```
+
+2. Clone this repository:
+   ```bash
+   git clone https://github.com/keploy/samples-python.git
+   cd samples-python
+   ```
+
+3. Navigate to the sample application directory of your choice:
+   ```bash
+   cd <sample-app-directory>
+   ```
+
+4. Follow the specific README.md instructions in that directory.
+
+## Running the Samples
+
+Each sample application follows a similar pattern:
+
+1. **Installation**: Install dependencies and set up the required database
+2. **Record Mode**: Capture API calls using Keploy
+3. **Test Mode**: Run tests using the generated test cases
+
+For detailed instructions, refer to the README.md file in each sample application directory.
+
+## Framework and Database Coverage
+
+The samples in this repository cover a wide range of Python frameworks and databases:
+
+### Frameworks
+- Flask
+- Django
+- FastAPI
+- Sanic
+
+### Databases
+- MongoDB
+- PostgreSQL
+- Redis
+
+## Contributing
+
+Contributions are welcome! If you'd like to submit a sample for another use-case, framework, or database integration, please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-sample`)
+3. Commit your changes (`git commit -m 'Add new sample for XYZ framework'`)
+4. Push to the branch (`git push origin feature/new-sample`)
+5. Open a Pull Request
+
+Please ensure your sample application includes:
+- Clear setup and usage instructions
+- Properly documented code
+- Demonstration of Keploy's key features
+- Tests showing Keploy integration
 
 ## Community Support ❤️
 
