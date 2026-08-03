@@ -1,0 +1,35 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# SQLite DB file (do not commit local dev DB)
+*.db
+instance/
+
+# Keploy reports (tests are OK, reports are not needed)
+keploy/reports/
+
+# Coverage reports
+coverage.*
+*.cover
+.hypothesis/
+
+# Keploy traces/cache
+*.log
+keploy/test-set-*/coverage.*
+keploy/test-set-*/mocks/
+
+# Environment files
+.env
+.venv/
+env/
+venv/
+
+# IDE files
+.vscode/
+.idea/
+
+# macOS/Linux system files
+.DS_Store
+Thumbs.db
