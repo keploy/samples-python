@@ -36,11 +36,41 @@ Once you have the prerequisites set up, follow these steps:
    ```bash
    git clone https://github.com/keploy/sample-python.git
    cd sample-python
-Install the required Python packages:
 
-```bash
-pip install -r requirements.txt
-```
+2. Navigate your project directory:
+
+    ```bash
+    cd sample-python/sanic-postgres
+    ```
+
+3. Create a Virtual Environment:
+
+    ```bash
+    python -m venv venv
+    ```
+4. Activating the Virtual Environment
+
+    On Windows:
+
+    ```bash
+    venv\Scripts\activate
+    ```
+
+    On macOS and Linux:
+
+    ```bash
+    source venv/bin/activate
+    ```
+5. Install the required Python packages:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+6. To exit your Virtual Environment:
+
+    ```bash
+    deactivate
+    ```
 
 Set up your PostgreSQL database and update the connection settings in your application as needed.
 
