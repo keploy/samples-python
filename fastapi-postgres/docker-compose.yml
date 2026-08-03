@@ -14,6 +14,13 @@ services:
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - keploy-network
+  fastapi-app:
+    build: .
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
 
   app:
     container_name: fastapi-app
