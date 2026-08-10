@@ -11,6 +11,22 @@ This application is a simple student management API built using Python's Flask f
 
 - Install WSL (`wsl --install`) for <img src="https://keploy.io/docs/img/os/windows.png" alt="Windows" width="3%" /> Windows.
 
+### Windows (PowerShell) Notes 🪟
+
+If you are using Windows with PowerShell, some Linux/macOS commands in this guide may not work directly.
+
+- If you are using a Python virtual environment, activate it using:
+  ```powershell
+  .\venv\Scripts\Activate.ps1
+  ```
+
+Install dependencies using 'pip' (instead of 'pip3'):
+
+```powershell
+pip install -r requirements.txt
+```
+
+If you encounter script execution errors, ensure that PowerShell execution policy allows running local scripts.
 #### Optional 🛠️
 
 - Install Colima( `brew install colima && colima start` ) for <img src="https://keploy.io/docs/img/os/macos.png" alt="MacOS" width="3%" /> MacOs.
@@ -39,11 +55,46 @@ Start the MongoDB instance-
 docker run -p 27017:27017 -d --network backend --name mongo mongo
 ```
 
+### Using MongoDB Atlas (Optional) ☁️
+
+Instead of running MongoDB locally or via Docker, you can also use **MongoDB Atlas**, a free cloud-hosted MongoDB service.
+
+If you are using MongoDB Atlas:
+
+1. Create a free cluster on MongoDB Atlas.
+2. Obtain the connection string (SRV format), for example:
+
+```
+mongodb+srv://<username>:<password>@cluster0.mongodb.net/studentsdb
+```
+
+3. Install the required SRV dependency:
+```bash
+pip install "pymongo[srv]"
+```
+
+Replace the MongoDB connection URL in the application with your Atlas connection string.
+
+⚠️ **Important Note on MongoDB Passwords**
+
+If your MongoDB password contains special characters such as @, :, /, or #, the connection string may fail with an InvalidURI error.
+
+To avoid this:
+
+- Use alphanumeric passwords, or
+- URL-encode the password before adding it to the connection string (for example, using `urllib.parse.quote_plus` in Python).
+
 ## Clone a simple Student Management API 🧪
 
 ```bash
 git clone https://github.com/keploy/samples-python.git && cd samples-python/flask-mongo
+
+# For Linux/WSL users:
 pip3 install -r requirements.txt
+
+# For Windows (PowerShell) users:
+# .\venv\Scripts\Activate.ps1  <-- Activate your virtual environment first
+pip install -r requirements.txt
 ```
 
 ## Installation 📥
@@ -62,9 +113,21 @@ pip3 install -r requirements.txt
   keploy record -c "docker run -p 6000:6000 --name flask-app --network backend flask-app:1.0"
   ```
 
-  🔥**Make some API calls**. Postman, Hoppscotch or even curl - take your pick!
+  🔥 **Make some API calls.** Postman, Hoppscotch or even curl - take your pick!
 
   Let's make URLs short and sweet:
+
+### Port Configuration Note ⚙️
+
+The application commonly runs on port `6000`, but if that port is already in use, Flask may automatically switch to another available port.
+
+Always check the terminal output for a line similar to:
+
+```
+Running on http://127.0.0.1:<port>
+```
+
+Use the displayed port number when making API calls with `curl`, Postman, or other tools.
 
   ### Generate testcases
 
@@ -227,6 +290,11 @@ pip3 install -r requirements.txt
   Install the dependencies:
 
   ```bash
+  # For Linux/WSL:
+  pip3 install -r requirements.txt
+
+  # For Windows (PowerShell):
+  .\venv\Scripts\Activate.ps1
   pip install -r requirements.txt
   ```
 
