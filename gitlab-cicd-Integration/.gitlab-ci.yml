@@ -1,0 +1,23 @@
+stages:
+  - test
+
+keploy-test-job:
+  stage: test
+  image: ubuntu:22.04
+  before_script:
+    - apt-get update && apt-get install -y curl python3 python3-pip git kmod linux-headers-generic bpfcc-tools sudo
+    - git clone https://github.com/keploy/samples-python
+    - cd flask-mongo
+    - mkdir -p /sys/kernel/debug
+    - mkdir -p /sys/kernel/tracing
+  script:
+    # Install Keploy
+    - curl --silent -O -L https://keploy.io/install.sh && source install.sh
+
+    # Mount required filesystems
+    - mount -t debugfs nodev /sys/kernel/debug || true
+    - mount -t tracefs nodev /sys/kernel/tracing || true
+
+    # Run Keploy test
+    - pip3 install -r requirements.txt
+    - keploy test -c "python3 app.py"  --delay 50
