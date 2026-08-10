@@ -12,3 +12,17 @@ services:
     volumes: 
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
+  postgres_ssl:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: usersdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_ssl:/var/lib/postgresql
+      - ./sql/enable-ssl.sh:/docker-entrypoint-initdb.d/enable-ssl.sh:ro
+
+volumes:
+  pgdata_ssl:
