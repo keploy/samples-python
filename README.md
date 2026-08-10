@@ -27,6 +27,25 @@ This repo contains the samples for [Keploy's](https://keploy.io) integration wit
 
 5. [Flask-Redis](https://github.com/keploy/samples-python/tree/main/flask-redis) - This Flask-based application provides a book management system utilizing Redis for caching and storage. It supports adding, retrieving, updating, and deleting book records, with optimized search functionality and cache management for improved performance. The API endpoints ensure efficient data handling and quick access to book information.
 
+## 🛡️ Ensuring Proper Code Coverage with Keploy
+
+When running Python samples with Keploy, it's important to make sure coverage data is saved correctly when the app shuts down. To avoid issues (like missing `coverage.keploy` files), use one of these methods:
+
+### ✅ Option 1: Graceful Shutdown in Your App
+
+Update your app’s main file with:
+
+```python
+import signal
+import sys
+
+def handle_exit(sig, frame):
+    print("Gracefully shutting down...")
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, handle_exit)
+signal.signal(signal.SIGTERM, handle_exit)
+
 ## Community Support ❤️
 
 ### 🤔 Questions?
