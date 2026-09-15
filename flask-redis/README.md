@@ -21,10 +21,36 @@ If homebrew is not installed, then go to https://brew.sh/ and install it.
 
 ```bash
 git clone https://github.com/keploy/samples-typescript && cd samples-typescript/flask-redis
-
-# Install the dependencies
-pip3 install -r requirements.txt
 ```
+
+1. Create a Virtual Environment:
+
+    ```bash
+    python -m venv venv
+    ```
+2. Activating the Virtual Environment
+
+    On Windows:
+
+    ```bash
+    venv\Scripts\activate
+    ```
+
+    On macOS and Linux:
+
+    ```bash
+    source venv/bin/activate
+    ```
+3. Install the required Python packages:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+4. To exit your Virtual Environment:
+
+    ```bash
+    deactivate
+    ```
 
 # Installing Keploy
 
