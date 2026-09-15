@@ -11,6 +11,8 @@ This application is a simple student management API built using Python's Flask f
 
 - Install WSL (`wsl --install`) for <img src="https://keploy.io/docs/img/os/windows.png" alt="Windows" width="3%" /> Windows.
 
+- Execute All the commands given in the other sections in **WSL Terminal**
+
 #### Optional 🛠️
 
 - Install Colima( `brew install colima && colima start` ) for <img src="https://keploy.io/docs/img/os/macos.png" alt="MacOS" width="3%" /> MacOs.
@@ -47,6 +49,11 @@ pip3 install -r requirements.txt
 ```
 
 ## Installation 📥
+
+  ### There are two methods to run Keploy
+
+  1. [With Docker](###with-docker-🎥)
+  2. [With WSL](##running-in-linux/wsl)
 
   ### With Docker 🎥
 
@@ -105,6 +112,16 @@ pip3 install -r requirements.txt
   ```bash
   curl -X DELETE http://localhost:6000/students/12345
   ```
+
+To run all the API Calls, you can execute `call.sh` 
+
+**File Path:** `./flask-mongo/call.sh`
+
+Command
+
+```bash
+bash call.sh
+```
 
   Give yourself a pat on the back! With that simple spell, you've conjured up a test case with a mock! Explore the **Keploy directory** and you'll discover your handiwork in `test-1.yml` and `mocks.yml`.
 
@@ -283,6 +300,16 @@ pip3 install -r requirements.txt
   ```bash
   curl -X DELETE http://localhost:6000/students/12345
   ```
+
+To run all the API Calls, you can execute `call.sh` 
+
+**File Path:** `./flask-mongo/call.sh`
+
+Command
+
+```bash
+bash call.sh
+```
 
   Give yourself a pat on the back! With that simple spell, you've conjured up a test case with a mock! Explore the **Keploy directory** and you'll discover your handiwork in `test-1.yml` and `mocks.yml`.
 
