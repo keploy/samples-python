@@ -1,4 +1,5 @@
 <h1 align="center"> Keploy Python Sample Applications </h1>
+Keploy is a powerful open-source testing platform that creates test cases from reall API calls.
 <p align="center">
 
   <a href="CODE_OF_CONDUCT.md" alt="Contributions welcome">
