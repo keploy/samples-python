@@ -26,6 +26,12 @@ This repo contains the samples for [Keploy's](https://keploy.io) integration wit
 4. [FastAPI-Twilio](https://github.com/keploy/samples-python/tree/main/fastapi-twilio) - This application is a SMS sending API built using Python's FastAPI and Twilio for their SMS sharing service.
 
 5. [Flask-Redis](https://github.com/keploy/samples-python/tree/main/flask-redis) - This Flask-based application provides a book management system utilizing Redis for caching and storage. It supports adding, retrieving, updating, and deleting book records, with optimized search functionality and cache management for improved performance. The API endpoints ensure efficient data handling and quick access to book information.
+   
+6. [Flask_Postgresql_App](https://github.com/keploy/samples-python/tree/main/flask_postgresql_app) - This is a Flask-based user management API that uses PostgreSQL as its database backend.It supports basic CRUD operations on user data and is fully containerized using Docker and Docker Compose.Keploy is integrated to record and test API behavior through auto-generated test cases. Ideal for building lightweight, production-ready REST APIs with relational database support.
+
+7. [Sanic-Mongo](https://github.com/keploy/samples-python/tree/main/sanic-mongo) - This is a simple movie management API built using Python’s Sanic framework and MongoDB for data storage.It supports basic CRUD operations for movie records with fast, asynchronous handling. Keploy is integrated to record and replay API interactions for testing and observability. Perfect for experimenting with Sanic’s speed and MongoDB’s flexible document model.
+
+8. [Sanic-Postgres](https://github.com/keploy/samples-python/tree/main/sanic-postgres) - This is a simple employee management API built using Python’s Sanic framework and PostgreSQL for persistent storage.It enables full CRUD operations for employee records, including search, update, and delete. Keploy integration allows capturing, testing, and validating real API behavior through auto-generated test cases. Great for building high-performance backend systems with structured relational data.
 
 ## Community Support ❤️
 
