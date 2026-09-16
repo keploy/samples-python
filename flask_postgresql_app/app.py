@@ -1,77 +1,89 @@
-from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv
+from flask import Flask, request, jsonify, abort
+from pymongo import MongoClient
+from flask_cors import CORS
+from bson.objectid import ObjectId
+from bson.errors import InvalidId
 import os
+from werkzeug.exceptions import HTTPException
 
-# Load environment variables from .env file
-load_dotenv()
+app = Flask(_name_)
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Config from environment variables
+MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/')
+DB_NAME = os.getenv('DB_NAME', 'studentsdb')
 
-db = SQLAlchemy(app)
+# Secure CORS (adjust in production)
+CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000"]}})
 
-class User(db.Model):
-    __tablename__ = 'users' 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
+client = MongoClient(MONGO_URI)
+db = client[DB_NAME]
+students_collection = db['students']
+students_collection.create_index('student_id', unique=True)  # Prevent duplicates
 
-    def __init__(self, name):
-        self.name = name
+@app.errorhandler(HTTPException)
+def handle_error(e):
+    return jsonify(error=str(e.description)), e.code
 
-# Create the database tables
-@app.before_request
-def create_tables():
-    db.create_all()
+# Input validation helper
+def validate_student_data(data, is_update=False):
+    required_fields = ['student_id', 'name', 'email']
+    for field in required_fields:
+        if not is_update and field not in data:
+            abort(400, description=f"Missing required field: {field}")
+        if field in data and not isinstance(data[field], str):
+            abort(400, description=f"{field} must be a string")
 
-# Home route
-@app.route('/', methods=['GET'])
-def home():
-    return jsonify({"message": "Welcome to the User Management API!"}), 200
+@app.route('/students', methods=['GET'])
+def get_students():
+    students = list(students_collection.find({}, {'_id': 0}))
+    return jsonify(students)
 
-# GET all users
-@app.route('/users', methods=['GET'])
-def get_users():
-    users = User.query.all()
-    return jsonify([{'id': user.id, 'name': user.name} for user in users])
+@app.route('/students/<student_id>', methods=['GET'])
+def get_student(student_id):
+    student = students_collection.find_one({'student_id': student_id}, {'_id': 0})
+    if not student:
+        abort(404, description="Student not found")
+    return jsonify(student)
 
-# POST a new user
-@app.route('/users', methods=['POST'])
-def add_user():
-    name = request.json.get('name')
-    if not name:
-        return jsonify({"error": "Name is required."}), 400
-    user = User(name=name)
-    db.session.add(user)
-    db.session.commit()
-    return jsonify({"message": f"User {name} added.", "id": user.id}), 201
-
-# PUT to update a user
-@app.route('/users/<int:id>', methods=['PUT'])
-def update_user(id):
-    user = User.query.get(id)
-    if user is None:
-        return jsonify({"error": "User not found."}), 404
+@app.route('/students', methods=['POST'])
+def create_student():
+    data = request.get_json()
+    if not data:
+        abort(400, description="No data provided")
     
-    name = request.json.get('name')
-    if name:
-        user.name = name
-        db.session.commit()
-        return jsonify({"message": f"User {id} updated."})
+    validate_student_data(data)
     
-    return jsonify({"error": "Name is required."}), 400
-
-# DELETE a user
-@app.route('/users/<int:id>', methods=['DELETE'])
-def delete_user(id):
-    user = User.query.get(id)
-    if user is None:
-        return jsonify({"error": "User not found."}), 404
+    try:
+        result = students_collection.insert_one(data)
+    except Exception as e:
+        abort(400, description=str(e))
     
-    db.session.delete(user)
-    db.session.commit()
-    return jsonify({"message": f"User {id} deleted."})
+    return jsonify({'message': 'Student created'}), 201
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+@app.route('/students/<student_id>', methods=['PUT'])
+def update_student(student_id):
+    data = request.get_json()
+    if not data:
+        abort(400, description="No data provided")
+    
+    validate_student_data(data, is_update=True)
+    
+    result = students_collection.update_one(
+        {'student_id': student_id},
+        {'$set': data}
+    )
+    
+    if result.matched_count == 0:
+        abort(404, description="Student not found")
+    
+    return jsonify({'message': 'Student updated'})
+
+@app.route('/students/<student_id>', methods=['DELETE'])
+def delete_student(student_id):
+    result = students_collection.delete_one({'student_id': student_id})
+    if result.deleted_count == 0:
+        abort(404, description="Student not found")
+    return jsonify({'message': 'Student deleted'})
+
+if _name_ == '_main_':
+    app.run(host='0.0.0.0', port=6000)
