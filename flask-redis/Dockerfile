@@ -14,10 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code into the container
 COPY . .
 
-# Download Keploy CA certificate and setup script
-# RUN curl -o ca.crt https://raw.githubusercontent.com/keploy/keploy/main/pkg/core/proxy/asset/ca.crt && \
-#     curl -o setup_ca.sh https://raw.githubusercontent.com/keploy/keploy/main/pkg/core/proxy/asset/setup_ca.sh && \
-#     chmod +x setup_ca.sh  # Make the setup script executable
+# Keploy injects its per-run MITM CA and trust env vars automatically; no
+# certificate needs to be baked in.
 
 # Expose the port the app runs on
 EXPOSE 5000

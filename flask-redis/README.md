@@ -43,49 +43,12 @@ There are 2 ways you can run this sample application.
 
 # Natively on Ubuntu/WSL
 
-## Let's install certificates
+> **Note:** You no longer need to download a `ca.crt` or run `setup_ca.sh`.
+> Keploy generates its MITM CA per run and sets the trust environment variables
+> for the app it launches automatically. (The old `pkg/core/proxy/asset/` URLs
+> are retired.)
 
-1. **Install required packages:**
-
-   ```sh
-   sudo apt-get install -y --no-install-recommends ca-certificates curl
-   ```
-
-   This command installs necessary packages without additional recommended packages.
-
-2. **Download CA certificate:**
-
-   ```sh
-   curl -o ca.crt https://raw.githubusercontent.com/keploy/keploy/main/pkg/core/proxy/asset/ca.crt
-   ```
-
-   This command downloads the CA certificate to `ca.crt`.
-
-3. **Download setup script:**
-
-   ```sh
-   curl -o setup_ca.sh https://raw.githubusercontent.com/keploy/keploy/main/pkg/core/proxy/asset/setup_ca.sh
-   ```
-
-   This command downloads the setup script to `setup_ca.sh`.
-
-4. **Make the setup script executable:**
-
-   ```sh
-   chmod +x setup_ca.sh
-   ```
-
-   This command changes the permissions of `setup_ca.sh` to make it executable.
-
-5. **Run the setup script:**
-
-   ```sh
-   source ./setup_ca.sh
-   ```
-
-   This command executes the setup script in the current shell.
-
-6. **Start the redis server:**
+1. **Start the redis server:**
    ```sh
    redis-server
    ```
