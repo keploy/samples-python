@@ -1,3 +1,6 @@
+Health (readiness, no token):
+-> curl http://localhost:5000/health
+
 0. Register
 -> curl -X POST -H "Content-Type: application/json" -d '{"username": "gouravkrosx", "password": "gkrosx"}' http://localhost:5000/register
 

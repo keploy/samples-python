@@ -13,6 +13,12 @@ users = {}
 items = {}
 next_item_id = 1
 
+@app.route('/health', methods=['GET'])
+def health():
+    # A readiness probe (keploy test --health-url, CI waits): 200 once the app
+    # serves. It needs no token and touches no state.
+    return jsonify({'status': 'ok'}), 200
+
 # JWT token decorator to protect routes
 def token_required(f):
     @wraps(f)
