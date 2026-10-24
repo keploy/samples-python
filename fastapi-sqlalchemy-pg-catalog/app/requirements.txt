@@ -2,3 +2,7 @@ fastapi==0.115.0
 uvicorn==0.30.6
 sqlalchemy==2.0.36
 psycopg2-binary==2.9.10
+# fastapi takes pydantic 1 or 2. Pinned, so that an index page cut in transit
+# (pydantic-core's, say) fails the install, which the Dockerfile's fetch rule
+# retries, instead of pip quietly resolving around it to pydantic 1.
+pydantic==2.14.1
