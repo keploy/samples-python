@@ -20,7 +20,7 @@ This application is a simple student management API built using Python's Flask f
 - Install Keploy CLI using the following command:
 
 ```bash
-curl -O -L https://keploy.io/install.sh && source install.sh
+source /dev/stdin <<<"$(curl -fsSL https://keploy.io/install.sh || echo 'echo Keploy installer download failed >&2; return 1')"
 ```
 
 ## Get Started! 🎬

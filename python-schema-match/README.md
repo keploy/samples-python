@@ -37,7 +37,7 @@ The application supports schema validation testing to ensure API responses maint
 ### Install Keploy
 
 ```bash
-curl -O -L https://keploy.io/install.sh && source install.sh
+source /dev/stdin <<<"$(curl -fsSL https://keploy.io/install.sh || echo 'echo Keploy installer download failed >&2; return 1')"
 ```
 
 ### Clone the Repository
