@@ -46,7 +46,7 @@ pip install -r requirements.txt
 ### Install Keploy
 
 ```bash
- curl --silent -O -L https://keploy.io/install.sh && source install.sh
+ source /dev/stdin <<<"$(curl -fsSL https://keploy.io/install.sh || echo 'echo Keploy installer download failed >&2; return 1')"
 ```
 
 ## Running the Application 🚀
