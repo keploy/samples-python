@@ -2,6 +2,8 @@
 
 A sample App using flask and redis
 
+> **Note:** Keploy records and mocks Redis only in [Keploy Enterprise](https://keploy.io/docs/keploy-cloud/cloud-installation/). The `source keploy.sh` command below installs Keploy Enterprise, and a free account is enough for it (free-tier runs are subject to a usage allowance). The open-source `keploy` (installed with `curl -O https://raw.githubusercontent.com/keploy/keploy/main/keploy.sh && source keploy.sh --oss`, the keploy/keploy GitHub release binary, or the `ghcr.io/keploy/keploy` image) passes the app's Redis calls through to the real Redis server in record and in test mode, records no Redis mocks, and logs that the Redis calls are skipped. With it, keep Redis running while `keploy test` runs; a test whose response depends on Redis data, such as the book IDs this app takes from a Redis counter, can then fail, because the app reads and writes the live Redis. The test set in `keploy/` holds Redis mocks, which the open-source `keploy` skips and logs as skipped. To drop them, delete `keploy/test-set-0` and record again. Every mention of mocks in this README, and its passing test runs, apply to Keploy Enterprise.
+
 ## Setup application
 
 1. Clone the repository and move to flask-redis folder
