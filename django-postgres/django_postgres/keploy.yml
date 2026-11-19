@@ -1,0 +1,7 @@
+# Django builds the Allow header from an unordered set, so the method order
+# differs between runs. Ignore it when replaying.
+test:
+    globalNoise:
+        global:
+            header:
+                Allow: []

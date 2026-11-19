@@ -1,5 +1,5 @@
 # Use the official Python image as the base image
-FROM python:3.11.5-bullseye
+FROM python:3.11.5-bookworm
 
 # Install PostgreSQL client
 RUN apt-get update \

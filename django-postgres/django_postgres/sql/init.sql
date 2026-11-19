@@ -1,2 +1,1 @@
-psql -U postgres
-postgres=# CREATE DATABASE usersdb;
+-- The usersdb database is created by POSTGRES_DB in docker-compose.yml.
