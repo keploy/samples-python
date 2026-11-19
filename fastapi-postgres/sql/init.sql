@@ -1,2 +1,1 @@
-CREATE DATABASE studentdb;
-DROP DATABASE IF EXISTS studentdb;
+-- The studentdb database is created by POSTGRES_DB in docker-compose.yml.
